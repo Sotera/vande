@@ -8,8 +8,13 @@
 
 	<properties>
 		<jackson2.version>2.2.1	</jackson2.version>
+		<testng-release-version>6.3.1</testng-release-version>
 		<!-- Maven properties -->
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
+		<maven.site.plugin.version>3.0</maven.site.plugin.version>
+		<maven.project.info.reports.plugin.version>2.7</maven.project.info.reports.plugin.version>
+		<maven.dependency.plugin.version>2.1</maven.dependency.plugin.version>
+		<maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -22,6 +27,13 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
 			<version>${jackson2.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>${testng-release-version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>

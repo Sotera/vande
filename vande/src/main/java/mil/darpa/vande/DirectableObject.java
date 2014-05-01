@@ -14,6 +14,10 @@ public interface DirectableObject {
 
 	public String getDest();
 
+	/**
+	 * Note that in older versions of this class, we returned a String instead.
+	 * @return
+	 */
 	public Number getValue();
 
 	public int getWeight();

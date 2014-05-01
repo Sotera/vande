@@ -1,0 +1,9 @@
+*.classpath
+*.project
+vande/.settings/org.eclipse.jdt.core.prefs
+vande/.settings/org.eclipse.wst.common.component
+vande/.settings/org.eclipse.wst.common.project.facet.core.xml
+vande/.settings/org.eclipse.jdt.core.prefs
+vande/.project
+*.classpath
+*.xml

@@ -12,7 +12,9 @@ import mil.darpa.vande.generic.V_IdProperty;
 public class V_NodeList {
 	
 	private Map<String, V_GenericNode> nodes = new HashMap<String, V_GenericNode>();
-	
+	public int size(){
+		return nodes.size();
+	}
 	public void addNode(V_GenericNode n)
 	{
 		nodes.put(n.getId(), n);

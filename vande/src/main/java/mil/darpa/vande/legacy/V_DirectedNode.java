@@ -1,42 +1,34 @@
-package mil.darpa.vande.legacy;
 
-import mil.darpa.vande.legacy.entity.IconMap;
+package mil.darpa.vande.legacy;
+import mil.darpa.vande.generic.V_GenericNode;
+import mil.darpa.vande.generic.V_GraphObjectData;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * An extension of GRNode for directed graph use
- * 
+ * This was listed as legacy, in the legacy package, but it was already extending a Vande class.  So it was renamed to V_DirectedNode --djue
  * @author ??
  * 
  */
-@Deprecated
-public class DirectedNode extends GenericNode {
+public class V_DirectedNode extends V_GenericNode {
 
 	// TODO: remove any that are dupes of GRNode
 
 	static String origin_bg_color = "#ffff0000";
 	static String leaf_bg_color = "#0000ffff";
 	private boolean isPlaceholder = false;
-	private boolean scanned = false; // true when we have searched on this value
 
 	private String valueType = null;
-	private int id_type = 0;
 	private boolean used = true;
 
-	static Logger logger = LoggerFactory.getLogger(DirectedNode.class);
+	static Logger logger = LoggerFactory.getLogger(V_GenericNode.class);
 
-	public DirectedNode() {
-		// Used for JAXB - has to have a no-arg constructor
-		super();
-	}
 
-	public DirectedNode(String value, String id) {
-		super();
-		this.value = value;
-		this.key = value;
-		this.id = id;
+	public V_DirectedNode(double value, String id) {
+		super(id);
+//		this.value = value;
 	}
 
 	/**
@@ -73,7 +65,7 @@ public class DirectedNode extends GenericNode {
 
 		// Now add the value
 		boolean need_add = false;
-		for (GraphObjectData d : dataSet) {
+		for (V_GraphObjectData d : dataSet) {
 			if (d.getKey().equals(attribute)) {
 				if (d.getKeyVal().equals(value))
 					return; // Duplicate attr + value - ignore it
@@ -90,7 +82,7 @@ public class DirectedNode extends GenericNode {
 
 		// So the name doesn't exist in the data set
 
-		dataSet.add(new GraphObjectData(attribute, value));
+		dataSet.add(new V_GraphObjectData(attribute, value));
 	}
 
 	public void addData(String attribute, String value, String family) {
@@ -114,7 +106,7 @@ public class DirectedNode extends GenericNode {
 	public String getLabel() {
 		String label = null;
 
-		for (GraphObjectData d : dataSet) {
+		for (V_GraphObjectData d : dataSet) {
 			if (d.getKey().equals("label"))
 				label = d.getKeyVal();
 		}
@@ -124,7 +116,7 @@ public class DirectedNode extends GenericNode {
 	public void removeData(String type) {
 		Object l = null;
 
-		for (GraphObjectData d : dataSet) {
+		for (V_GraphObjectData d : dataSet) {
 			if (d.getKey().equals(type)) {
 				l = d;
 				break;
@@ -137,15 +129,12 @@ public class DirectedNode extends GenericNode {
 	public void setValueType(String type) {
 		addData("IdentifierType", type);
 		valueType = type;
-		addData("node-prop-ImageSource", IconMap.getIcon(type));
-		dataSource = 0; // todo - implement when we have more than one
 	}
 
 
-	@Override
-	public void setValue(String value) {
-		dataSet.add(new GraphObjectData("Identifier", value));
-		this.value = value; // to make traversal easier
+	public void setValue(double value) {
+		dataSet.add(new V_GraphObjectData("Identifier", Double.toString(value)));
+//		this.value = value; // to make traversal easier
 	}
 
 	public String getValueType() {
@@ -165,21 +154,6 @@ public class DirectedNode extends GenericNode {
 		 */
 	}
 
-	public void setColors(boolean GQT) {
-		String color = null;
-
-		if (isOrigin)
-			color = origin_bg_color;
-		else if (isLeaf)
-			color = leaf_bg_color;
-		else
-			color = "FFFFFFFF";
-
-		if (color != null)
-			setBackgroundColor(color);
-
-	}
-
 	public void incLinks() {
 		++nbrLinks;
 	}
@@ -188,11 +162,19 @@ public class DirectedNode extends GenericNode {
 		--nbrLinks;
 	}
 
-	public int getId_type() {
-		return id_type;
-	}
 
-	public boolean isPlaceholder() {
+	// public void setId_type(int id_type) {
+	// // Only used for Identifier nodes.
+	// // Note that a person might have the same identifier value for more than
+	// // one identifier type.
+	// // So we use the family rather than the exact identifier. They can still
+	// // see the short name when looking
+	// // at the linked person node.
+	// this.id_type = id_type;
+	// setValueType(dao.getFamily(id_type));
+	// }
+
+	public boolean isCluster() {
 		return isPlaceholder;
 	}
 
@@ -211,13 +193,6 @@ public class DirectedNode extends GenericNode {
 		this.degree = degree;
 	}
 
-	public boolean isScanned() {
-		return scanned;
-	}
-
-	public void setScanned(boolean scanned) {
-		this.scanned = scanned;
-	}
 
 	public boolean isUsed() {
 		return used;
@@ -229,7 +204,7 @@ public class DirectedNode extends GenericNode {
 
 	@Override
 	public String toString() {
-		return "Node: " + id + " : " + getKey();
+		return "Node: " + getId();
 	}
 
 }
