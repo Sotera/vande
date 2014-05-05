@@ -14,7 +14,6 @@ import mil.darpa.vande.legacy.DirectedNode;
 import mil.darpa.vande.legacy.GenericEdge;
 import mil.darpa.vande.legacy.GenericGraph;
 import mil.darpa.vande.legacy.GenericNode;
-import mil.darpa.vande.legacy.V_DirectedNode;
 import mil.darpa.vande.legacy.entity.IdProperty;
 import mil.darpa.vande.legacy.entity.NodeColors;
 import mil.darpa.vande.legacy.entity.NodeFactory;
