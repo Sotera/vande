@@ -1,8 +1,5 @@
 package mil.darpa.vande.converters.graphml;
 
-
-
-
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -19,36 +16,22 @@ public class GraphmlNode {
 	protected static final Logger logger = LoggerFactory
 			.getLogger(GraphmlNode.class);
 
-	@XmlAttribute
-	public String id="";
-	@XmlAttribute	
-	public String label="";
-	
-	@XmlElement(name = "data")	
+	@XmlElement(name = "data")
 	protected SortedSet<V_GraphObjectData> dataSet = new TreeSet<V_GraphObjectData>();
+	@XmlAttribute
+	public String id = "";
 
-	
-	public GraphmlNode(V_GenericNode node)
-	{
+	@XmlAttribute
+	public String label = "";
+
+	public GraphmlNode(final V_GenericNode node) {
 		this.id = node.getId();
-		this.label=node.getLabel();// temp - not really part of graphml
+		this.label = node.getLabel(); // temp - not really part of graphml
 		dataSet.addAll(node.getDataSet());
 		setLabel(node.getLabel()); // node-prop format
 	}
-	
-	
-	private void setLabel(String label) {
-		if (label == null || label.length() == 0) {
-			logger.error("Setting invalid label into node");
-			return;
-		}
-		removeData("label");
-		removeData("node-prop-DisplayValue");
 
-		addData("label", label);
-		addData("node-prop-DisplayValue", label);
-	}
-	public void addData(String attribute, String value) {
+	public void addData(final String attribute, final String value) {
 		// We can have two entries for an identifier name. But SnagL barfs
 		// if it gets two entries for the same name. So we kludge the name
 		// here
@@ -73,9 +56,9 @@ public class GraphmlNode {
 		boolean need_add = false;
 		for (V_GraphObjectData d : dataSet) {
 			if (d.getKey().equals(attribute)) {
-				if (d.getKeyVal().equals(value))
+				if (d.getKeyVal().equals(value)) {
 					return; // Duplicate attr + value - ignore it
-				else {
+				} else {
 					need_add = true; // Duplicate attr, new value
 					break;
 				}
@@ -90,22 +73,35 @@ public class GraphmlNode {
 
 		dataSet.add(new V_GraphObjectData(attribute, value));
 	}
-	private void removeData(String type) {
+
+	private void removeData(final String type) {
 		Object l = null;
- 
+
 		for (V_GraphObjectData d : dataSet) {
 			if (d.getKey().equals(type)) {
 				l = d;
 				break;
 			}
 		}
-		if (l != null)
+		if (l != null) {
 			dataSet.remove(l);
+		}
 	}
-	
-	public void setColors(boolean GQTStyle)
-	{
+
+	public void setColors(final boolean GQTStyle) {
 		// TODO
+	}
+
+	private void setLabel(final String label) {
+		if (label == null || label.length() == 0) {
+			logger.error("Setting invalid label into node");
+			return;
+		}
+		removeData("label");
+		removeData("node-prop-DisplayValue");
+
+		addData("label", label);
+		addData("node-prop-DisplayValue", label);
 	}
 
 }

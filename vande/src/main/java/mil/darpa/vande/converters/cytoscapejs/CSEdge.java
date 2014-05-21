@@ -2,19 +2,29 @@ package mil.darpa.vande.converters.cytoscapejs;
 
 import mil.darpa.vande.generic.V_GenericEdge;
 
-
 public class CSEdge {
-	
-	public CSEdgeData data;
-	
-	public CSEdge()
-	{
-		
+
+	private CSEdgeData data;
+
+	public CSEdgeData getData() {
+		return data;
 	}
-	
-	public CSEdge(V_GenericEdge e)
-	{
-		this.data=new CSEdgeData(e);
+
+	public void setData(CSEdgeData data) {
+		this.data = data;
+	}
+
+	public CSEdge() {
+
+	}
+
+	@Override
+	public String toString() {
+		return "CSEdge [data=" + data + "]";
+	}
+
+	public CSEdge(final V_GenericEdge e) {
+		this.data = new CSEdgeData(e);
 	}
 
 }

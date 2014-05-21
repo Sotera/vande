@@ -9,40 +9,78 @@ import mil.darpa.vande.generic.V_Actor;
 import mil.darpa.vande.generic.V_IdProperty;
 
 /**
- * An interaction represents an event involving two parties that can be displayed
- * in an interaction graph.
+ * 
+ * This is essentially a list of two Actors, which is a precursor to a pair of nodes and an edge.  Similar to NodeList
+ * 
+ * An interaction represents an event involving two parties that can be
+ * displayed in an interaction graph.
  * 
  * @author pgofton
- *
+ * 
  */
 public class Interaction {
-	
+
+	public int day = -1;
+	private long dt; // date time
+	public int month = -1;
+	private List<V_IdProperty> properties = null;
 	private V_Actor source;
 	private V_Actor target;
-	private long dt; // date time
 	private Double value = 0D;
-	private List<V_IdProperty> properties = null;
-	public int day=-1;
-	public int month=-1;
-	public int year=-1;
-	
-	public Interaction(V_Actor source, V_Actor target, long dt, Double value) {
+	public int year = -1;
+
+	public Interaction(final String source, final String target, final long dt, final Double value) {
+		this.source = new V_Actor(source);
+		this.target = new V_Actor(target);
+		this.setDt(dt); // sets day month year also
+		this.value = value;
+	}
+
+	public Interaction(final V_Actor source, final V_Actor target, final long dt, final Double value) {
 		this.source = source;
 		this.target = target;
 		this.setDt(dt); // sets day month year also
 		this.value = value;
 	}
 
-	public Interaction(String source, String target, long dt, Double value) {
-		this.source = new V_Actor(source);
-		this.target = new V_Actor(target);
-		this.setDt(dt); // sets day month year also
-		this.value = value;
+	public void addProperty(final V_IdProperty prop) {
+		if (properties == null) {
+			properties = new ArrayList<V_IdProperty>();
+		}
+
+		properties.add(prop);
 	}
-	
-	public void setDt(long d)
-	{
-		this.dt=d;
+
+	public long getDt() {
+		return dt;
+	}
+
+	public List<V_IdProperty> getProperties() {
+		return properties;
+	}
+
+	public V_Actor getSource() {
+		return source;
+	}
+
+	public String getSourceId() {
+		return source.getId();
+	}
+
+	public V_Actor getTarget() {
+		return target;
+	}
+
+	public String getTargetId() {
+		return target.getId();
+	}
+
+	public Double getValue() {
+		return value;
+	}
+
+	public void setDt(final long d) {
+		this.dt = d;
 		if (d != 0) {
 			Calendar c = Calendar.getInstance();
 			c.setTime(new Date(d));
@@ -52,56 +90,19 @@ public class Interaction {
 		}
 	}
 
-	public void addProperty(V_IdProperty prop)
-	{
-		if (properties==null)
-			properties=new ArrayList<V_IdProperty>();
-		
-		properties.add(prop);
-	}
-
-	public V_Actor getSource() {
-		return source;
-	}
-
-	public void setSource(V_Actor source) {
-		this.source = source;
-	}
-
-	public V_Actor getTarget() {
-		return target;
-	}
-
-	public void setTarget(V_Actor target) {
-		this.target = target;
-	}
-
-	public long getDt() {
-		return dt;
-	}
-
-
-	public Double getValue() {
-		return value;
-	}
-
-	public void setValue(Double value) {
-		this.value = value;
-	}
-
-	public List<V_IdProperty> getProperties() {
-		return properties;
-	}
-
-	public void setProperties(List<V_IdProperty> properties) {
+	public void setProperties(final List<V_IdProperty> properties) {
 		this.properties = properties;
 	}
 
-	public String getSourceId() {
-		return source.getId();
+	public void setSource(final V_Actor source) {
+		this.source = source;
 	}
 
-	public String getTargetId() {
-		return target.getId();
+	public void setTarget(final V_Actor target) {
+		this.target = target;
+	}
+
+	public void setValue(final Double value) {
+		this.value = value;
 	}
 }

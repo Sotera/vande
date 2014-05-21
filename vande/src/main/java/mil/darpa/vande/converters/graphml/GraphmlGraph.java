@@ -1,7 +1,5 @@
 package mil.darpa.vande.converters.graphml;
 
-
-
 import java.util.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -19,23 +17,32 @@ public class GraphmlGraph {
 	private List<GraphmlNode> nodes = new ArrayList<GraphmlNode>();
 
 	private String nodeType = "Icon";
-	
+
 	/**
 	 * 
-	 * @param g GenericGraph
-	 * @param GQT_Style true=use the colors from Graphics Query Tool
+	 * @param g
+	 *            GenericGraph
+	 * @param GQT_Style
+	 *            true=use the colors from Graphics Query Tool
 	 */
-	public GraphmlGraph(V_GenericGraph g, boolean GQT_Style)
-	{
-		for (V_GenericEdge e:g.getEdges())
+	public GraphmlGraph(final V_GenericGraph g, final boolean GQT_Style) {
+		for (V_GenericEdge e : g.getEdges()) {
 			edges.add(new GraphmlEdge(e));
-		
-		for (V_GenericNode n:g.getNodes()) {
+		}
+		for (V_GenericNode n : g.getNodes()) {
 			GraphmlNode node = new GraphmlNode(n);
 			node.setColors(GQT_Style);
 			nodes.add(new GraphmlNode(n));
 		}
-		
+
+	}
+
+	public void addEdge(final GraphmlEdge grEdge) {
+		edges.add(grEdge);
+	}
+
+	public void addNode(final GraphmlNode node) {
+		nodes.add(node);
 	}
 
 	/**
@@ -56,10 +63,6 @@ public class GraphmlGraph {
 		return nodes;
 	}
 
-	public void addNode(GraphmlNode node) {
-		nodes.add(node);
-	}
-
 	/**
 	 * FIXME: This namespace doesn't exist anymore.
 	 * 
@@ -74,7 +77,7 @@ public class GraphmlGraph {
 	 * @param edges
 	 *            the edges to set
 	 */
-	public final void setEdges(List<GraphmlEdge> edges) {
+	public final void setEdges(final List<GraphmlEdge> edges) {
 		this.edges = edges;
 	}
 
@@ -82,7 +85,7 @@ public class GraphmlGraph {
 	 * @param nodes
 	 *            the nodes to set
 	 */
-	public final void setNodes(List<GraphmlNode> nodes) {
+	public final void setNodes(final List<GraphmlNode> nodes) {
 		this.nodes = nodes;
 	}
 
@@ -91,7 +94,7 @@ public class GraphmlGraph {
 	 * @param type
 	 *            String - either "Icon" or "Text"
 	 */
-	public void setNodeType(String type) {
+	public void setNodeType(final String type) {
 		nodeType = type;
 	}
 
@@ -105,24 +108,17 @@ public class GraphmlGraph {
 			}
 			idList.add(g.id);
 		}
-/*
- * TODO		
-		for (GraphmlEdge e : edges) {
-			if (e.getSource().equals(e.getTarget())) // Note: do not use == or
-														// != to
-				// compare strings.
-				err = "Node with source and target the same";
-			if (!idList.contains(e.getSource()))
-				err = "Source node for edge is missing";
-			if (!idList.contains(e.getTarget()))
-				err = "Target node for edge is missing";
-
-		}
-*/		
+		/*
+		 * TODO for (GraphmlEdge e : edges) { if
+		 * (e.getSource().equals(e.getTarget())) // Note: do not use == or // !=
+		 * to // compare strings. err = "Node with source and target the same";
+		 * if (!idList.contains(e.getSource())) err =
+		 * "Source node for edge is missing"; if
+		 * (!idList.contains(e.getTarget())) err =
+		 * "Target node for edge is missing";
+		 * 
+		 * }
+		 */
 		return err;
-	}
-
-	public void addEdge(GraphmlEdge grEdge) {
-		edges.add(grEdge);
 	}
 }

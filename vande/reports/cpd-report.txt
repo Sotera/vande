@@ -1,0 +1,1745 @@
+Found a 91 line (255 tokens) duplication in the following files: 
+Starting at line 42 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlGraph.java
+Starting at line 32 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlGraph.java
+
+		for (GenericNode n : g.getNodes()) {
+			GraphmlNode node = new GraphmlNode(n);
+			node.setColors(GQT_Style);
+			nodes.add(new GraphmlNode(n));
+		}
+
+	}
+
+	public void addEdge(final GraphmlEdge grEdge) {
+		edges.add(grEdge);
+	}
+
+	public void addNode(final GraphmlNode node) {
+		nodes.add(node);
+	}
+
+	/**
+	 * @return the edges
+	 */
+	@XmlElementWrapper(name = "edges")
+	@XmlElement(name = "edge")
+	public final List<GraphmlEdge> getEdges() {
+		return edges;
+	}
+
+	/**
+	 * @return the nodes
+	 */
+	@XmlElementWrapper(name = "nodes")
+	@XmlElement(name = "node")
+	public final List<GraphmlNode> getNodes() {
+		return nodes;
+	}
+
+	/**
+	 * @return the nodeType
+	 */
+	@XmlAttribute(namespace = "http://graph.bericotechnologies.com/xmlns")
+	public final String getNodeType() {
+		return nodeType;
+	}
+
+	/**
+	 * @param edges
+	 *            the edges to set
+	 */
+	public final void setEdges(final List<GraphmlEdge> edges) {
+		this.edges = edges;
+	}
+
+	/**
+	 * @param nodes
+	 *            the nodes to set
+	 */
+	public final void setNodes(final List<GraphmlNode> nodes) {
+		this.nodes = nodes;
+	}
+
+	/**
+	 * 
+	 * @param type
+	 *            String - either "Icon" or "Text"
+	 */
+	public void setNodeType(final String type) {
+		nodeType = type;
+	}
+
+	public String validate() {
+		String err = "";
+		Set<String> idList = new HashSet<String>();
+		for (GraphmlNode g : nodes) {
+			if (idList.contains(g.id)) {
+				err = " Duplicate node number " + g.id;
+				return err;
+			}
+			idList.add(g.id);
+		}
+		/*
+		 * TODO for (GraphmlEdge e : edges) { if
+		 * (e.getSource().equals(e.getTarget())) // Note: do not use == or // !=
+		 * to // compare strings. err = "Node with source and target the same";
+		 * if (!idList.contains(e.getSource())) err =
+		 * "Source node for edge is missing"; if
+		 * (!idList.contains(e.getTarget())) err =
+		 * "Target node for edge is missing";
+		 * 
+		 * }
+		 */
+		return err;
+	}
+}
+=====================================================================
+Found a 60 line (184 tokens) duplication in the following files: 
+Starting at line 30 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 30 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+
+	public V_DirectedNode(final double value, final String id) {
+		super(id);
+		// this.value = value;
+	}
+
+	/**
+	 * Adds a key value pair to the dataSet list that appears in the keys
+	 * section of graphml. If an entry with this attribute already exsists,
+	 * append "_" to the attribute's name, except for labels, where we set the
+	 * shortest version of the customer name.
+	 * 
+	 * @param attribute
+	 *            String the name of the attribute
+	 * @param value
+	 *            String the value for the attribute
+	 */
+	public void addData(final String attribute, final String value) {
+		// We can have two entries for an identifier name. But SnagL barfs
+		// if it gets two entries for the same name. So we kludge the name
+		// here
+
+		try {
+			if (attribute == null || attribute.length() == 0) {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			logger.error(
+					"Add Data with empty attribute name " + e.getMessage(), e);
+			return;
+		}
+
+		if (value == null || value.length() == 0) {
+			logger.error("Add Data for name " + attribute + " with null value");
+			new Exception().printStackTrace();
+			return;
+		}
+
+		// Now add the value
+		boolean need_add = false;
+		for (V_GraphObjectData d : dataSet) {
+			if (d.getKey().equals(attribute)) {
+				if (d.getKeyVal().equals(value)) {
+					return; // Duplicate attr + value - ignore it
+				} else {
+					need_add = true; // Duplicate attr, new value
+					break;
+				}
+			}
+		}
+		if (need_add) { // we have more than one value for the same attribute
+			addData(attribute + "_", value); // recursive
+			return;
+		}
+
+		// So the name doesn't exist in the data set
+
+		dataSet.add(new V_GraphObjectData(attribute, value));
+	}
+
+	public void addData(final String attribute, final String value,
+=====================================================================
+Found a 57 line (176 tokens) duplication in the following files: 
+Starting at line 176 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericNode.java
+Starting at line 40 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+
+	}
+
+	/**
+	 * Adds a key value pair to the dataSet list that appears in the keys
+	 * section of graphml. If an entry with this attribute already exsists,
+	 * append "_" to the attribute's name, except for labels, where we set the
+	 * shortest version of the customer name.
+	 * 
+	 * @param attribute
+	 *            String the name of the attribute
+	 * @param value
+	 *            String the value for the attribute
+	 */
+	public void addData(final String attribute, final String value) {
+		// We can have two entries for an identifier name. But SnagL barfs
+		// if it gets two entries for the same name. So we kludge the name
+		// here
+
+		try {
+			if (attribute == null || attribute.length() == 0) {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			logger.error(
+					"Add Data with empty attribute name " + e.getMessage(), e);
+			return;
+		}
+
+		if (value == null || value.length() == 0) {
+			logger.error("Add Data for name " + attribute + " with null value");
+			new Exception().printStackTrace();
+			return;
+		}
+
+		// Now add the value
+		boolean need_add = false;
+		for (GraphObjectData d : dataSet) {
+			if (d.getKey().equals(attribute)) {
+				if (d.getKeyVal().equals(value)) {
+					return; // Duplicate attr + value - ignore it
+				} else {
+					need_add = true; // Duplicate attr, new value
+					break;
+				}
+			}
+		}
+		if (need_add) { // we have more than one value for the same attribute
+			addData(attribute + "_", value); // recursive
+			return;
+		}
+
+		// So the name doesn't exist in the data set
+
+		dataSet.add(new GraphObjectData(attribute, value));
+	}
+
+	public void setBackgroundColor(final String colorString) {
+=====================================================================
+Found a 57 line (175 tokens) duplication in the following files: 
+Starting at line 31 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 31 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+Starting at line 31 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlNode.java
+
+		super(id);
+		// this.value = value;
+	}
+
+	/**
+	 * Adds a key value pair to the dataSet list that appears in the keys
+	 * section of graphml. If an entry with this attribute already exsists,
+	 * append "_" to the attribute's name, except for labels, where we set the
+	 * shortest version of the customer name.
+	 * 
+	 * @param attribute
+	 *            String the name of the attribute
+	 * @param value
+	 *            String the value for the attribute
+	 */
+	public void addData(final String attribute, final String value) {
+		// We can have two entries for an identifier name. But SnagL barfs
+		// if it gets two entries for the same name. So we kludge the name
+		// here
+
+		try {
+			if (attribute == null || attribute.length() == 0) {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			logger.error(
+					"Add Data with empty attribute name " + e.getMessage(), e);
+			return;
+		}
+
+		if (value == null || value.length() == 0) {
+			logger.error("Add Data for name " + attribute + " with null value");
+			new Exception().printStackTrace();
+			return;
+		}
+
+		// Now add the value
+		boolean need_add = false;
+		for (V_GraphObjectData d : dataSet) {
+			if (d.getKey().equals(attribute)) {
+				if (d.getKeyVal().equals(value)) {
+					return; // Duplicate attr + value - ignore it
+				} else {
+					need_add = true; // Duplicate attr, new value
+					break;
+				}
+			}
+		}
+		if (need_add) { // we have more than one value for the same attribute
+			addData(attribute + "_", value); // recursive
+			return;
+		}
+
+		// So the name doesn't exist in the data set
+
+		dataSet.add(new V_GraphObjectData(attribute, value));
+	}
+=====================================================================
+Found a 44 line (174 tokens) duplication in the following files: 
+Starting at line 44 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlNode.java
+Starting at line 176 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericNode.java
+Starting at line 40 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+
+	}
+
+	public void addData(final String attribute, final String value) {
+		// We can have two entries for an identifier name. But SnagL barfs
+		// if it gets two entries for the same name. So we kludge the name
+		// here
+
+		try {
+			if (attribute == null || attribute.length() == 0) {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			logger.error(
+					"Add Data with empty attribute name " + e.getMessage(), e);
+			return;
+		}
+
+		if (value == null || value.length() == 0) {
+			logger.error("Add Data for name " + attribute + " with null value");
+			new Exception().printStackTrace();
+			return;
+		}
+
+		// Now add the value
+		boolean need_add = false;
+		for (GraphObjectData d : dataSet) {
+			if (d.getKey().equals(attribute)) {
+				if (d.getKeyVal().equals(value)) {
+					return; // Duplicate attr + value - ignore it
+				} else {
+					need_add = true; // Duplicate attr, new value
+					break;
+				}
+			}
+		}
+		if (need_add) { // we have more than one value for the same attribute
+			addData(attribute + "_", value); // recursive
+			return;
+		}
+
+		// So the name doesn't exist in the data set
+
+		dataSet.add(new GraphObjectData(attribute, value));
+	}
+=====================================================================
+Found a 34 line (105 tokens) duplication in the following files: 
+Starting at line 258 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericNode.java
+Starting at line 264 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericEdge.java
+
+	}
+
+	public String getDataValue(final String key) {
+		for (GraphObjectData o : dataSet) {
+			if (o.key.equals(key)) {
+				return o.keyVal;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Change the existing value of an attribute or add a new one. <BR>
+	 * Different from addData which handles dupes by appending an underscore to
+	 * the key
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	public void setDataValue(final String key, final String value) {
+		if (value == null) {
+			logger.error("Null value being set for key " + key);
+		}
+		for (GraphObjectData o : dataSet) {
+			if (o.key.equals(key)) {
+				dataSet.remove(o);
+				break;
+			}
+		}
+
+		addData(key, value);
+	}
+
+}
+=====================================================================
+Found a 28 line (104 tokens) duplication in the following files: 
+Starting at line 92 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlNode.java
+Starting at line 80 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlNode.java
+
+		for (GraphObjectData d : dataSet) {
+			if (d.getKey().equals(type)) {
+				l = d;
+				break;
+			}
+		}
+		if (l != null) {
+			dataSet.remove(l);
+		}
+	}
+
+	public void setColors(final boolean GQTStyle) {
+		// TODO
+	}
+
+	private void setLabel(final String label) {
+		if (label == null || label.length() == 0) {
+			logger.error("Setting invalid label into node");
+			return;
+		}
+		removeData("label");
+		removeData("node-prop-DisplayValue");
+
+		addData("label", label);
+		addData("node-prop-DisplayValue", label);
+	}
+
+}
+=====================================================================
+Found a 28 line (104 tokens) duplication in the following files: 
+Starting at line 12 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlContainer.java
+Starting at line 10 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlContainer.java
+
+public class GraphmlContainer {
+
+	@XmlElement(name = "graph")
+	public GraphmlGraph graph;
+
+	@XmlElement(name = "key")
+	List<GraphmlKey> keys = new ArrayList<GraphmlKey>();
+
+	public GraphmlContainer() {
+		// Note: individual graph implementations should add their own initial
+		// keys
+		addNodeKey("label", "label");
+		addNodeKey("node-prop-DisplayValue", "node-prop-DisplayValue");
+		addNodeKey("node-prop-ImageSource", "node-prop-ImageSource");
+
+	}
+
+	public void addNodeKey(final String name, final String value) {
+		keys.add(new GraphmlKey(name, "node", value, "string"));
+	}
+
+	/*
+	 * @XmlTransient public GraphmlGraph getGraph() { return graph; }
+	 */
+	public void setGraph(final GraphmlGraph graph) {
+		this.graph = graph;
+	}
+}
+=====================================================================
+Found a 28 line (103 tokens) duplication in the following files: 
+Starting at line 42 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlNode.java
+Starting at line 31 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlNode.java
+
+		dataSet.add(new GraphObjectData("node-prop-ImageSource", node.getIcon()));
+
+	}
+
+	public void addData(final String attribute, final String value) {
+		// We can have two entries for an identifier name. But SnagL barfs
+		// if it gets two entries for the same name. So we kludge the name
+		// here
+
+		try {
+			if (attribute == null || attribute.length() == 0) {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			logger.error(
+					"Add Data with empty attribute name " + e.getMessage(), e);
+			return;
+		}
+
+		if (value == null || value.length() == 0) {
+			logger.error("Add Data for name " + attribute + " with null value");
+			new Exception().printStackTrace();
+			return;
+		}
+
+		// Now add the value
+		boolean need_add = false;
+		for (GraphObjectData d : dataSet) {
+=====================================================================
+Found a 28 line (102 tokens) duplication in the following files: 
+Starting at line 42 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlNode.java
+Starting at line 31 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 31 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+
+		dataSet.add(new GraphObjectData("node-prop-ImageSource", node.getIcon()));
+
+	}
+
+	public void addData(final String attribute, final String value) {
+		// We can have two entries for an identifier name. But SnagL barfs
+		// if it gets two entries for the same name. So we kludge the name
+		// here
+
+		try {
+			if (attribute == null || attribute.length() == 0) {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			logger.error(
+					"Add Data with empty attribute name " + e.getMessage(), e);
+			return;
+		}
+
+		if (value == null || value.length() == 0) {
+			logger.error("Add Data for name " + attribute + " with null value");
+			new Exception().printStackTrace();
+			return;
+		}
+
+		// Now add the value
+		boolean need_add = false;
+		for (GraphObjectData d : dataSet) {
+=====================================================================
+Found a 37 line (101 tokens) duplication in the following files: 
+Starting at line 33 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 176 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericNode.java
+Starting at line 40 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+Starting at line 32 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+Starting at line 32 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlNode.java
+
+	}
+
+	/**
+	 * Adds a key value pair to the dataSet list that appears in the keys
+	 * section of graphml. If an entry with this attribute already exsists,
+	 * append "_" to the attribute's name, except for labels, where we set the
+	 * shortest version of the customer name.
+	 * 
+	 * @param attribute
+	 *            String the name of the attribute
+	 * @param value
+	 *            String the value for the attribute
+	 */
+	public void addData(final String attribute, final String value) {
+		// We can have two entries for an identifier name. But SnagL barfs
+		// if it gets two entries for the same name. So we kludge the name
+		// here
+
+		try {
+			if (attribute == null || attribute.length() == 0) {
+				throw new Exception();
+			}
+		} catch (Exception e) {
+			logger.error(
+					"Add Data with empty attribute name " + e.getMessage(), e);
+			return;
+		}
+
+		if (value == null || value.length() == 0) {
+			logger.error("Add Data for name " + attribute + " with null value");
+			new Exception().printStackTrace();
+			return;
+		}
+
+		// Now add the value
+		boolean need_add = false;
+		for (V_GraphObjectData d : dataSet) {
+=====================================================================
+Found a 39 line (83 tokens) duplication in the following files: 
+Starting at line 14 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlKey.java
+Starting at line 12 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlKey.java
+
+public class GraphmlKey {
+
+	@XmlAttribute(name = "for")
+	/* Note that "for" is a variable name in graphml */
+	String fore;
+
+	@XmlAttribute
+	String id;
+
+	@XmlAttribute(name = "attr.name")
+	String name;
+
+	@XmlAttribute(name = "attr.type")
+	String type;
+
+	public GraphmlKey() {
+
+	}
+
+	/**
+	 * 
+	 * @param id
+	 *            String: the name of the key
+	 * @param fore
+	 *            String: "node" or "edge"
+	 * @param name
+	 *            String: the name of the key (usually same as id)
+	 * @param type
+	 *            String: type of variable (usually "string")
+	 */
+	public GraphmlKey(final String id, final String fore, final String name,
+			final String type) {
+		this.id = id;
+		this.fore = fore;
+		this.name = name;
+		this.type = type;
+	}
+
+}
+=====================================================================
+Found a 21 line (70 tokens) duplication in the following files: 
+Starting at line 32 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\entity\IdProperty.java
+Starting at line 15 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_IdProperty.java
+
+	public IdProperty(final String name, final String idValue) {
+		this.idName = name;
+		this.idValue = idValue;
+	}
+
+	public String getIdName() {
+		return idName;
+	}
+
+	public String getIdValue() {
+		return idValue;
+	}
+
+	public void setIdName(final String idName) {
+		this.idName = idName;
+	}
+
+	public void setIdValue(final String idValue) {
+		this.idValue = idValue;
+	}
+}
+=====================================================================
+Found a 18 line (64 tokens) duplication in the following files: 
+Starting at line 69 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlNode.java
+Starting at line 69 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 212 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericNode.java
+Starting at line 76 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+Starting at line 68 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+Starting at line 57 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlNode.java
+
+		for (GraphObjectData d : dataSet) {
+			if (d.getKey().equals(attribute)) {
+				if (d.getKeyVal().equals(value)) {
+					return; // Duplicate attr + value - ignore it
+				} else {
+					need_add = true; // Duplicate attr, new value
+					break;
+				}
+			}
+		}
+		if (need_add) { // we have more than one value for the same attribute
+			addData(attribute + "_", value); // recursive
+			return;
+		}
+
+		// So the name doesn't exist in the data set
+
+		dataSet.add(new GraphObjectData(attribute, value));
+=====================================================================
+Found a 10 line (62 tokens) duplication in the following files: 
+Starting at line 33 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlEdge.java
+Starting at line 31 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlEdge.java
+
+		this.target = e.getTarget();
+		this.degree = e.getDegree();
+		this.label = e.getLabel();
+		this.directed = e.isDirected();
+		this.weight = e.getWeight();
+		this.dataSet.addAll(e.getDataSet());
+	}
+
+	@XmlElement(name = "data")
+	public final Set<GraphObjectData> getDataSet() {
+=====================================================================
+Found a 17 line (59 tokens) duplication in the following files: 
+Starting at line 129 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 139 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+
+	}
+
+	public void removeData(final String type) {
+		Object l = null;
+
+		for (V_GraphObjectData d : dataSet) {
+			if (d.getKey().equals(type)) {
+				l = d;
+				break;
+			}
+		}
+		if (l != null) {
+			dataSet.remove(l);
+		}
+	}
+
+	public void setDegree(final int degree) {
+=====================================================================
+Found a 11 line (59 tokens) duplication in the following files: 
+Starting at line 41 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\InfoVisGraphAdjacency.java
+Starting at line 18 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\InfoVisEdge.java
+
+		for (int i = 0; i < d.length; i += 2) {
+			if (d.length > i + 1) {
+				addData(d[i], d[i + 1]);
+			}
+		}
+	}
+
+	// keys are like [$dim, $color, $type]
+	// ex {$dim=10, $color=#83548B, $type=circle}
+	public void addData(final String key, final String value) {
+		if (data == null) {
+=====================================================================
+Found a 17 line (59 tokens) duplication in the following files: 
+Starting at line 158 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericNode.java
+Starting at line 123 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+
+	}
+
+	public void removeData(final String type) {
+		Object l = null;
+
+		for (GraphObjectData d : dataSet) {
+			if (d.getKey().equals(type)) {
+				l = d;
+				break;
+			}
+		}
+		if (l != null) {
+			dataSet.remove(l);
+		}
+	}
+
+	public void setLabel(final String label) {
+=====================================================================
+Found a 15 line (57 tokens) duplication in the following files: 
+Starting at line 89 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlNode.java
+Starting at line 160 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericNode.java
+Starting at line 125 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+
+	private void removeData(final String type) {
+		Object l = null;
+
+		for (GraphObjectData d : dataSet) {
+			if (d.getKey().equals(type)) {
+				l = d;
+				break;
+			}
+		}
+		if (l != null) {
+			dataSet.remove(l);
+		}
+	}
+
+	public void setColors(final boolean GQTStyle) {
+=====================================================================
+Found a 15 line (57 tokens) duplication in the following files: 
+Starting at line 131 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 141 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+Starting at line 77 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlNode.java
+
+	public void removeData(final String type) {
+		Object l = null;
+
+		for (V_GraphObjectData d : dataSet) {
+			if (d.getKey().equals(type)) {
+				l = d;
+				break;
+			}
+		}
+		if (l != null) {
+			dataSet.remove(l);
+		}
+	}
+
+	public void setDegree(final int degree) {
+=====================================================================
+Found a 16 line (56 tokens) duplication in the following files: 
+Starting at line 150 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 98 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+
+		addData("IdentifierTableSource ", source);
+	}
+
+	public void setLabel(final String label) {
+		if (label == null || label.length() == 0) {
+			logger.error("Setting invalid label into node");
+			return;
+		}
+		removeData("label");
+		removeData("node-prop-DisplayValue");
+
+		addData("label", label);
+		addData("node-prop-DisplayValue", label);
+	}
+
+	public void setPlaceholder(final boolean isPlaceholder) {
+=====================================================================
+Found a 12 line (56 tokens) duplication in the following files: 
+Starting at line 91 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+Starting at line 137 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+
+			if (e.matchesInteraction(ia, false, false, false)) {
+				e.aggregate(1, ia.getValue());
+				found = true;
+				break;
+			}
+		}
+
+		if (!found) {
+			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
+			e.setDay(-1);
+			e.setMonth(-1);
+			e.setYear(-1);
+=====================================================================
+Found a 11 line (52 tokens) duplication in the following files: 
+Starting at line 107 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlNode.java
+Starting at line 153 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 102 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+Starting at line 95 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlNode.java
+
+	private void setLabel(final String label) {
+		if (label == null || label.length() == 0) {
+			logger.error("Setting invalid label into node");
+			return;
+		}
+		removeData("label");
+		removeData("node-prop-DisplayValue");
+
+		addData("label", label);
+		addData("node-prop-DisplayValue", label);
+	}
+=====================================================================
+Found a 16 line (52 tokens) duplication in the following files: 
+Starting at line 58 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GraphObjectData.java
+Starting at line 55 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GraphObjectData.java
+
+		GraphObjectData other = (GraphObjectData) obj;
+		if (key == null) {
+			if (other.key != null) {
+				return false;
+			}
+		} else if (!key.equals(other.key)) {
+			return false;
+		}
+		return true;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(final String key) {
+=====================================================================
+Found a 7 line (51 tokens) duplication in the following files: 
+Starting at line 301 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphserver\GraphBuilderDirected.java
+Starting at line 318 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphserver\GraphBuilderDirected.java
+
+				attrs = e.getSrcAttributes();
+				for (Object idp : attrs) {
+					// XXX:This may fail, this unsafe type conversion happened
+					// because we aren't done refactoring.
+					String idName = ((IdProperty) idp).getIdName();
+					String idValue = ((IdProperty) idp).getIdValue();
+					if (idValue != null && idValue.length() > 0) {
+=====================================================================
+Found a 11 line (51 tokens) duplication in the following files: 
+Starting at line 114 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+Starting at line 137 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+
+			if (e.matchesInteraction(ia, false, true, true)) {
+				e.aggregate(1, ia.getValue());
+				found = true;
+				break;
+			}
+		}
+
+		if (!found) {
+			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
+			e.setDay(-1);
+			e.setMonth(ia.month);
+=====================================================================
+Found a 14 line (50 tokens) duplication in the following files: 
+Starting at line 92 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+Starting at line 160 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+
+	public SortedSet<V_GraphObjectData> getDataSet() {
+		return dataSet;
+	}
+
+	public String getDataValue(final String key) {
+		for (V_GraphObjectData o : dataSet) {
+			if (o.key.equals(key)) {
+				return o.keyVal;
+			}
+		}
+		return null;
+	}
+
+	public int getDegree() {
+=====================================================================
+Found a 9 line (50 tokens) duplication in the following files: 
+Starting at line 61 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+Starting at line 96 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+
+			final int weight, final boolean directed, final String label) {
+		this.sourceId = src_node.getId();
+		this.targetId = target_node.getId();
+		this.sourceNode = src_node;
+		this.targetNode = target_node;
+		this.degree = degree;
+		this.weight = weight;
+		this.directed = directed;
+		this.label = label;
+=====================================================================
+Found a 11 line (49 tokens) duplication in the following files: 
+Starting at line 91 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+Starting at line 114 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+
+			if (e.matchesInteraction(ia, false, false, false)) {
+				e.aggregate(1, ia.getValue());
+				found = true;
+				break;
+			}
+		}
+
+		if (!found) {
+			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
+			e.setDay(-1);
+			e.setMonth(-1);
+=====================================================================
+Found a 13 line (48 tokens) duplication in the following files: 
+Starting at line 35 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphserver\TransactionDistinctEntityPair.java
+Starting at line 40 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GraphObjectData.java
+Starting at line 37 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GraphObjectData.java
+
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+=====================================================================
+Found a 16 line (47 tokens) duplication in the following files: 
+Starting at line 16 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlEdge.java
+Starting at line 14 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlEdge.java
+
+	private Set<GraphObjectData> dataSet = new HashSet<GraphObjectData>();
+	@XmlAttribute
+	private int degree = 0;
+	@XmlAttribute
+	private boolean directed = false;
+	@XmlAttribute
+	private String label;
+	@XmlAttribute
+	private String source = "src";
+	@XmlAttribute
+	private String target = "target";
+
+	@XmlAttribute
+	private int weight = 1;
+
+	public GraphmlEdge(final GenericEdge e) {
+=====================================================================
+Found a 10 line (46 tokens) duplication in the following files: 
+Starting at line 68 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+Starting at line 114 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+
+			if (e.matchesInteraction(ia, true, true, true)) {
+				e.aggregate(1, ia.getValue());
+				found = true;
+				break;
+			}
+		}
+
+		if (!found) {
+			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
+			e.setDay(ia.day);
+=====================================================================
+Found a 11 line (44 tokens) duplication in the following files: 
+Starting at line 163 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 201 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+
+	}
+
+	public void setPlaceholder(final boolean isPlaceholder) {
+		this.isPlaceholder = isPlaceholder;
+		String lab = getLabel();
+		if (lab.charAt(0) != '[') {
+			setLabel("[" + lab + "]");
+		}
+	}
+
+	public void setUsed(final boolean used) {
+=====================================================================
+Found a 10 line (44 tokens) duplication in the following files: 
+Starting at line 68 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+Starting at line 137 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+
+			if (e.matchesInteraction(ia, true, true, true)) {
+				e.aggregate(1, ia.getValue());
+				found = true;
+				break;
+			}
+		}
+
+		if (!found) {
+			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
+			e.setDay(ia.day);
+=====================================================================
+Found a 12 line (42 tokens) duplication in the following files: 
+Starting at line 92 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlNode.java
+Starting at line 134 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 163 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericNode.java
+Starting at line 128 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+Starting at line 144 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+Starting at line 80 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlNode.java
+
+		for (GraphObjectData d : dataSet) {
+			if (d.getKey().equals(type)) {
+				l = d;
+				break;
+			}
+		}
+		if (l != null) {
+			dataSet.remove(l);
+		}
+	}
+
+	public void setColors(final boolean GQTStyle) {
+=====================================================================
+Found a 14 line (42 tokens) duplication in the following files: 
+Starting at line 27 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GraphObjectData.java
+Starting at line 72 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GraphObjectData.java
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((key == null) ? 0 : key.hashCode());
+		return result;
+	}
+=====================================================================
+Found a 10 line (42 tokens) duplication in the following files: 
+Starting at line 68 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+Starting at line 91 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+
+			if (e.matchesInteraction(ia, true, true, true)) {
+				e.aggregate(1, ia.getValue());
+				found = true;
+				break;
+			}
+		}
+
+		if (!found) {
+			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
+			e.setDay(ia.day);
+=====================================================================
+Found a 16 line (41 tokens) duplication in the following files: 
+Starting at line 23 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlGraph.java
+Starting at line 13 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlGraph.java
+
+public class GraphmlGraph {
+
+	private List<GraphmlEdge> edges = new ArrayList<GraphmlEdge>();
+
+	private List<GraphmlNode> nodes = new ArrayList<GraphmlNode>();
+
+	private String nodeType = "Icon";
+
+	/**
+	 * 
+	 * @param g
+	 *            GenericGraph
+	 * @param GQT_Style
+	 *            true=use the colors from Graphics Query Tool
+	 */
+	public GraphmlGraph(final GenericGraph g, final boolean GQT_Style) {
+=====================================================================
+Found a 8 line (41 tokens) duplication in the following files: 
+Starting at line 55 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericEdge.java
+Starting at line 67 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericEdge.java
+
+			final GenericNode target_node, final int degree,
+			final boolean directed) {
+		this.source = src_node.getId();
+		this.target = target_node.getId();
+		this.sourceNode = src_node;
+		this.targetNode = target_node;
+		this.degree = degree;
+		this.directed = directed;
+=====================================================================
+Found a 12 line (40 tokens) duplication in the following files: 
+Starting at line 86 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GraphObjectData.java
+Starting at line 29 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GraphObjectData.java
+
+	public int compareTo(final GraphObjectData o) {
+		int keyCompare = key.compareTo(o.key);
+		if (keyCompare == 0) {
+			return keyVal.compareTo(o.keyVal);
+		} else {
+			return keyCompare;
+		}
+
+	}
+
+	@Override
+	public String toString() {
+=====================================================================
+Found a 5 line (39 tokens) duplication in the following files: 
+Starting at line 28 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlNode.java
+Starting at line 27 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlNode.java
+
+	public GraphmlNode(final GenericNode node) {
+		this.id = node.getId();
+		this.label = node.getLabel(); // temp - not really part of graphml
+		dataSet.addAll(node.getDataSet());
+		setLabel(node.getLabel()); // node-prop format
+=====================================================================
+Found a 17 line (39 tokens) duplication in the following files: 
+Starting at line 9 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphResponse.java
+Starting at line 7 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphResponse.java
+
+public class GraphResponse {
+
+	public GraphmlContainer graphml = new GraphmlContainer();
+
+	public GraphResponse() {
+
+	}
+
+	public GraphmlGraph getGraph() {
+		return graphml.graph;
+	}
+
+	public GraphmlContainer getGraphml() {
+		return graphml;
+	}
+
+}
+=====================================================================
+Found a 16 line (39 tokens) duplication in the following files: 
+Starting at line 164 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericEdge.java
+Starting at line 283 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+
+		for (GraphObjectData d : dataSet) {
+			if (d.key.equals(type)) {
+				l = d;
+				break;
+			}
+		}
+		if (l != null) {
+			dataSet.remove(l);
+		}
+	}
+
+	/**
+	 * @param dataSet
+	 *            the dataSet to set
+	 */
+	public final void setDataSet(final Set<GraphObjectData> dataSet) {
+=====================================================================
+Found a 11 line (38 tokens) duplication in the following files: 
+Starting at line 180 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+Starting at line 331 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+
+		for (V_GraphObjectData o : dataSet) {
+			if (o.key.equals(key)) {
+				dataSet.remove(o);
+				break;
+			}
+		}
+
+		addData(key, value);
+	}
+
+	public void setDegree(final int degree) {
+=====================================================================
+Found a 8 line (38 tokens) duplication in the following files: 
+Starting at line 84 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+Starting at line 130 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+
+	private void checkGlobal(final Interaction ia,
+			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
+		boolean found = false;
+
+		// First, add it to the full aggregation edge
+
+		for (V_GenericEdge e : edges) {
+			if (e.matchesInteraction(ia, false, false, false)) {
+=====================================================================
+Found a 11 line (37 tokens) duplication in the following files: 
+Starting at line 230 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphserver\TransactionDistinctEntityPair.java
+Starting at line 127 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphserver\TransactionDistinctAccountPair.java
+
+	}
+
+	public void setNbr(final int nbr) {
+		this.nbr = nbr;
+	}
+
+	public void setSrc(final String src) {
+		this.src = src;
+	}
+
+	public void setSrcEntityId(final String srcEntityId) {
+=====================================================================
+Found a 7 line (37 tokens) duplication in the following files: 
+Starting at line 45 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericEdge.java
+Starting at line 56 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericEdge.java
+Starting at line 68 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericEdge.java
+
+			final GenericNode target_node, final int degree) {
+		this.source = src_node.getId();
+		this.target = target_node.getId();
+		this.sourceNode = src_node;
+		this.targetNode = target_node;
+		this.degree = degree;
+		this.count = degree;
+=====================================================================
+Found a 8 line (36 tokens) duplication in the following files: 
+Starting at line 84 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+Starting at line 107 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+Starting at line 130 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+
+	private void checkGlobal(final Interaction ia,
+			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
+		boolean found = false;
+
+		// First, add it to the full aggregation edge
+
+		for (V_GenericEdge e : edges) {
+			if (e.matchesInteraction(ia, false, false, false)) {
+=====================================================================
+Found a 11 line (35 tokens) duplication in the following files: 
+Starting at line 41 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\interactions\Interaction.java
+Starting at line 27 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_Actor.java
+
+	}
+
+	public void addProperty(final V_IdProperty prop) {
+		if (properties == null) {
+			properties = new ArrayList<V_IdProperty>();
+		}
+
+		properties.add(prop);
+	}
+
+	public long getDt() {
+=====================================================================
+Found a 4 line (35 tokens) duplication in the following files: 
+Starting at line 38 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\cytoscapejs\CSNodeData.java
+Starting at line 58 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\cytoscapejs\CSEdgeData.java
+
+		Set<V_GraphObjectData> s = node.getDataSet();
+		for (V_GraphObjectData d : s) {
+			this.attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
+		}
+=====================================================================
+Found a 8 line (34 tokens) duplication in the following files: 
+Starting at line 61 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+Starting at line 84 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+Starting at line 107 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+Starting at line 130 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+
+	private void checkDaily(final Interaction ia,
+			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
+		boolean found = false;
+
+		// First, add it to the full aggregation edge
+
+		for (V_GenericEdge e : edges) {
+			if (e.matchesInteraction(ia, true, true, true)) {
+=====================================================================
+Found a 4 line (33 tokens) duplication in the following files: 
+Starting at line 41 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\cytoscapejs\CSNodeData.java
+Starting at line 29 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\cytoscapejs\CSNodeData.java
+
+		this.id = node.getId();
+		this.label = node.getLabel();
+		this.name = node.getLabel(); // TODO - check why this redundancy
+		this.idVal = node.getValue();
+=====================================================================
+Found a 11 line (33 tokens) duplication in the following files: 
+Starting at line 86 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 93 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+
+		dataSet.add(new V_GraphObjectData(attribute, value));
+	}
+
+	public void addData(final String attribute, final String value,
+			final String family) {
+
+		addData(attribute, value);
+
+	}
+
+	public void decLinks() {
+=====================================================================
+Found a 9 line (33 tokens) duplication in the following files: 
+Starting at line 281 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericNode.java
+Starting at line 288 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericEdge.java
+Starting at line 180 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+Starting at line 331 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+
+		for (GraphObjectData o : dataSet) {
+			if (o.key.equals(key)) {
+				dataSet.remove(o);
+				break;
+			}
+		}
+
+		addData(key, value);
+	}
+=====================================================================
+Found a 11 line (33 tokens) duplication in the following files: 
+Starting at line 369 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+Starting at line 64 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_Actor.java
+
+	}
+
+	public void setIdType(final String idType) {
+		this.idType = idType;
+	}
+
+	public void setIdVal(final String idVal) {
+		this.idVal = idVal;
+	}
+
+	public void setIntValue(final int v) {
+=====================================================================
+Found a 16 line (32 tokens) duplication in the following files: 
+Starting at line 148 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphserver\TransactionDistinctEntityPair.java
+Starting at line 77 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphserver\TransactionDistinctAccountPair.java
+
+	}
+
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int getNbr() {
+		return nbr;
+	}
+
+	@Override
+	public String getSrc() {
+		return src;
+	}
+=====================================================================
+Found a 9 line (32 tokens) duplication in the following files: 
+Starting at line 107 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 117 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+
+		for (V_GraphObjectData d : dataSet) {
+			if (d.getKey().equals("label")) {
+				label = d.getKeyVal();
+			}
+		}
+		return label;
+	}
+
+	public String getValueType() {
+=====================================================================
+Found a 15 line (32 tokens) duplication in the following files: 
+Starting at line 267 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericNode.java
+Starting at line 273 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericEdge.java
+Starting at line 165 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+
+	}
+
+	/**
+	 * Change the existing value of an attribute or add a new one. <BR>
+	 * Different from addData which handles dupes by appending an underscore to
+	 * the key
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	public void setDataValue(final String key, final String value) {
+		if (value == null) {
+			logger.error("Null value being set for key " + key);
+		}
+		for (GraphObjectData o : dataSet) {
+=====================================================================
+Found a 14 line (31 tokens) duplication in the following files: 
+Starting at line 167 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\entity\EntityRefNode.java
+Starting at line 144 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+
+	}
+
+	@Override
+	public void setValue(final String value) {
+		dataSet.add(new GraphObjectData("Identifier", value));
+		this.value = value; // to make traversal easier
+	}
+
+	/**
+	 * FIXME: Remove the side effects created by the author.
+	 * 
+	 * @param type
+	 */
+	public void setValueType(final String type) {
+=====================================================================
+Found a 6 line (31 tokens) duplication in the following files: 
+Starting at line 70 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericEdge.java
+Starting at line 63 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+Starting at line 98 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+
+		this.target = target_node.getId();
+		this.sourceNode = src_node;
+		this.targetNode = target_node;
+		this.degree = degree;
+		this.weight = weight;
+		this.directed = directed;
+=====================================================================
+Found a 7 line (30 tokens) duplication in the following files: 
+Starting at line 159 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\entity\EntityRefNode.java
+Starting at line 167 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+
+		String lab = getLabel();
+		if (lab.charAt(0) != '[') {
+			setLabel("[" + lab + "]");
+		}
+	}
+
+	public void setTraversed(final boolean traversed) {
+=====================================================================
+Found a 6 line (30 tokens) duplication in the following files: 
+Starting at line 46 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\cytoscapejs\CSEdgeData.java
+Starting at line 59 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\cytoscapejs\CSEdgeData.java
+
+		for (GraphObjectData d : s) {
+			this.attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
+		}
+	}
+
+}
+=====================================================================
+Found a 11 line (29 tokens) duplication in the following files: 
+Starting at line 93 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlNode.java
+Starting at line 135 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 164 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericNode.java
+Starting at line 165 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericEdge.java
+Starting at line 129 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+Starting at line 145 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+Starting at line 284 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+Starting at line 81 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlNode.java
+
+			if (d.getKey().equals(type)) {
+				l = d;
+				break;
+			}
+		}
+		if (l != null) {
+			dataSet.remove(l);
+		}
+	}
+
+	public void setColors(final boolean GQTStyle) {
+=====================================================================
+Found a 7 line (29 tokens) duplication in the following files: 
+Starting at line 159 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\entity\EntityRefNode.java
+Starting at line 205 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+
+		String lab = getLabel();
+		if (lab.charAt(0) != '[') {
+			setLabel("[" + lab + "]");
+		}
+	}
+
+	public void setTraversed(final boolean traversed) {
+=====================================================================
+Found a 15 line (29 tokens) duplication in the following files: 
+Starting at line 182 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+Starting at line 44 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_Actor.java
+
+	}
+
+	public String getIdType() {
+		return idType;
+	}
+
+	public String getIdVal() {
+		return idVal;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public int getMonth() {
+=====================================================================
+Found a 6 line (28 tokens) duplication in the following files: 
+Starting at line 16 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlNode.java
+Starting at line 15 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\graphml\GraphmlNode.java
+
+public class GraphmlNode {
+	protected static final Logger logger = LoggerFactory
+			.getLogger(GraphmlNode.class);
+
+	@XmlElement(name = "data")
+	protected SortedSet<GraphObjectData> dataSet = new TreeSet<GraphObjectData>();
+=====================================================================
+Found a 3 line (28 tokens) duplication in the following files: 
+Starting at line 46 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\cytoscapejs\CSEdgeData.java
+Starting at line 39 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\cytoscapejs\CSNodeData.java
+
+		for (GraphObjectData d : s) {
+			this.attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
+		}
+=====================================================================
+Found a 3 line (27 tokens) duplication in the following files: 
+Starting at line 38 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlGraph.java
+Starting at line 30 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\cytoscapejs\CSGraph.java
+
+	public GraphmlGraph(final GenericGraph g, final boolean GQT_Style) {
+		for (GenericEdge e : g.getEdges()) {
+			edges.add(new GraphmlEdge(e));
+=====================================================================
+Found a 11 line (27 tokens) duplication in the following files: 
+Starting at line 19 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\cytoscapejs\CSAttr.java
+Starting at line 67 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GraphObjectData.java
+
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(final String key) {
+		this.key = key;
+	}
+
+	public String getVal() {
+=====================================================================
+Found a 11 line (27 tokens) duplication in the following files: 
+Starting at line 105 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericNode.java
+Starting at line 209 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\DirectedNode.java
+
+	}
+
+	public int getDegree() {
+		return degree;
+	}
+
+	public void setDegree(final int degree) {
+		this.degree = degree;
+	}
+
+	public boolean isPlaceholder() {
+=====================================================================
+Found a 17 line (27 tokens) duplication in the following files: 
+Starting at line 261 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericNode.java
+Starting at line 267 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericEdge.java
+Starting at line 97 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+Starting at line 165 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+
+		for (GraphObjectData o : dataSet) {
+			if (o.key.equals(key)) {
+				return o.keyVal;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Change the existing value of an attribute or add a new one. <BR>
+	 * Different from addData which handles dupes by appending an underscore to
+	 * the key
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	public void setDataValue(final String key, final String value) {
+=====================================================================
+Found a 9 line (27 tokens) duplication in the following files: 
+Starting at line 49 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericGraph.java
+Starting at line 77 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\cytoscapejs\V_CSGraph.java
+
+	public void setEdges(final List<V_GenericEdge> edges) {
+		this.edges = edges;
+	}
+
+	public void setIntStatus(final int intStatus) {
+		this.intStatus = intStatus;
+	}
+
+	public void setNodes(final List<V_GenericNode> nodes) {
+=====================================================================
+Found a 21 line (27 tokens) duplication in the following files: 
+Starting at line 41 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+Starting at line 70 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+
+	}
+
+	/**
+	 * Non-temporal constructor
+	 * 
+	 * @param src_node
+	 *            Generic Node
+	 * @param target_node
+	 *            Generic Node
+	 * @param degree
+	 *            int
+	 * @param weight
+	 *            int
+	 * @param directed
+	 *            boolean
+	 * @param label
+	 *            String
+	 */
+	public V_GenericEdge(final V_GenericNode src_node,
+			final V_GenericNode target_node, final int degree,
+			final int weight, final boolean directed, final String label) {
+=====================================================================
+Found a 8 line (27 tokens) duplication in the following files: 
+Starting at line 77 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+Starting at line 123 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\V_EdgeList.java
+
+			e.setDay(ia.day);
+			e.setMonth(ia.month);
+			e.setYear(ia.year);
+			edges.add(e);
+		}
+	}
+
+	private void checkGlobal(final Interaction ia,
+=====================================================================
+Found a 8 line (26 tokens) duplication in the following files: 
+Starting at line 191 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphserver\TransactionDistinctEntityPair.java
+Starting at line 27 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GraphObjectData.java
+Starting at line 72 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GraphObjectData.java
+
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((attributeList == null) ? 0 : attributeList.hashCode());
+=====================================================================
+Found a 7 line (26 tokens) duplication in the following files: 
+Starting at line 87 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\graphml\GraphmlNode.java
+Starting at line 159 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericEdge.java
+
+	}
+
+	private void removeData(final String type) {
+		Object l = null;
+
+		for (GraphObjectData d : dataSet) {
+			if (d.getKey().equals(type)) {
+=====================================================================
+Found a 5 line (26 tokens) duplication in the following files: 
+Starting at line 51 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\cytoscapejs\CSNodeData.java
+Starting at line 46 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\cytoscapejs\CSEdgeData.java
+Starting at line 59 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\cytoscapejs\CSEdgeData.java
+
+			} else {
+				this.attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
+			}
+		}
+	}
+=====================================================================
+Found a 4 line (26 tokens) duplication in the following files: 
+Starting at line 31 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\cytoscapejs\CSEdgeData.java
+Starting at line 36 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\converters\cytoscapejs\CSEdgeData.java
+
+	public CSEdgeData(final GenericEdge e) {
+		if (e.isDirected()) {
+			direction = new String[2];
+			direction[0] = e.getSource();
+=====================================================================
+Found a 11 line (26 tokens) duplication in the following files: 
+Starting at line 19 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\cytoscapejs\CSAttr.java
+Starting at line 67 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GraphObjectData.java
+Starting at line 137 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericNode.java
+
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(final String key) {
+		this.key = key;
+	}
+
+	public String getVal() {
+=====================================================================
+Found a 7 line (26 tokens) duplication in the following files: 
+Starting at line 129 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\V_DirectedNode.java
+Starting at line 139 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+Starting at line 278 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+
+	}
+
+	public void removeData(final String type) {
+		Object l = null;
+
+		for (V_GraphObjectData d : dataSet) {
+			if (d.getKey().equals(type)) {
+=====================================================================
+Found a 11 line (26 tokens) duplication in the following files: 
+Starting at line 25 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\Link.java
+Starting at line 256 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\legacy\GenericEdge.java
+Starting at line 112 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GraphQuery.java
+
+	}
+
+	public boolean isDirected() {
+		return directed;
+	}
+
+	public void setDirected(final boolean directed) {
+		this.directed = directed;
+	}
+
+	public int getCount() {
+=====================================================================
+Found a 13 line (25 tokens) duplication in the following files: 
+Starting at line 163 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericNode.java
+Starting at line 317 of C:\Users\djue\Documents\GitHub\vande\vande\src\main\java\mil\darpa\vande\generic\V_GenericEdge.java
+
+	public final void setDataSet(final SortedSet<V_GraphObjectData> dataSet) {
+		this.dataSet = dataSet;
+	}
+
+	/**
+	 * Change the existing value of an attribute or add a new one. <BR>
+	 * Different from addData which handles dupes by appending an underscore to
+	 * the key
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	public void setDataValue(final String key, final String value) {

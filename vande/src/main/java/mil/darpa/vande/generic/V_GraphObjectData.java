@@ -16,13 +16,59 @@ public class V_GraphObjectData implements Comparable<V_GraphObjectData> {
 	@XmlValue
 	String keyVal;
 
-	public V_GraphObjectData(String key, String keyVal) {
+	public V_GraphObjectData() {
+
+	}
+
+	public V_GraphObjectData(final String key, final String keyVal) {
 		this.key = key;
 		this.keyVal = keyVal;
 	}
 
-	public V_GraphObjectData() {
+	@Override
+	public int compareTo(final V_GraphObjectData o) {
+		int keyCompare = key.compareTo(o.key);
+		if (keyCompare == 0) {
+			return keyVal.compareTo(o.keyVal);
+		} else {
+			return keyCompare;
+		}
 
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		V_GraphObjectData other = (V_GraphObjectData) obj;
+		if (key == null) {
+			if (other.key != null) {
+				return false;
+			}
+		} else if (!key.equals(other.key)) {
+			return false;
+		}
+		return true;
+	}
+
+	public String getKey() {
+		return key;
+	}
+
+	public String getKeyVal() {
+		return keyVal;
 	}
 
 	/*
@@ -38,60 +84,17 @@ public class V_GraphObjectData implements Comparable<V_GraphObjectData> {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		V_GraphObjectData other = (V_GraphObjectData) obj;
-		if (key == null) {
-			if (other.key != null)
-				return false;
-		} else if (!key.equals(other.key))
-			return false;
-		return true;
-	}
-
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
+	public void setKey(final String key) {
 		this.key = key;
 	}
 
-	public String getKeyVal() {
-		return keyVal;
-	}
-
-	public void setKeyVal(String keyVal) {
+	public void setKeyVal(final String keyVal) {
 		this.keyVal = keyVal;
 	}
 
 	@Override
-	public int compareTo(V_GraphObjectData o) {
-		int keyCompare = key.compareTo(o.key);
-		if (keyCompare == 0) {
-			return keyVal.compareTo(o.keyVal);
-		} else {
-			return keyCompare;
-		}
-
-	}
-	@Override
-	public String toString()
-	{
+	public String toString() {
 		return key + ":" + keyVal;
 	}
-
-	
 
 }

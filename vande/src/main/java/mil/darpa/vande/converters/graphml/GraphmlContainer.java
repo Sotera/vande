@@ -9,18 +9,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "graphml")
 public class GraphmlContainer {
 
-	@XmlElement(name = "key")
-	List<GraphmlKey> keys = new ArrayList<GraphmlKey>();
-
 	@XmlElement(name = "graph")
 	public GraphmlGraph graph;
 
-	/*
-	 * @XmlTransient public GraphmlGraph getGraph() { return graph; }
-	 */
-	public void setGraph(GraphmlGraph graph) {
-		this.graph = graph;
-	}
+	@XmlElement(name = "key")
+	List<GraphmlKey> keys = new ArrayList<GraphmlKey>();
 
 	/**
 	 * 
@@ -39,7 +32,14 @@ public class GraphmlContainer {
 	 * @param name
 	 * @param value
 	 */
-	public void addNodeKey(String name, String value) {
+	public void addNodeKey(final String name, final String value) {
 		keys.add(new GraphmlKey(name, "node", value, "string"));
+	}
+
+	/*
+	 * @XmlTransient public GraphmlGraph getGraph() { return graph; }
+	 */
+	public void setGraph(final GraphmlGraph graph) {
+		this.graph = graph;
 	}
 }

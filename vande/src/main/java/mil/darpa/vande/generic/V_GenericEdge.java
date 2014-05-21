@@ -13,33 +13,57 @@ import mil.darpa.vande.interactions.Interaction;
 
 public class V_GenericEdge {
 
-	private V_GenericNode sourceNode;
-	private V_GenericNode targetNode;
+	private int count = 1;
+	private Set<V_GraphObjectData> dataSet = new HashSet<V_GraphObjectData>();
 
-	private String sourceId = "src";
-	private String targetId = "target";
+	private int day = -1;
+	private int degree = 0;
+	private boolean directed = false;
 	private String idType = "";
 	private String idVal = "";
-	private int degree = 0;
 	private String label;
-	private boolean directed = false;
-	private int count = 1;
-	private double value = 0; // to be a serialized amount to hold aggregated
-								// values
-								// for the total interactions between the nodes
-	// For edges that represent temporal aggregations of links
-	private int year = -1;
 	private int month = -1;
-	private int day = -1;
+	private String sourceId = "src";
+	private V_GenericNode sourceNode;
+	private String targetId = "target";
+	private V_GenericNode targetNode;
+	private double value = 0; // to be a serialized amount to hold aggregated
 
+	// Consider allowing double or Number
 	private int weight = 1;
 
-	private Set<V_GraphObjectData> dataSet = new HashSet<V_GraphObjectData>();
+	// values
+	// for the total interactions between the nodes
+	// For edges that represent temporal aggregations of links
+	private int year = -1;
 
 	public V_GenericEdge() {
 
 	}
 
+	/**
+	 * TODO: Taken from legacy code. Determine if still needed.
+	 * 
+	 * @param src_node
+	 * @param target_node
+	 * @param degree
+	 */
+	public V_GenericEdge(final V_GenericNode src_node,
+			final V_GenericNode target_node, final int degree) {
+		this.sourceId = src_node.getId();
+		this.targetId = target_node.getId();
+		this.sourceNode = src_node;
+		this.targetNode = target_node;
+		this.degree = degree;
+		this.count = degree;
+	}
+	public V_GenericEdge(final V_GenericNode src_node,
+			final V_GenericNode target_node) {
+		this.sourceId = src_node.getId();
+		this.targetId = target_node.getId();
+		this.sourceNode = src_node;
+		this.targetNode = target_node;
+	}
 	/**
 	 * Non-temporal constructor
 	 * 
@@ -56,8 +80,9 @@ public class V_GenericEdge {
 	 * @param label
 	 *            String
 	 */
-	public V_GenericEdge(V_GenericNode src_node, V_GenericNode target_node,
-			int degree, int weight, boolean directed, String label) {
+	public V_GenericEdge(final V_GenericNode src_node,
+			final V_GenericNode target_node, final int degree,
+			final int weight, final boolean directed, final String label) {
 		this.sourceId = src_node.getId();
 		this.targetId = target_node.getId();
 		this.sourceNode = src_node;
@@ -89,9 +114,10 @@ public class V_GenericEdge {
 	 * @param year
 	 *            int
 	 */
-	public V_GenericEdge(V_GenericNode src_node, V_GenericNode target_node,
-			int degree, int weight, boolean directed, String label, int day,
-			int month, int year) {
+	public V_GenericEdge(final V_GenericNode src_node,
+			final V_GenericNode target_node, final int degree,
+			final int weight, final boolean directed, final String label,
+			final int day, final int month, final int year) {
 		this.sourceId = src_node.getId();
 		this.targetId = target_node.getId();
 		this.sourceNode = src_node;
@@ -105,21 +131,94 @@ public class V_GenericEdge {
 		this.year = year;
 	}
 
-	public void addInteractionProperties(Interaction ia) {
+	public void addData(final String name, final String value) {
+		dataSet.add(new V_GraphObjectData(name, value));
+	}
+
+	public void addInteractionProperties(final Interaction ia) {
 		if (ia.getProperties() != null) {
 			for (V_IdProperty p : ia.getProperties()) {
-				addData(p.idName, p.idValue);
+				addData(p.getIdName(), p.getIdValue());
 			}
 		}
 	}
 
-	public void addData(String name, String value) {
-		dataSet.add(new V_GraphObjectData(name, value));
-	}
-
-	public void aggregate(int count, double value) {
+	public void aggregate(final int count, final double value) {
 		this.count += count;
 		this.value += value;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		V_GenericEdge other = (V_GenericEdge) obj;
+		if (count != other.count)
+			return false;
+		if (dataSet == null) {
+			if (other.dataSet != null)
+				return false;
+		} else if (!dataSet.equals(other.dataSet))
+			return false;
+		if (day != other.day)
+			return false;
+		if (degree != other.degree)
+			return false;
+		if (directed != other.directed)
+			return false;
+		if (idType == null) {
+			if (other.idType != null)
+				return false;
+		} else if (!idType.equals(other.idType))
+			return false;
+		if (idVal == null) {
+			if (other.idVal != null)
+				return false;
+		} else if (!idVal.equals(other.idVal))
+			return false;
+		if (label == null) {
+			if (other.label != null)
+				return false;
+		} else if (!label.equals(other.label))
+			return false;
+		if (month != other.month)
+			return false;
+		if (sourceId == null) {
+			if (other.sourceId != null)
+				return false;
+		} else if (!sourceId.equals(other.sourceId))
+			return false;
+		if (sourceNode == null) {
+			if (other.sourceNode != null)
+				return false;
+		} else if (!sourceNode.equals(other.sourceNode))
+			return false;
+		if (targetId == null) {
+			if (other.targetId != null)
+				return false;
+		} else if (!targetId.equals(other.targetId))
+			return false;
+		if (targetNode == null) {
+			if (other.targetNode != null)
+				return false;
+		} else if (!targetNode.equals(other.targetNode))
+			return false;
+		if (Double.doubleToLongBits(value) != Double
+				.doubleToLongBits(other.value))
+			return false;
+		if (weight != other.weight)
+			return false;
+		if (year != other.year)
+			return false;
+		return true;
+	}
+
+	public int getCount() {
+		return count;
 	}
 
 	/**
@@ -129,15 +228,41 @@ public class V_GenericEdge {
 		return dataSet;
 	}
 
+	public String getDataValue(final String key) {
+		for (V_GraphObjectData o : dataSet) {
+			if (o.key.equals(key)) {
+				return o.keyVal;
+			}
+		}
+		return null;
+	}
+
+	public int getDay() {
+		return day;
+	}
+
 	/**
+	 * XXX:Only used by the graphml flavor of edges, not sure if needed --djue
 	 * @return the degree
 	 */
 	public final int getDegree() {
 		return degree;
 	}
 
+	public String getIdType() {
+		return idType;
+	}
+
+	public String getIdVal() {
+		return idVal;
+	}
+
 	public String getLabel() {
 		return label;
+	}
+
+	public int getMonth() {
+		return month;
 	}
 
 	public final String getSourceId() {
@@ -162,6 +287,10 @@ public class V_GenericEdge {
 		return targetNode;
 	}
 
+	public double getValue() {
+		return value;
+	}
+
 	/**
 	 * Sometimes Gephi will not read in the edge weights if the column is named
 	 * weight rather than Weight
@@ -173,222 +302,45 @@ public class V_GenericEdge {
 		return weight;
 	}
 
-	public int getCount() {
-		return count;
-	}
-
-	public void removeData(String type) {
-		Object l = null;
-
-		for (V_GraphObjectData d : dataSet) {
-			if (d.key.equals(type)) {
-				l = d;
-				break;
-			}
-		}
-		if (l != null)
-			dataSet.remove(l);
-	}
-
-	/**
-	 * @param dataSet
-	 *            the dataSet to set
-	 */
-	public final void setDataSet(Set<V_GraphObjectData> dataSet) {
-		this.dataSet = dataSet;
-	}
-
-	/**
-	 * @param degree
-	 *            the degree to set
-	 */
-	public final void setDegree(int degree) {
-		this.degree = degree;
-	}
-
-	public void setLabel(String label) {
-
-		this.label = label;
-	}
-
-	/**
-	 * @param source
-	 *            the source to set
-	 */
-	public final void setSourceId(String source) {
-		this.sourceId = source;
-	}
-
-	/**
-	 * @param sourceNode
-	 *            the sourceNode to set
-	 */
-
-	public final void setSourceNode(V_GenericNode sourceNode) {
-		this.sourceNode = sourceNode;
-	}
-
-	/**
-	 * @param target
-	 *            the target to set
-	 */
-
-	public final void setTargetId(String target) {
-		this.targetId = target;
-	}
-
-	/**
-	 * @param targetNode
-	 *            the targetNode to set
-	 */
-	public final void setTargetNode(V_GenericNode targetNode) {
-		this.targetNode = targetNode;
-	}
-
-	/**
-	 * Set the number of occurrences of this specific from-to pair
-	 * 
-	 * @param count
-	 */
-	public void setCount(int count) {
-		this.count = count;
+	public int getYear() {
+		return year;
 	}
 
 	@Override
-	public String toString() {
-		return ("Edge from " + sourceNode + " to " + targetNode);
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + count;
+		result = prime * result + ((dataSet == null) ? 0 : dataSet.hashCode());
+		result = prime * result + day;
+		result = prime * result + degree;
+		result = prime * result + (directed ? 1231 : 1237);
+		result = prime * result + ((idType == null) ? 0 : idType.hashCode());
+		result = prime * result + ((idVal == null) ? 0 : idVal.hashCode());
+		result = prime * result + ((label == null) ? 0 : label.hashCode());
+		result = prime * result + month;
+		result = prime * result
+				+ ((sourceId == null) ? 0 : sourceId.hashCode());
+		result = prime * result
+				+ ((sourceNode == null) ? 0 : sourceNode.hashCode());
+		result = prime * result
+				+ ((targetId == null) ? 0 : targetId.hashCode());
+		result = prime * result
+				+ ((targetNode == null) ? 0 : targetNode.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(value);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + weight;
+		result = prime * result + year;
+		return result;
 	}
 
 	public boolean isDirected() {
 		return directed;
 	}
 
-	public void setDirected(boolean directed) {
-		this.directed = directed;
-	}
-
-	public String getDataValue(String key) {
-		for (V_GraphObjectData o : dataSet) {
-			if (o.key.equals(key))
-				return o.keyVal;
-		}
-		return null;
-	}
-
-	/**
-	 * Change the existing value of an attribute or add a new one. <BR>
-	 * Different from addData which handles dupes by appending an underscore to
-	 * the key
-	 * 
-	 * @param key
-	 * @param value
-	 */
-	public void setDataValue(String key, String value) {
-
-		for (V_GraphObjectData o : dataSet) {
-			if (o.key.equals(key)) {
-				dataSet.remove(o);
-				break;
-			}
-		}
-
-		addData(key, value);
-	}
-
-	public void setWeight(int weight) {
-		this.weight = weight;
-	}
-
-	public double getValue() {
-		return value;
-	}
-
-	public void setValue(double amount) {
-		this.value = amount;
-	}
-
-	public void setIntValue(String s) {
-		int val = 0;
-		try {
-			val = Integer.parseInt(s);
-		} catch (NumberFormatException e) {
-		}
-		;
-		this.value = new Integer(val);
-	}
-
-	public void setDoubleValue(double v) {
-		this.value = new Double(v);
-	}
-
-	public void setDoubleValue(String s) {
-		double val = 0D;
-		try {
-			val = Double.parseDouble(s);
-		} catch (NumberFormatException e) {
-		}
-		;
-		this.value = new Double(val);
-	}
-
-	public void setIntValue(int v) {
-		this.value = new Integer(v);
-	}
-
-	public int getYear() {
-		return year;
-	}
-
-	public void setYear(int year) {
-		this.year = year;
-	}
-
-	public int getMonth() {
-		return month;
-	}
-
-	public void setMonth(int month) {
-		this.month = month;
-	}
-
-	public int getDay() {
-		return day;
-	}
-
-	public void setDay(int day) {
-		this.day = day;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (!(o instanceof V_GenericEdge))
-			return false;
-		V_GenericEdge e = (V_GenericEdge) o;
-		if (!e.getSourceId().equals(sourceId))
-			return false;
-		if (!e.getTargetId().equals(targetId))
-			return false;
-		if (e.getYear() != year)
-			return false;
-		if (e.getMonth() != month)
-			return false;
-		if (e.getDay() != day)
-			return false;
-
-		return true;
-
-	}
-
-	public boolean sameNodes(String s, String t) {
-		if (s.equals(sourceId) && t.equals(targetId))
-			return true;
-		else if (directed)
-			return false;
-		else
-			return t.equals(sourceId) && s.equals(targetId);
-	}
-
-	public boolean matches(String s, String t, int day, int month, int year) {
+	public boolean matches(final String s, final String t, final int day,
+			final int month, final int year) {
 		return (sameNodes(s, t) && this.day == day && this.month == month && this.year == year);
 	}
 
@@ -404,39 +356,185 @@ public class V_GenericEdge {
 	 *            boolean
 	 * @return boolean true if the interaction matches this edge
 	 */
-	public boolean matchesInteraction(Interaction ia, boolean matchDay,
-			boolean matchMonth, boolean matchYear) {
-		if (matchDay) {
-			matchMonth = true;
-			matchYear = true;
+	public boolean matchesInteraction(final Interaction ia,
+			final boolean matchDay, final boolean matchMonth,
+			final boolean matchYear) {
+		if (!sameNodes(ia.getSourceId(), ia.getTargetId())) {
+			return false;
 		}
-		if (matchMonth)
-			matchYear = true;
-
-		if (!sameNodes(ia.getSourceId(), ia.getTargetId()))
+		if (matchDay && this.day != ia.day) {
 			return false;
-		if (matchDay && this.day != ia.day)
+		}
+		if ((matchDay || matchMonth) && this.month != ia.month) {
 			return false;
-		if (matchMonth && this.month != ia.month)
+		}
+		if ((matchDay || matchMonth || matchYear) && this.year != ia.year) {
 			return false;
-		if (matchYear && this.year != ia.year)
-			return false;
+		}
 		return true;
 	}
 
-	public String getIdType() {
-		return idType;
+	public void removeData(final String type) {
+		Object l = null;
+
+		for (V_GraphObjectData d : dataSet) {
+			if (d.key.equals(type)) {
+				l = d;
+				break;
+			}
+		}
+		if (l != null) {
+			dataSet.remove(l);
+		}
 	}
 
-	public void setIdType(String idType) {
+	public boolean sameNodes(final String s, final String t) {
+		if (s.equals(sourceId) && t.equals(targetId)) {
+			return true;
+		} else if (directed) {
+			return false;
+		} else {
+			return t.equals(sourceId) && s.equals(targetId);
+		}
+	}
+
+	/**
+	 * Set the number of occurrences of this specific from-to pair
+	 * 
+	 * @param count
+	 */
+	public void setCount(final int count) {
+		this.count = count;
+	}
+
+	/**
+	 * @param dataSet
+	 *            the dataSet to set
+	 */
+	public final void setDataSet(final Set<V_GraphObjectData> dataSet) {
+		this.dataSet = dataSet;
+	}
+
+	/**
+	 * Change the existing value of an attribute or add a new one. <BR>
+	 * Different from addData which handles dupes by appending an underscore to
+	 * the key
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	public void setDataValue(final String key, final String value) {
+
+		for (V_GraphObjectData o : dataSet) {
+			if (o.key.equals(key)) {
+				dataSet.remove(o);
+				break;
+			}
+		}
+
+		addData(key, value);
+	}
+
+	public void setDay(final int day) {
+		this.day = day;
+	}
+
+	/**
+	 * XXX:This seems unused.
+	 * @param degree
+	 *            the degree to set
+	 */
+	public final void setDegree(final int degree) {
+		this.degree = degree;
+	}
+
+	public void setDirected(final boolean directed) {
+		this.directed = directed;
+	}
+
+	public void setDoubleValue(final double v) {
+		this.value = new Double(v);
+	}
+
+	public void setDoubleValue(final String s) {
+		double val = 0D;
+		try {
+			val = Double.parseDouble(s);
+		} catch (NumberFormatException e) {
+		}
+		;
+		this.value = new Double(val);
+	}
+
+	public void setIdType(final String idType) {
 		this.idType = idType;
 	}
 
-	public String getIdVal() {
-		return idVal;
+	public void setIdVal(final String idVal) {
+		this.idVal = idVal;
 	}
 
-	public void setIdVal(String idVal) {
-		this.idVal = idVal;
+	public void setIntValue(final int v) {
+		this.value = new Integer(v);
+	}
+
+	public void setLabel(final String label) {
+
+		this.label = label;
+	}
+
+	public void setMonth(final int month) {
+		this.month = month;
+	}
+
+	/**
+	 * @param source
+	 *            the source to set
+	 */
+	public final void setSourceId(final String source) {
+		this.sourceId = source;
+	}
+
+	/**
+	 * @param sourceNode
+	 *            the sourceNode to set
+	 */
+
+	public final void setSourceNode(final V_GenericNode sourceNode) {
+		this.sourceNode = sourceNode;
+	}
+
+	/**
+	 * @param target
+	 *            the target to set
+	 */
+
+	public final void setTargetId(final String target) {
+		this.targetId = target;
+	}
+
+	/**
+	 * @param targetNode
+	 *            the targetNode to set
+	 */
+	public final void setTargetNode(final V_GenericNode targetNode) {
+		this.targetNode = targetNode;
+	}
+
+	public void setValue(final double amount) {
+		this.value = amount;
+	}
+
+	public void setWeight(final int weight) {
+		this.weight = weight;
+	}
+
+	public void setYear(final int year) {
+		this.year = year;
+	}
+
+	@Override
+	public String toString() {
+		return ("Edge from " + sourceNode + " to " + targetNode);
 	}
 }

@@ -1,4 +1,4 @@
-package mil.darpa.vande.legacy;
+package mil.darpa.vande.converters.infovis;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +35,7 @@ public class InfoVisGraphAdjacency {
 	 * @param name
 	 * @param d
 	 */
-	public InfoVisGraphAdjacency(String id, String name, String... d) {
+	public InfoVisGraphAdjacency(final String id, final String name, final String... d) {
 		this.id = id;
 		this.name = name;
 		for (int i = 0; i < d.length; i += 2) {
@@ -47,14 +47,14 @@ public class InfoVisGraphAdjacency {
 
 	// keys are like [$dim, $color, $type]
 	// ex {$dim=10, $color=#83548B, $type=circle}
-	public void addData(String key, String value) {
+	public void addData(final String key, final String value) {
 		if (data == null) {
 			data = new HashMap<String, String>(3);
 		}
 		data.put(key, value);
 	}
 
-	public void addEdge(InfoVisEdge a) {
+	public void addEdge(final InfoVisEdge a) {
 		if (edges == null) {
 			edges = new ArrayList<InfoVisEdge>(5);
 		}
@@ -73,15 +73,15 @@ public class InfoVisGraphAdjacency {
 		return name;
 	}
 
-	public void setData(HashMap<String, String> data) {
+	public void setData(final HashMap<String, String> data) {
 		this.data = data;
 	}
 
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 

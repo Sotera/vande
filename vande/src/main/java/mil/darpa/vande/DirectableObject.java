@@ -10,9 +10,17 @@ import java.util.List;
  */
 public interface DirectableObject {
 
+	public String getDest();
+
+	public List<Object> getDestAttributes(); // for mouse over etc
+
+	public List<Object> getEdgeAttributes(); // for mouse over etc
+
+	public String getId(); // for drill down
+
 	public String getSrc();
 
-	public String getDest();
+	public List<Object> getSrcAttributes(); // for mouse over etc
 
 	/**
 	 * Note that in older versions of this class, we returned a String instead.
@@ -21,13 +29,5 @@ public interface DirectableObject {
 	public Number getValue();
 
 	public int getWeight();
-
-	public String getId(); // for drill down
-
-	public List<Object> getEdgeAttributes(); // for mouse over etc
-
-	public List<Object> getSrcAttributes(); // for mouse over etc
-
-	public List<Object> getDestAttributes(); // for mouse over etc
 
 }

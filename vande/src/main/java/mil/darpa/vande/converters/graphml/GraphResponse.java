@@ -12,12 +12,12 @@ public class GraphResponse {
 
 	}
 
-	public GraphmlContainer getGraphml() {
-		return graphml;
-	}
-
 	public GraphmlGraph getGraph() {
 		return graphml.graph;
+	}
+
+	public GraphmlContainer getGraphml() {
+		return graphml;
 	}
 
 }

@@ -5,14 +5,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class V_IdProperty {
-	public String idName;
-	public String idValue;
+	private String idName;
+	private String idValue;
 
 	public V_IdProperty() {
 
 	}
 
-	public V_IdProperty(String name, String idValue) {
+	public V_IdProperty(final String name, final String idValue) {
 		this.idName = name;
 		this.idValue = idValue;
 	}
@@ -25,11 +25,11 @@ public class V_IdProperty {
 		return idValue;
 	}
 
-	public void setIdName(String idName) {
+	public void setIdName(final String idName) {
 		this.idName = idName;
 	}
 
-	public void setIdValue(String idValue) {
+	public void setIdValue(final String idValue) {
 		this.idValue = idValue;
 	}
 }
