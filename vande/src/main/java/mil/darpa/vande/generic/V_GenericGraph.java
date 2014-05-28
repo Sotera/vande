@@ -40,8 +40,11 @@ public class V_GenericGraph {
 
 	@Override
 	public String toString() {
-		return "V_GenericGraph [edges=" + edges + ", intStatus=" + intStatus
-				+ ", nodes=" + nodes + ", strStatus=" + strStatus + "]";
+		return "V_GenericGraph ["
+				+ (edges != null ? "edges=" + edges + ", " : "") + "intStatus="
+				+ intStatus + ", "
+				+ (nodes != null ? "nodes=" + nodes + ", " : "")
+				+ (strStatus != null ? "strStatus=" + strStatus : "") + "]";
 	}
 
 	@Override

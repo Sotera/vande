@@ -8,6 +8,15 @@ import java.util.Set;
 import mil.darpa.vande.interactions.Interaction;
 import mil.darpa.vande.interactions.TemporalGraphQuery;
 
+/**
+ * The current implementation of edgeList allows duplicate edges to be added.
+ * This may fit the needs for interaction graphs, but really we should disallow
+ * trouble causing duplicates by storing a map and forcing classes that add
+ * edges to provide a unique key for the interaction/property edge --djue
+ * 
+ * @author PWG
+ * 
+ */
 public class V_EdgeList {
 
 	private Set<V_GenericEdge> edges = new HashSet<V_GenericEdge>();
@@ -56,6 +65,20 @@ public class V_EdgeList {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "V_EdgeList [" + (edges != null ? "edges=" + edges + ", " : "")
+				+ (query != null ? "query=" + query + ", " : "")
+				+ (tquery != null ? "tquery=" + tquery : "") + "]";
+	}
+
+	/**
+	 * This is stupid, get this aggregation logic out of here. --djue
+	 * 
+	 * @param ia
+	 * @param sourceNode
+	 * @param targetNode
+	 */
 	private void checkDaily(final Interaction ia,
 			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
 		boolean found = false;
@@ -79,6 +102,13 @@ public class V_EdgeList {
 		}
 	}
 
+	/**
+	 * This is stupid, get this aggregation logic out of here. --djue
+	 * 
+	 * @param ia
+	 * @param sourceNode
+	 * @param targetNode
+	 */
 	private void checkGlobal(final Interaction ia,
 			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
 		boolean found = false;
@@ -102,6 +132,13 @@ public class V_EdgeList {
 		}
 	}
 
+	/**
+	 * This is stupid, get this aggregation logic out of here. --djue
+	 * 
+	 * @param ia
+	 * @param sourceNode
+	 * @param targetNode
+	 */
 	private void checkMonthly(final Interaction ia,
 			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
 		boolean found = false;
@@ -125,6 +162,13 @@ public class V_EdgeList {
 		}
 	}
 
+	/**
+	 * This is stupid, get this aggregation logic out of here. --djue
+	 * 
+	 * @param ia
+	 * @param sourceNode
+	 * @param targetNode
+	 */
 	private void checkYearly(final Interaction ia,
 			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
 		boolean found = false;
@@ -148,6 +192,9 @@ public class V_EdgeList {
 		}
 	}
 
+	/**
+	 * Why?? --djue
+	 */
 	public V_EdgeList clone() {
 		V_EdgeList list = new V_EdgeList(this.query);
 		list.edges.addAll(edges);

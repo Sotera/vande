@@ -26,6 +26,17 @@ public class V_GenericNode extends V_Actor {
 	 */
 	protected int dataSource = 0; // TODO: set this value when we have more than
 
+	@Override
+	public String toString() {
+		return "V_GenericNode [" + (key != null ? "key=" + key + ", " : "")
+				+ (value != null ? "value=" + value + ", " : "")
+				+ (id != null ? "id=" + id + ", " : "")
+				+ (idType != null ? "idType=" + idType + ", " : "")
+				+ (idVal != null ? "idVal=" + idVal + ", " : "")
+				+ (label != null ? "label=" + label + ", " : "")
+				+ (properties != null ? "properties=" + properties : "") + "]";
+	}
+
 	protected int degree = 0;
 
 	/*

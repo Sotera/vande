@@ -28,7 +28,7 @@ public interface PropertyFinder {
 	// List<T> pairQuery(Q q) throws Exception;
 
 	// Taken from interactionFinder.
-	long countEdges(V_GraphQuery q, String id);
+	long countEdges(String id);
 
 	// Trying to be more like the modern code, but without the side
 	// effects--djue

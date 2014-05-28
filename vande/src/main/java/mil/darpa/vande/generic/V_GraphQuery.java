@@ -191,11 +191,14 @@ public class V_GraphQuery {
 
 	@Override
 	public String toString() {
-		return "GraphQuery [searchIds=" + searchIds + ", startTime="
-				+ startTime + ", endTime=" + endTime + ", minValue="
-				+ minTransValue + ", maxEdgesPerNode=" + maxEdgesPerNode
-				+ ", maxNodes=" + maxNodes + ", directed=" + directed
-				+ ", minLinks=" + minLinks + ", maxHops=" + maxHops + "]";
+		return "V_GraphQuery [directed=" + directed + ", "
+				+ (endTime != null ? "endTime=" + endTime + ", " : "")
+				+ "maxEdgesPerNode=" + maxEdgesPerNode + ", maxHops=" + maxHops
+				+ ", maxNodes=" + maxNodes + ", minLinks=" + minLinks
+				+ ", minTransValue=" + minTransValue + ", "
+				+ (searchIds != null ? "searchIds=" + searchIds + ", " : "")
+				+ (startTime != null ? "startTime=" + startTime + ", " : "")
+				+ (type != null ? "type=" + type : "") + "]";
 	}
 
 }

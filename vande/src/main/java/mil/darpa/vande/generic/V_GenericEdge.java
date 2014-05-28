@@ -535,6 +535,10 @@ public class V_GenericEdge {
 
 	@Override
 	public String toString() {
-		return ("Edge from " + sourceNode + " to " + targetNode);
+		return "V_GenericEdge ["
+				+ (idVal != null ? "idVal=" + idVal + ", " : "")
+				+ (label != null ? "label=" + label + ", " : "")
+				+ (sourceId != null ? "sourceId=" + sourceId + ", " : "")
+				+ (targetId != null ? "targetId=" + targetId : "") + "]";
 	}
 }

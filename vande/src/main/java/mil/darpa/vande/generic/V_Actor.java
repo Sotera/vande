@@ -120,17 +120,6 @@ public class V_Actor {
 		this.id = id;
 	}
 
-	/**
-	 * FIXME: Change the values that get passed to this into a String instead of
-	 * a char. (EntityRefNode.xyz)
-	 * 
-	 * @param entityCustomer
-	 */
-	@Deprecated
-	public void setIdType(char entityCustomer) {
-		// TODO Auto-generated method stub
-
-	}
 
 	public void setIdType(final String idType) {
 		this.idType = idType;
@@ -150,7 +139,10 @@ public class V_Actor {
 
 	@Override
 	public String toString() {
-		return "V_Actor [id=" + id + ", idType=" + idType + ", idVal=" + idVal
-				+ ", label=" + label + ", properties=" + properties + "]";
+		return "V_Actor [" + (id != null ? "id=" + id + ", " : "")
+				+ (idType != null ? "idType=" + idType + ", " : "")
+				+ (idVal != null ? "idVal=" + idVal + ", " : "")
+				+ (label != null ? "label=" + label + ", " : "")
+				+ (properties != null ? "properties=" + properties : "") + "]";
 	}
 }

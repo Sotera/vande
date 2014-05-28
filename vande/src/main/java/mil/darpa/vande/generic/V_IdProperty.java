@@ -17,6 +17,7 @@ public class V_IdProperty {
 		this.idValue = idValue;
 	}
 
+
 	public String getIdName() {
 		return idName;
 	}
@@ -31,5 +32,12 @@ public class V_IdProperty {
 
 	public void setIdValue(final String idValue) {
 		this.idValue = idValue;
+	}
+
+	@Override
+	public String toString() {
+		return "V_IdProperty ["
+				+ (idName != null ? "idName=" + idName + ", " : "")
+				+ (idValue != null ? "idValue=" + idValue : "") + "]";
 	}
 }

@@ -40,6 +40,11 @@ public class V_NodeList {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "V_NodeList [" + (nodes != null ? "nodes=" + nodes : "") + "]";
+	}
+
 	public void addNode(final V_GenericNode n) {
 		nodes.put(n.getId(), n);
 	}

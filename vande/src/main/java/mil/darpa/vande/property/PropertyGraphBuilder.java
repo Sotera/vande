@@ -630,7 +630,7 @@ public class PropertyGraphBuilder implements V_PropertyCallback {
 			// if we haven't scanned
 			if (!scannedActors.contains(id)) {
 				// Make sure there aren't too many edges.
-				long count = finder.countEdges(q, id);
+				long count = finder.countEdges(id);
 				n.setNbrLinks((int) count);
 				if (count > q.getMaxEdgesPerNode()) {
 					n.setCluster(true);
