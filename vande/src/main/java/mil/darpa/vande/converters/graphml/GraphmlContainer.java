@@ -16,15 +16,25 @@ public class GraphmlContainer {
 	List<GraphmlKey> keys = new ArrayList<GraphmlKey>();
 
 	/**
-	 * 
-	 */
+ * 
+ */
 	public GraphmlContainer() {
 		// Note: individual graph implementations should add their own initial
 		// keys
 		addNodeKey("label", "label");
 		addNodeKey("node-prop-DisplayValue", "node-prop-DisplayValue");
 		addNodeKey("node-prop-ImageSource", "node-prop-ImageSource");
+	}
 
+	/**
+	 * 
+	 * @param graph
+	 */
+	public GraphmlContainer(final GraphmlGraph graph) {
+		this.graph = graph;
+		addNodeKey("label", "label");
+		addNodeKey("node-prop-DisplayValue", "node-prop-DisplayValue");
+		addNodeKey("node-prop-ImageSource", "node-prop-ImageSource");
 	}
 
 	/**
@@ -36,8 +46,9 @@ public class GraphmlContainer {
 		keys.add(new GraphmlKey(name, "node", value, "string"));
 	}
 
-	/*
-	 * @XmlTransient public GraphmlGraph getGraph() { return graph; }
+	/**
+	 * 
+	 * @param graph
 	 */
 	public void setGraph(final GraphmlGraph graph) {
 		this.graph = graph;

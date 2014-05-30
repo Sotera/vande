@@ -44,6 +44,15 @@ public class V_GenericNode extends V_Actor {
 	 * --djue
 	 */
 	protected char entityType;
+	protected String family;
+
+	public String getFamily() {
+		return family;
+	}
+
+	public void setFamily(String family) {
+		this.family = family;
+	}
 
 	private boolean isCluster = false;
 
@@ -212,7 +221,6 @@ public class V_GenericNode extends V_Actor {
 		return entityType;
 	}
 
-
 	/*
 	 * XXX: Added from legacy for compatibility; reassess the need for this.
 	 * --djue
@@ -350,7 +358,6 @@ public class V_GenericNode extends V_Actor {
 	public void setEntityType(final char entityType) {
 		this.entityType = entityType;
 	}
-
 
 	/*
 	 * XXX: Added from legacy for compatibility; reassess the need for this.

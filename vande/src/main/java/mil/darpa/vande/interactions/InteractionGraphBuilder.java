@@ -128,7 +128,7 @@ public class InteractionGraphBuilder implements V_InteractionCallback {
 		// row
 
 		// FIXME: This call uses side effects.
-		finder.query(idList, originalQuery, this);
+		finder.query(idList, q, this);
 
 		for (String id : idList) {
 			scannedActors.add(id);
