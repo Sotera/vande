@@ -13,16 +13,48 @@ public class GraphmlKey {
 
 	@XmlAttribute(name = "for")
 	// Note that "for" is a variable name in graphml
-	String fore;
+	private String fore;
 
 	@XmlAttribute
-	String id;
+	private String id;
 
 	@XmlAttribute(name = "attr.name")
-	String name;
+	private String name;
 
 	@XmlAttribute(name = "attr.type")
-	String type;
+	private String type;
+
+	public final String getFore() {
+		return fore;
+	}
+
+	public final void setFore(String fore) {
+		this.fore = fore;
+	}
+
+	public final String getId() {
+		return id;
+	}
+
+	public final void setId(String id) {
+		this.id = id;
+	}
+
+	public final String getName() {
+		return name;
+	}
+
+	public final void setName(String name) {
+		this.name = name;
+	}
+
+	public final String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public GraphmlKey() {
 

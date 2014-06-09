@@ -14,10 +14,12 @@ import mil.darpa.vande.interactions.TemporalGraphQuery;
  * trouble causing duplicates by storing a map and forcing classes that add
  * edges to provide a unique key for the interaction/property edge --djue
  * 
+ * Updated so that it does not expect genericEdge to contain the actual node objects--just the ids
+ * 
  * @author PWG
  * 
  */
-public class V_EdgeList {
+public class V_EdgeList implements Cloneable{
 
 	private Set<V_GenericEdge> edges = new HashSet<V_GenericEdge>();
 	private V_GraphQuery query;
@@ -47,20 +49,20 @@ public class V_EdgeList {
 		if (ia.getValue() < tquery.getMinTransValue()) {
 			return false;
 		}
-
-		checkGlobal(ia, sourceNode, targetNode);
-
-		if (tquery.isByYear()) {
-			checkYearly(ia, sourceNode, targetNode);
-		}
-
-		if (tquery.isByMonth()) {
-			checkMonthly(ia, sourceNode, targetNode);
-		}
-
-		if (tquery.isByDay()) {
-			checkDaily(ia, sourceNode, targetNode);
-		}
+//
+//		checkGlobal(ia, sourceNode, targetNode);
+//
+//		if (tquery.isByYear()) {
+//			checkYearly(ia, sourceNode, targetNode);
+//		}
+//
+//		if (tquery.isByMonth()) {
+//			checkMonthly(ia, sourceNode, targetNode);
+//		}
+//
+//		if (tquery.isByDay()) {
+//			checkDaily(ia, sourceNode, targetNode);
+//		}
 
 		return true;
 	}
@@ -79,58 +81,28 @@ public class V_EdgeList {
 	 * @param sourceNode
 	 * @param targetNode
 	 */
-	private void checkDaily(final Interaction ia,
-			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-		boolean found = false;
-
-		// First, add it to the full aggregation edge
-
-		for (V_GenericEdge e : edges) {
-			if (e.matchesInteraction(ia, true, true, true)) {
-				e.aggregate(1, ia.getValue());
-				found = true;
-				break;
-			}
-		}
-
-		if (!found) {
-			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
-			e.setDay(ia.day);
-			e.setMonth(ia.month);
-			e.setYear(ia.year);
-			edges.add(e);
-		}
-	}
-
-	/**
-	 * This is stupid, get this aggregation logic out of here. --djue
-	 * 
-	 * @param ia
-	 * @param sourceNode
-	 * @param targetNode
-	 */
-	private void checkGlobal(final Interaction ia,
-			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-		boolean found = false;
-
-		// First, add it to the full aggregation edge
-
-		for (V_GenericEdge e : edges) {
-			if (e.matchesInteraction(ia, false, false, false)) {
-				e.aggregate(1, ia.getValue());
-				found = true;
-				break;
-			}
-		}
-
-		if (!found) {
-			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
-			e.setDay(-1);
-			e.setMonth(-1);
-			e.setYear(-1);
-			edges.add(e);
-		}
-	}
+//	private void checkDaily(final Interaction ia,
+//			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
+//		boolean found = false;
+//
+//		// First, add it to the full aggregation edge
+//
+//		for (V_GenericEdge e : edges) {
+//			if (e.matchesInteraction(ia, true, true, true)) {
+//				e.aggregate(1, ia.getValue());
+//				found = true;
+//				break;
+//			}
+//		}
+//
+//		if (!found) {
+//			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
+//			e.setDay(ia.getDay());
+//			e.setMonth(ia.getMonth());
+//			e.setYear(ia.getYear());
+//			edges.add(e);
+//		}
+//	}
 
 	/**
 	 * This is stupid, get this aggregation logic out of here. --djue
@@ -139,28 +111,28 @@ public class V_EdgeList {
 	 * @param sourceNode
 	 * @param targetNode
 	 */
-	private void checkMonthly(final Interaction ia,
-			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-		boolean found = false;
-
-		// First, add it to the full aggregation edge
-
-		for (V_GenericEdge e : edges) {
-			if (e.matchesInteraction(ia, false, true, true)) {
-				e.aggregate(1, ia.getValue());
-				found = true;
-				break;
-			}
-		}
-
-		if (!found) {
-			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
-			e.setDay(-1);
-			e.setMonth(ia.month);
-			e.setYear(ia.year);
-			edges.add(e);
-		}
-	}
+//	private void checkGlobal(final Interaction ia,
+//			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
+//		boolean found = false;
+//
+//		// First, add it to the full aggregation edge
+//
+//		for (V_GenericEdge e : edges) {
+//			if (e.matchesInteraction(ia, false, false, false)) {
+//				e.aggregate(1, ia.getValue());
+//				found = true;
+//				break;
+//			}
+//		}
+//
+//		if (!found) {
+//			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
+//			e.setDay(-1);
+//			e.setMonth(-1);
+//			e.setYear(-1);
+//			edges.add(e);
+//		}
+//	}
 
 	/**
 	 * This is stupid, get this aggregation logic out of here. --djue
@@ -169,28 +141,58 @@ public class V_EdgeList {
 	 * @param sourceNode
 	 * @param targetNode
 	 */
-	private void checkYearly(final Interaction ia,
-			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-		boolean found = false;
+//	private void checkMonthly(final Interaction ia,
+//			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
+//		boolean found = false;
+//
+//		// First, add it to the full aggregation edge
+//
+//		for (V_GenericEdge e : edges) {
+//			if (e.matchesInteraction(ia, false, true, true)) {
+//				e.aggregate(1, ia.getValue());
+//				found = true;
+//				break;
+//			}
+//		}
+//
+//		if (!found) {
+//			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
+//			e.setDay(-1);
+//			e.setMonth(ia.getMonth());
+//			e.setYear(ia.getYear());
+//			edges.add(e);
+//		}
+//	}
 
-		// First, add it to the full aggregation edge
-
-		for (V_GenericEdge e : edges) {
-			if (e.matchesInteraction(ia, false, false, true)) {
-				e.aggregate(1, ia.getValue());
-				found = true;
-				break;
-			}
-		}
-
-		if (!found) {
-			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
-			e.setDay(-1);
-			e.setMonth(-1);
-			e.setYear(ia.year);
-			edges.add(e);
-		}
-	}
+	/**
+	 * This is stupid, get this aggregation logic out of here. --djue
+	 * 
+	 * @param ia
+	 * @param sourceNode
+	 * @param targetNode
+	 */
+//	private void checkYearly(final Interaction ia,
+//			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
+//		boolean found = false;
+//
+//		// First, add it to the full aggregation edge
+//
+//		for (V_GenericEdge e : edges) {
+//			if (e.matchesInteraction(ia, false, false, true)) {
+//				e.aggregate(1, ia.getValue());
+//				found = true;
+//				break;
+//			}
+//		}
+//
+//		if (!found) {
+//			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
+//			e.setDay(-1);
+//			e.setMonth(-1);
+//			e.setYear(ia.getYear());
+//			edges.add(e);
+//		}
+//	}
 
 	/**
 	 * Why?? --djue
@@ -290,8 +292,8 @@ public class V_EdgeList {
 		e.setSourceId(ia.getSourceId());
 		e.setTargetId(ia.getTargetId());
 
-		e.setSourceNode(sourceNode);
-		e.setTargetNode(targetNode);
+//		e.setSourceNode(sourceNode);
+//		e.setTargetNode(targetNode);
 		e.setValue(ia.getValue());
 		e.setDirected(query.isDirected());
 		e.setCount(1);

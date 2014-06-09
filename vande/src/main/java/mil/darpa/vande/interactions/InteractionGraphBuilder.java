@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author PWG
  * 
  */
+@Deprecated
 public class InteractionGraphBuilder implements V_InteractionCallback {
 
 	static Logger logger = LoggerFactory
@@ -29,7 +30,7 @@ public class InteractionGraphBuilder implements V_InteractionCallback {
 
 	private V_GraphQuery originalQuery;
 
-	public void setOriginalQuery(V_GraphQuery originalQuery) {
+	public final void setOriginalQuery(final V_GraphQuery originalQuery) {
 		this.originalQuery = originalQuery;
 	}
 
@@ -38,27 +39,24 @@ public class InteractionGraphBuilder implements V_InteractionCallback {
 		// TODO Auto-generated constructor stub
 	}
 
-	// public InteractionGraphBuilder(final V_GraphQuery q) {
-	// this.originalQuery = q;
-	// }
 
-	V_EdgeList getEdgeList() {
+	public final V_EdgeList getEdgeList() {
 		return edgeList;
 	}
 
-	void setEdgeList(V_EdgeList edgeList) {
+	public final void setEdgeList(final V_EdgeList edgeList) {
 		this.edgeList = edgeList;
 	}
 
-	V_NodeList getNodeList() {
+	public final V_NodeList getNodeList() {
 		return nodeList;
 	}
 
-	void setNodeList(V_NodeList nodeList) {
+	public final void setNodeList(final V_NodeList nodeList) {
 		this.nodeList = nodeList;
 	}
 
-	V_GraphQuery getOriginalQuery() {
+	public final V_GraphQuery getOriginalQuery() {
 		return originalQuery;
 	}
 
@@ -185,8 +183,8 @@ public class InteractionGraphBuilder implements V_InteractionCallback {
 
 	}
 
-	public V_GenericGraph makeGraphResponse(V_GraphQuery q,
-			InteractionFinder interactionFinder) {
+	public V_GenericGraph makeGraphResponse(final V_GraphQuery q,
+			final InteractionFinder interactionFinder) {
 		TemporalGraphQuery tq = new TemporalGraphQuery(q);
 		return makeGraphResponse(tq, interactionFinder);
 	}

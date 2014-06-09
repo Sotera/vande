@@ -6,11 +6,11 @@ public class CSEdge {
 
 	private CSEdgeData data;
 
-	public CSEdgeData getData() {
+	public final CSEdgeData getData() {
 		return data;
 	}
 
-	public void setData(CSEdgeData data) {
+	public final void setData(CSEdgeData data) {
 		this.data = data;
 	}
 

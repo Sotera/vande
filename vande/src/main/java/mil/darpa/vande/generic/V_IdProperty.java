@@ -17,20 +17,19 @@ public class V_IdProperty {
 		this.idValue = idValue;
 	}
 
-
-	public String getIdName() {
+	public final String getIdName() {
 		return idName;
 	}
 
-	public String getIdValue() {
+	public final String getIdValue() {
 		return idValue;
 	}
 
-	public void setIdName(final String idName) {
+	public final void setIdName(final String idName) {
 		this.idName = idName;
 	}
 
-	public void setIdValue(final String idValue) {
+	public final void setIdValue(final String idValue) {
 		this.idValue = idValue;
 	}
 

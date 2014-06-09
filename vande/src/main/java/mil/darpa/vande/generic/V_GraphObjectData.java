@@ -26,7 +26,7 @@ public class V_GraphObjectData implements Comparable<V_GraphObjectData> {
 	}
 
 	@Override
-	public int compareTo(final V_GraphObjectData o) {
+	public final int compareTo(final V_GraphObjectData o) {
 		int keyCompare = key.compareTo(o.key);
 		if (keyCompare == 0) {
 			return keyVal.compareTo(o.keyVal);
@@ -42,7 +42,7 @@ public class V_GraphObjectData implements Comparable<V_GraphObjectData> {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(final Object obj) {
+	public final boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -63,11 +63,11 @@ public class V_GraphObjectData implements Comparable<V_GraphObjectData> {
 		return true;
 	}
 
-	public String getKey() {
+	public final String getKey() {
 		return key;
 	}
 
-	public String getKeyVal() {
+	public final String getKeyVal() {
 		return keyVal;
 	}
 

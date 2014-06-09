@@ -1,5 +1,6 @@
 package mil.darpa.vande.generic;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -100,7 +101,7 @@ public class V_GraphQuery {
 
 	public void addSearchIds(final String... id) {
 		if (id == null || id.length == 0) {
-			logger.warn("null or empty id provided: " + id);
+			logger.warn("null or empty id provided: " + Arrays.toString(id));
 		} else {
 			for (String x : id) {
 				searchIds.add(x);

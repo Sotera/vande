@@ -1,6 +1,9 @@
 package mil.darpa.vande.converters.graphml;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -102,11 +105,11 @@ public class GraphmlGraph {
 		String err = "";
 		Set<String> idList = new HashSet<String>();
 		for (GraphmlNode g : nodes) {
-			if (idList.contains(g.id)) {
-				err = " Duplicate node number " + g.id;
+			if (idList.contains(g.getId())) {
+				err = " Duplicate node number " + g.getId();
 				return err;
 			}
-			idList.add(g.id);
+			idList.add(g.getId());
 		}
 		/*
 		 * TODO for (GraphmlEdge e : edges) { if

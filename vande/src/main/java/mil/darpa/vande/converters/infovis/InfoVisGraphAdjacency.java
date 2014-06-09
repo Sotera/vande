@@ -7,17 +7,24 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({ "adjacencies", "data", "id", "name" })
-
 @Deprecated
 public class InfoVisGraphAdjacency {
 	@JsonProperty("data")
-	HashMap<String, String> data;
+	private HashMap<String, String> data;
 	@JsonProperty("adjacencies")
-	ArrayList<InfoVisEdge> edges;
+	private ArrayList<InfoVisEdge> edges;
 	@JsonProperty("id")
-	String id;
+	private String id;
 	@JsonProperty("name")
-	String name;
+	private String name;
+
+	public final ArrayList<InfoVisEdge> getEdges() {
+		return edges;
+	}
+
+	public final void setEdges(ArrayList<InfoVisEdge> edges) {
+		this.edges = edges;
+	}
 
 	public InfoVisGraphAdjacency() {
 		// TODO Auto-generated constructor stub
@@ -35,7 +42,8 @@ public class InfoVisGraphAdjacency {
 	 * @param name
 	 * @param d
 	 */
-	public InfoVisGraphAdjacency(final String id, final String name, final String... d) {
+	public InfoVisGraphAdjacency(final String id, final String name,
+			final String... d) {
 		this.id = id;
 		this.name = name;
 		for (int i = 0; i < d.length; i += 2) {

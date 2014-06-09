@@ -31,15 +31,15 @@ public class InfoVisEdge {
 		}
 	}
 
-	public HashMap<String, String> getData() {
+	public final HashMap<String, String> getData() {
 		return data;
 	}
 
-	public String getNodeFrom() {
+	public final String getNodeFrom() {
 		return nodeFrom;
 	}
 
-	public String getNodeTo() {
+	public final String getNodeTo() {
 		return nodeTo;
 	}
 
@@ -47,11 +47,11 @@ public class InfoVisEdge {
 		this.data = theData;
 	}
 
-	public void setNodeFrom(final String f) {
+	public final void setNodeFrom(final String f) {
 		this.nodeFrom = f;
 	}
 
-	public void setNodeTo(final String t) {
+	public final void setNodeTo(final String t) {
 		this.nodeTo = t;
 	}
 

@@ -12,8 +12,9 @@ public class CSNodeData {
 
 	private boolean cluster = false;
 
-	private String id;
+	private String color = "bababa";
 
+	private String id;
 	private String idType;
 	private String idVal;
 	private String label;
@@ -36,7 +37,7 @@ public class CSNodeData {
 		this.origin = node.isOrigin();
 		this.cluster = node.isCluster();
 		this.nbrLinks = node.getNbrLinks();
-
+		this.color = node.getColor();
 		Set<V_GraphObjectData> s = node.getDataSet();
 		for (V_GraphObjectData d : s) {
 			this.attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
@@ -49,93 +50,131 @@ public class CSNodeData {
 
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		CSNodeData other = (CSNodeData) obj;
 		if (attrs == null) {
-			if (other.attrs != null)
+			if (other.attrs != null) {
 				return false;
-		} else if (!attrs.equals(other.attrs))
+			}
+		} else if (!attrs.equals(other.attrs)) {
 			return false;
-		if (cluster != other.cluster)
+		}
+		if (cluster != other.cluster) {
 			return false;
+		}
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		if (idType == null) {
-			if (other.idType != null)
+			if (other.idType != null) {
 				return false;
-		} else if (!idType.equals(other.idType))
+			}
+		} else if (!idType.equals(other.idType)) {
 			return false;
+		}
 		if (idVal == null) {
-			if (other.idVal != null)
+			if (other.idVal != null) {
 				return false;
-		} else if (!idVal.equals(other.idVal))
+			}
+		} else if (!idVal.equals(other.idVal)) {
 			return false;
+		}
 		if (label == null) {
-			if (other.label != null)
+			if (other.label != null) {
 				return false;
-		} else if (!label.equals(other.label))
+			}
+		} else if (!label.equals(other.label)) {
 			return false;
+		}
 		if (name == null) {
-			if (other.name != null)
+			if (other.name != null) {
 				return false;
-		} else if (!name.equals(other.name))
+			}
+		} else if (!name.equals(other.name)) {
 			return false;
-		if (nbrLinks != other.nbrLinks)
+		}
+		if (nbrLinks != other.nbrLinks) {
 			return false;
-		if (origin != other.origin)
+		}
+		if (origin != other.origin) {
 			return false;
+		}
 		if (type == null) {
-			if (other.type != null)
+			if (other.type != null) {
 				return false;
-		} else if (!type.equals(other.type))
+			}
+		} else if (!type.equals(other.type)) {
 			return false;
-		if (visible != other.visible)
+		}
+		if (visible != other.visible) {
 			return false;
+		}
 		return true;
 	}
 
-	public List<CSAttr> getAttrs() {
+	public final List<CSAttr> getAttrs() {
 		return attrs;
 	}
 
-	public String getId() {
+	/**
+	 * @return the color
+	 */
+	public final String getColor() {
+		return color;
+	}
+
+	public final String getId() {
 		return id;
 	}
 
-	public String getIdType() {
+	public final String getIdType() {
 		return idType;
 	}
 
-	public String getIdVal() {
+	public final String getIdVal() {
 		return idVal;
 	}
 
-	public String getLabel() {
+	public final String getLabel() {
 		return label;
 	}
 
-	public String getName() {
+	public final String getName() {
 		return name;
 	}
 
-	public int getNbrLinks() {
+	public final int getNbrLinks() {
 		return nbrLinks;
 	}
 
-	public String getType() {
+	public final String getType() {
 		return type;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -172,6 +211,14 @@ public class CSNodeData {
 
 	public void setCluster(boolean cluster) {
 		this.cluster = cluster;
+	}
+
+	/**
+	 * @param color
+	 *            the color to set
+	 */
+	final void setColor(String color) {
+		this.color = color;
 	}
 
 	public void setId(String id) {

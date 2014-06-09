@@ -10,10 +10,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class GraphmlContainer {
 
 	@XmlElement(name = "graph")
-	public GraphmlGraph graph;
+	private GraphmlGraph graph;
 
 	@XmlElement(name = "key")
-	List<GraphmlKey> keys = new ArrayList<GraphmlKey>();
+	private List<GraphmlKey> keys = new ArrayList<GraphmlKey>();
+
+	public List<GraphmlKey> getKeys() {
+		return keys;
+	}
+
+	public void setKeys(List<GraphmlKey> keys) {
+		this.keys = keys;
+	}
+
+	GraphmlGraph getGraph() {
+		return graph;
+	}
 
 	/**
  * 

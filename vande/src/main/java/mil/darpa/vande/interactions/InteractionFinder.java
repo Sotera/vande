@@ -10,6 +10,7 @@ import mil.darpa.vande.generic.V_GraphQuery;
  *         to handle scanning for transactions
  * 
  */
+@Deprecated
 public interface InteractionFinder {
 
 	long countEdges(V_GraphQuery q, String id);

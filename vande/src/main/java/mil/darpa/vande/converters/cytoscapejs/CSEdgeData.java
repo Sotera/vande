@@ -25,158 +25,13 @@ public class CSEdgeData {
 
 	private String target;
 
-	public String getAmount() {
-		return amount;
-	}
+	private String type = "";
 
-	public void setAmount(String amount) {
-		this.amount = amount;
-	}
+	private boolean visible = true;
 
-	public List<CSAttr> getAttrs() {
-		return attrs;
-	}
+	private String weight = "0";
 
-	public void setAttrs(List<CSAttr> attrs) {
-		this.attrs = attrs;
-	}
-
-	public String getCount() {
-		return count;
-	}
-
-	public void setCount(String count) {
-		this.count = count;
-	}
-
-	public int getDay() {
-		return day;
-	}
-
-	public void setDay(int day) {
-		this.day = day;
-	}
-
-	public String[] getDirection() {
-		return direction;
-	}
-
-	public void setDirection(String[] direction) {
-		this.direction = direction;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getIdType() {
-		return idType;
-	}
-
-	public void setIdType(String idType) {
-		this.idType = idType;
-	}
-
-	public String getIdVal() {
-		return idVal;
-	}
-
-	public void setIdVal(String idVal) {
-		this.idVal = idVal;
-	}
-
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
-	public int getLinewidth() {
-		return linewidth;
-	}
-
-	public void setLinewidth(int linewidth) {
-		this.linewidth = linewidth;
-	}
-
-	public int getMonth() {
-		return month;
-	}
-
-	public void setMonth(int month) {
-		this.month = month;
-	}
-
-	public String getSource() {
-		return source;
-	}
-
-	public void setSource(String source) {
-		this.source = source;
-	}
-
-	public String getTarget() {
-		return target;
-	}
-
-	public void setTarget(String target) {
-		this.target = target;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public boolean isVisible() {
-		return visible;
-	}
-
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-	}
-
-	public String getWeight() {
-		return weight;
-	}
-
-	public void setWeight(String weight) {
-		this.weight = weight;
-	}
-
-	public int getYear() {
-		return year;
-	}
-
-	public void setYear(int year) {
-		this.year = year;
-	}
-
-	@Override
-	public String toString() {
-		return "CSEdgeData [amount=" + amount + ", attrs=" + attrs + ", count="
-				+ count + ", day=" + day + ", direction="
-				+ Arrays.toString(direction) + ", id=" + id + ", idType="
-				+ idType + ", idVal=" + idVal + ", label=" + label
-				+ ", linewidth=" + linewidth + ", month=" + month + ", source="
-				+ source + ", target=" + target + ", type=" + type
-				+ ", visible=" + visible + ", weight=" + weight + ", year="
-				+ year + "]";
-	}
-
-	public String type = "";
-	public boolean visible = true;
-	public String weight = "0";
-	public int year = -1;
+	private int year = -1;
 
 	public CSEdgeData() {
 
@@ -197,6 +52,7 @@ public class CSEdgeData {
 		idVal = e.getIdVal();
 
 		amount = Double.toString(e.getValue());
+
 		weight = Integer.toString(e.getWeight());
 
 		day = e.getDay();
@@ -208,6 +64,154 @@ public class CSEdgeData {
 		for (V_GraphObjectData d : s) {
 			this.attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
 		}
+	}
+
+	public final String getAmount() {
+		return amount;
+	}
+
+	public final List<CSAttr> getAttrs() {
+		return attrs;
+	}
+
+	public final String getCount() {
+		return count;
+	}
+
+	public final int getDay() {
+		return day;
+	}
+
+	public final String[] getDirection() {
+		return direction;
+	}
+
+	public final String getId() {
+		return id;
+	}
+
+	public final String getIdType() {
+		return idType;
+	}
+
+	public final String getIdVal() {
+		return idVal;
+	}
+
+	public final String getLabel() {
+		return label;
+	}
+
+	public final int getLinewidth() {
+		return linewidth;
+	}
+
+	public final int getMonth() {
+		return month;
+	}
+
+	public final String getSource() {
+		return source;
+	}
+
+	public final String getTarget() {
+		return target;
+	}
+
+	public final String getType() {
+		return type;
+	}
+
+	public final String getWeight() {
+		return weight;
+	}
+
+	public final int getYear() {
+		return year;
+	}
+
+	public final boolean isVisible() {
+		return visible;
+	}
+
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+
+	public void setAttrs(List<CSAttr> attrs) {
+		this.attrs = attrs;
+	}
+
+	public void setCount(String count) {
+		this.count = count;
+	}
+
+	public void setDay(int day) {
+		this.day = day;
+	}
+
+	public final void setDirection(String[] direction) {
+		this.direction = direction;
+	}
+
+	public final void setId(String id) {
+		this.id = id;
+	}
+
+	public final void setIdType(String idType) {
+		this.idType = idType;
+	}
+
+	public final void setIdVal(String idVal) {
+		this.idVal = idVal;
+	}
+
+	public final void setLabel(String label) {
+		this.label = label;
+	}
+
+	public final void setLinewidth(int linewidth) {
+		this.linewidth = linewidth;
+	}
+
+	public final void setMonth(int month) {
+		this.month = month;
+	}
+
+	public final void setSource(String source) {
+		this.source = source;
+	}
+
+	public void setTarget(String target) {
+		this.target = target;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public final void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	public final void setWeight(String weight) {
+		this.weight = weight;
+	}
+
+	public final void setYear(int year) {
+		this.year = year;
+	}
+
+	@Override
+	public String toString() {
+		return "CSEdgeData [amount=" + amount + ", attrs=" + attrs + ", count="
+				+ count + ", day=" + day + ", direction="
+				+ Arrays.toString(direction) + ", id=" + id + ", idType="
+				+ idType + ", idVal=" + idVal + ", label=" + label
+				+ ", linewidth=" + linewidth + ", month=" + month + ", source="
+				+ source + ", target=" + target + ", type=" + type
+				+ ", visible=" + visible + ", weight=" + weight + ", year="
+				+ year + "]";
 	}
 
 }

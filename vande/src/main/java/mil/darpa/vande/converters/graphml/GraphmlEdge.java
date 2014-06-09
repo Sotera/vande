@@ -40,41 +40,58 @@ public class GraphmlEdge {
 		this.dataSet.addAll(e.getDataSet());
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		GraphmlEdge other = (GraphmlEdge) obj;
 		if (dataSet == null) {
-			if (other.dataSet != null)
+			if (other.dataSet != null) {
 				return false;
-		} else if (!dataSet.equals(other.dataSet))
+			}
+		} else if (!dataSet.equals(other.dataSet)) {
 			return false;
-		if (degree != other.degree)
+		}
+		if (degree != other.degree) {
 			return false;
-		if (directed != other.directed)
+		}
+		if (directed != other.directed) {
 			return false;
+		}
 		if (label == null) {
-			if (other.label != null)
+			if (other.label != null) {
 				return false;
-		} else if (!label.equals(other.label))
+			}
+		} else if (!label.equals(other.label)) {
 			return false;
+		}
 		if (source == null) {
-			if (other.source != null)
+			if (other.source != null) {
 				return false;
-		} else if (!source.equals(other.source))
+			}
+		} else if (!source.equals(other.source)) {
 			return false;
+		}
 		if (target == null) {
-			if (other.target != null)
+			if (other.target != null) {
 				return false;
-		} else if (!target.equals(other.target))
+			}
+		} else if (!target.equals(other.target)) {
 			return false;
-		if (weight != other.weight)
+		}
+		if (weight != other.weight) {
 			return false;
+		}
 		return true;
 	}
 
@@ -83,26 +100,29 @@ public class GraphmlEdge {
 		return dataSet;
 	}
 
-	int getDegree() {
+	public final int getDegree() {
 		return degree;
 	}
 
-	String getLabel() {
+	public final String getLabel() {
 		return label;
 	}
 
-	String getSource() {
+	public final String getSource() {
 		return source;
 	}
 
-	String getTarget() {
+	public final String getTarget() {
 		return target;
 	}
 
-	int getWeight() {
+	public final int getWeight() {
 		return weight;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;

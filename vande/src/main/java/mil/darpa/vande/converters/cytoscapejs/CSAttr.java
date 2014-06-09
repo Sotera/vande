@@ -21,36 +21,49 @@ public class CSAttr {
 		this.val = val;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		CSAttr other = (CSAttr) obj;
 		if (key == null) {
-			if (other.key != null)
+			if (other.key != null) {
 				return false;
-		} else if (!key.equals(other.key))
+			}
+		} else if (!key.equals(other.key)) {
 			return false;
+		}
 		if (val == null) {
-			if (other.val != null)
+			if (other.val != null) {
 				return false;
-		} else if (!val.equals(other.val))
+			}
+		} else if (!val.equals(other.val)) {
 			return false;
+		}
 		return true;
 	}
 
-	public String getKey() {
+	public final String getKey() {
 		return key;
 	}
 
-	public String getVal() {
+	public final String getVal() {
 		return val;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;

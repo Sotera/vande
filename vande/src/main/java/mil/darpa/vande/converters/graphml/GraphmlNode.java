@@ -17,12 +17,32 @@ public class GraphmlNode {
 			.getLogger(GraphmlNode.class);
 
 	@XmlElement(name = "data")
-	protected SortedSet<V_GraphObjectData> dataSet = new TreeSet<V_GraphObjectData>();
+	private SortedSet<V_GraphObjectData> dataSet = new TreeSet<V_GraphObjectData>();
 	@XmlAttribute
-	public String id = "";
+	private String id = "";
 
 	@XmlAttribute
-	public String label = "";
+	private String label = "";
+
+	public final SortedSet<V_GraphObjectData> getDataSet() {
+		return dataSet;
+	}
+
+	public final void setDataSet(SortedSet<V_GraphObjectData> dataSet) {
+		this.dataSet = dataSet;
+	}
+
+	public final String getId() {
+		return id;
+	}
+
+	public final void setId(String id) {
+		this.id = id;
+	}
+
+	public final String getLabel() {
+		return label;
+	}
 
 	public GraphmlNode(final V_GenericNode node) {
 		this.id = node.getId();
@@ -31,7 +51,7 @@ public class GraphmlNode {
 		setLabel(node.getLabel()); // node-prop format
 	}
 
-	public void addData(final String attribute, final String value) {
+	public final void addData(final String attribute, final String value) {
 		// We can have two entries for an identifier name. But SnagL barfs
 		// if it gets two entries for the same name. So we kludge the name
 		// here

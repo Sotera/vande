@@ -14,51 +14,42 @@ import org.slf4j.LoggerFactory;
  */
 public class V_GenericNode extends V_Actor {
 
-	protected static final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(V_GenericNode.class);
 
-	// from and to nodes
-	protected SortedSet<V_GraphObjectData> dataSet = new TreeSet<V_GraphObjectData>();
+	private String color; // added djue
 
+	/**
+	 * Why not just use a map? And is it really critical that it be sorted?
+	 * 
+	 * from and to nodes
+	 */
+	private SortedSet<V_GraphObjectData> dataSet = new TreeSet<V_GraphObjectData>();
+
+	/**
+	 * XXX: Added from legacy for compatibility; reassess the need for this.
+	 * --djue
+	 */
+	private int dataSource = 0; // TODO: set this value when we have more than
+
+	private int degree = 0;
 	/*
 	 * XXX: Added from legacy for compatibility; reassess the need for this.
 	 * --djue
 	 */
-	protected int dataSource = 0; // TODO: set this value when we have more than
+	private char entityType;
 
-	@Override
-	public String toString() {
-		return "V_GenericNode [" + (key != null ? "key=" + key + ", " : "")
-				+ (value != null ? "value=" + value + ", " : "")
-				+ (id != null ? "id=" + id + ", " : "")
-				+ (idType != null ? "idType=" + idType + ", " : "")
-				+ (idVal != null ? "idVal=" + idVal + ", " : "")
-				+ (label != null ? "label=" + label + ", " : "")
-				+ (properties != null ? "properties=" + properties : "") + "]";
-	}
-
-	protected int degree = 0;
-
-	/*
-	 * XXX: Added from legacy for compatibility; reassess the need for this.
-	 * --djue
-	 */
-	protected char entityType;
-	protected String family;
-
-	public String getFamily() {
-		return family;
-	}
-
-	public void setFamily(String family) {
-		this.family = family;
-	}
+	private String family;
 
 	private boolean isCluster = false;
-
-	protected boolean isLeaf = true; // default, until children added
-
-	protected boolean isOrigin = false; // true if it's the one searched for
+	/**
+	 * default, until children added
+	 */
+	private boolean isLeaf = true;
+	/**
+	 * // true if it's the one searched for
+	 */
+	private boolean isOrigin = false;
 
 	/*
 	 * XXX: Added from legacy for compatibility; reassess the need for this.
@@ -66,22 +57,25 @@ public class V_GenericNode extends V_Actor {
 	 */
 	private boolean isPlaceholder = false;
 
-	protected boolean isUsed = false;
+	private boolean isUsed = false;
+
 	/*
 	 * XXX: Added from legacy for compatibility; reassess the need for this.
 	 * --djue
 	 */
-	protected String key; // used to locate in nodeList
-	protected int nbrLinks = 0;
+	private String key; // used to locate in nodeList
+
+	private int nbrLinks = 0;
+
 	private boolean scanned = false; // true when we have searched on this value
 
-	protected boolean traversed = false;
+	private boolean traversed = false;
 
 	/*
 	 * XXX: Added from legacy for compatibility; reassess the need for this.
 	 * Might just use idVal from superclass. --djue
 	 */
-	protected String value;
+	private String value;
 
 	public V_GenericNode() {
 		super();
@@ -139,53 +133,92 @@ public class V_GenericNode extends V_Actor {
 		dataSet.add(new V_GraphObjectData(attribute, value));
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		V_GenericNode other = (V_GenericNode) obj;
 		if (dataSet == null) {
-			if (other.dataSet != null)
+			if (other.dataSet != null) {
 				return false;
-		} else if (!dataSet.equals(other.dataSet))
+			}
+		} else if (!dataSet.equals(other.dataSet)) {
 			return false;
-		if (dataSource != other.dataSource)
+		}
+		if (dataSource != other.dataSource) {
 			return false;
-		if (degree != other.degree)
+		}
+		if (degree != other.degree) {
 			return false;
-		if (entityType != other.entityType)
+		}
+		if (entityType != other.entityType) {
 			return false;
-		if (isCluster != other.isCluster)
+		}
+		if (family == null) {
+			if (other.family != null) {
+				return false;
+			}
+		} else if (!family.equals(other.family)) {
 			return false;
-		if (isLeaf != other.isLeaf)
+		}
+		if (isCluster != other.isCluster) {
 			return false;
-		if (isOrigin != other.isOrigin)
+		}
+		if (isLeaf != other.isLeaf) {
 			return false;
-		if (isPlaceholder != other.isPlaceholder)
+		}
+		if (isOrigin != other.isOrigin) {
 			return false;
-		if (isUsed != other.isUsed)
+		}
+		if (isPlaceholder != other.isPlaceholder) {
 			return false;
+		}
+		if (isUsed != other.isUsed) {
+			return false;
+		}
 		if (key == null) {
-			if (other.key != null)
+			if (other.key != null) {
 				return false;
-		} else if (!key.equals(other.key))
+			}
+		} else if (!key.equals(other.key)) {
 			return false;
-		if (nbrLinks != other.nbrLinks)
+		}
+		if (nbrLinks != other.nbrLinks) {
 			return false;
-		if (scanned != other.scanned)
+		}
+		if (scanned != other.scanned) {
 			return false;
-		if (traversed != other.traversed)
+		}
+		if (traversed != other.traversed) {
 			return false;
+		}
 		if (value == null) {
-			if (other.value != null)
+			if (other.value != null) {
 				return false;
-		} else if (!value.equals(other.value))
+			}
+		} else if (!value.equals(other.value)) {
 			return false;
+		}
 		return true;
+	}
+
+	/**
+	 * @return the color
+	 */
+	public final String getColor() {
+		return color;
 	}
 
 	/**
@@ -221,6 +254,10 @@ public class V_GenericNode extends V_Actor {
 		return entityType;
 	}
 
+	public String getFamily() {
+		return family;
+	}
+
 	/*
 	 * XXX: Added from legacy for compatibility; reassess the need for this.
 	 * --djue
@@ -237,6 +274,11 @@ public class V_GenericNode extends V_Actor {
 		return value;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -245,6 +287,7 @@ public class V_GenericNode extends V_Actor {
 		result = prime * result + dataSource;
 		result = prime * result + degree;
 		result = prime * result + entityType;
+		result = prime * result + ((family == null) ? 0 : family.hashCode());
 		result = prime * result + (isCluster ? 1231 : 1237);
 		result = prime * result + (isLeaf ? 1231 : 1237);
 		result = prime * result + (isOrigin ? 1231 : 1237);
@@ -294,6 +337,11 @@ public class V_GenericNode extends V_Actor {
 		return isUsed;
 	}
 
+	/**
+	 * 
+	 * @param type
+	 *            will be compared to the key of the object data
+	 */
 	public void removeData(final String type) {
 		Object l = null;
 
@@ -310,6 +358,14 @@ public class V_GenericNode extends V_Actor {
 
 	public void setCluster(final boolean isCluster) {
 		this.isCluster = isCluster;
+	}
+
+	/**
+	 * @param c
+	 *            the color to set
+	 */
+	public final void setColor(final String c) {
+		this.color = c;
 	}
 
 	/**
@@ -359,6 +415,10 @@ public class V_GenericNode extends V_Actor {
 		this.entityType = entityType;
 	}
 
+	public void setFamily(String family) {
+		this.family = family;
+	}
+
 	/*
 	 * XXX: Added from legacy for compatibility; reassess the need for this.
 	 * --djue
@@ -401,6 +461,21 @@ public class V_GenericNode extends V_Actor {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "V_GenericNode ["
+				+ (family != null ? "family=" + family + ", " : "")
+				+ (key != null ? "key=" + key + ", " : "")
+				+ (value != null ? "value=" + value + ", " : "")
+				+ (super.toString() != null ? "toString()=" + super.toString()
+						: "") + "]";
 	}
 
 }

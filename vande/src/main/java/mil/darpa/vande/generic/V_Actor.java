@@ -11,15 +11,19 @@ import java.util.List;
  * 
  */
 public class V_Actor {
-	protected String id; // must be enough to identifiy the entity
 	/**
-	 * Might serve the purpose of valueType in the old code, which was soemthing like customer or account.
+	 * must be enough to identify the entity
 	 */
-	protected String idType;  
-	protected String idVal;
+	private String id;
+	/**
+	 * Might serve the purpose of valueType in the old code, which was soemthing
+	 * like customer or account.
+	 */
+	private String idType;
+	private String idVal;
 	// will also be used as the id for the node
-	protected String label;
-	protected List<V_IdProperty> properties = null;
+	private String label;
+	private List<V_IdProperty> properties = null;
 
 	public V_Actor() {
 		// TODO Auto-generated constructor stub
@@ -29,7 +33,7 @@ public class V_Actor {
 		this.id = id;
 	}
 
-	public void addProperty(final String name, final String value) {
+	public final void addProperty(final String name, final String value) {
 		addProperty(new V_IdProperty(name, value));
 	}
 
@@ -39,70 +43,93 @@ public class V_Actor {
 	 * @param prop
 	 *            IdProperty
 	 */
-	public void addProperty(final V_IdProperty prop) {
+	public final void addProperty(final V_IdProperty prop) {
 		if (properties == null) {
 			properties = new ArrayList<V_IdProperty>();
 		}
 		properties.add(prop);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		V_Actor other = (V_Actor) obj;
 		if (id == null) {
-			if (other.id != null)
+			if (other.id != null) {
 				return false;
-		} else if (!id.equals(other.id))
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		if (idType == null) {
-			if (other.idType != null)
+			if (other.idType != null) {
 				return false;
-		} else if (!idType.equals(other.idType))
+			}
+		} else if (!idType.equals(other.idType)) {
 			return false;
+		}
 		if (idVal == null) {
-			if (other.idVal != null)
+			if (other.idVal != null) {
 				return false;
-		} else if (!idVal.equals(other.idVal))
+			}
+		} else if (!idVal.equals(other.idVal)) {
 			return false;
+		}
 		if (label == null) {
-			if (other.label != null)
+			if (other.label != null) {
 				return false;
-		} else if (!label.equals(other.label))
+			}
+		} else if (!label.equals(other.label)) {
 			return false;
+		}
 		if (properties == null) {
-			if (other.properties != null)
+			if (other.properties != null) {
 				return false;
-		} else if (!properties.equals(other.properties))
+			}
+		} else if (!properties.equals(other.properties)) {
 			return false;
+		}
 		return true;
 	}
 
-	public String getId() {
+	public final String getId() {
 		return id;
 	}
 
-	public String getIdType() {
+	public final String getIdType() {
 		return idType;
 	}
 
-	public String getIdVal() {
+	public final String getIdVal() {
 		return idVal;
 	}
 
-	public String getLabel() {
+	public final String getLabel() {
 		return label;
 	}
 
-	public List<V_IdProperty> getProperties() {
+	public final List<V_IdProperty> getProperties() {
 		return properties;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -119,7 +146,6 @@ public class V_Actor {
 	public void setId(final String id) {
 		this.id = id;
 	}
-
 
 	public void setIdType(final String idType) {
 		this.idType = idType;

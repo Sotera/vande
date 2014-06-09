@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class V_NodeList {
+public class V_NodeList implements Cloneable {
 
 	private Map<String, V_GenericNode> nodes = new HashMap<String, V_GenericNode>(
 			4);
@@ -119,12 +119,20 @@ public class V_NodeList {
 		return nodes.containsKey(node.getKey());
 	}
 
+	/**
+	 * What is the compelling reason for this? We would not have added any nodes
+	 * to the list unless an edge was possible.
+	 * 
+	 * @param elist
+	 */
 	public void removeOrphans(final V_EdgeList elist) {
 		Map<String, V_GenericNode> newnodes = new HashMap<String, V_GenericNode>();
 
 		for (V_GenericEdge e : elist.getEdges()) {
-			newnodes.put(e.getSourceId(), e.getSourceNode());
-			newnodes.put(e.getTargetId(), e.getTargetNode());
+//			newnodes.put(e.getSourceId(), e.getSourceNode());
+//			newnodes.put(e.getTargetId(), e.getTargetNode());
+			newnodes.put(e.getSourceId(), nodes.get(e.getSourceId()));
+			newnodes.put(e.getTargetId(), nodes.get(e.getTargetId()));
 		}
 
 		nodes = newnodes;
@@ -151,20 +159,20 @@ public class V_NodeList {
 	 * This seems to essentially remove any nodes that are unused,
 	 * non-identifiers.
 	 */
-//	@Deprecated
-//	public void removeUnused() {
-//		Map<String, V_GenericNode> map = new HashMap<String, V_GenericNode>();
-//		for (V_GenericNode n : nodes.values()) {
-//			if (map.containsKey(n.getKey())) {
-//				continue;
-//			}
-//			if ((n.getEntityType() != EntityRefNode.ENTITY_IDENTIFIER)
-//					|| n.isUsed()) {
-//				map.put(n.getKey(), n);
-//			}
-//		}
-//		nodes = map;
-//	}
+	// @Deprecated
+	// public void removeUnused() {
+	// Map<String, V_GenericNode> map = new HashMap<String, V_GenericNode>();
+	// for (V_GenericNode n : nodes.values()) {
+	// if (map.containsKey(n.getKey())) {
+	// continue;
+	// }
+	// if ((n.getEntityType() != EntityRefNode.ENTITY_IDENTIFIER)
+	// || n.isUsed()) {
+	// map.put(n.getKey(), n);
+	// }
+	// }
+	// nodes = map;
+	// }
 
 	public int size() {
 		return nodes.size();

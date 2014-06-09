@@ -13,7 +13,7 @@ public class GraphResponse {
 	}
 
 	public GraphmlGraph getGraph() {
-		return graphml.graph;
+		return graphml.getGraph();
 	}
 
 	public GraphmlContainer getGraphml() {

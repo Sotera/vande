@@ -7,6 +7,8 @@ import mil.darpa.vande.interactions.Interaction;
 
 /**
  * 
+ * Updated so that it does not retain the actual node objects, just their ids.
+ * 
  * @author PWG
  * 
  */
@@ -24,9 +26,9 @@ public class V_GenericEdge {
 	private String label;
 	private int month = -1;
 	private String sourceId = "src";
-	private V_GenericNode sourceNode;
+	// private V_GenericNode sourceNode;
 	private String targetId = "target";
-	private V_GenericNode targetNode;
+	// private V_GenericNode targetNode;
 	private double value = 0; // to be a serialized amount to hold aggregated
 
 	// Consider allowing double or Number
@@ -41,35 +43,37 @@ public class V_GenericEdge {
 
 	}
 
-	/**
-	 * TODO: Taken from legacy code. Determine if still needed.
-	 * 
-	 * @param src_node
-	 * @param target_node
-	 * @param degree
-	 */
-	public V_GenericEdge(final V_GenericNode src_node,
-			final V_GenericNode target_node, final int degree) {
-		this.sourceId = src_node.getId();
-		this.targetId = target_node.getId();
-		this.sourceNode = src_node;
-		this.targetNode = target_node;
-		this.degree = degree;
-		this.count = degree;
-	}
 	public V_GenericEdge(final V_GenericNode src_node,
 			final V_GenericNode target_node) {
 		this.sourceId = src_node.getId();
 		this.targetId = target_node.getId();
-		this.sourceNode = src_node;
-		this.targetNode = target_node;
+		// this.sourceNode = src_node;
+		// this.targetNode = target_node;
 	}
+
+	/**
+	 * TODO: Taken from legacy code. Determine if still needed.
+	 * 
+	 * @param srcNode
+	 * @param target_node
+	 * @param degree
+	 */
+	public V_GenericEdge(final V_GenericNode srcNode,
+			final V_GenericNode targetNode, final int degree) {
+		this.sourceId = srcNode.getId();
+		this.targetId = targetNode.getId();
+		// this.sourceNode = srcNode;
+		// this.targetNode = targetNode;
+		this.degree = degree;
+		this.count = degree;
+	}
+
 	/**
 	 * Non-temporal constructor
 	 * 
-	 * @param src_node
+	 * @param srcNode
 	 *            Generic Node
-	 * @param target_node
+	 * @param targetNode
 	 *            Generic Node
 	 * @param degree
 	 *            int
@@ -80,13 +84,13 @@ public class V_GenericEdge {
 	 * @param label
 	 *            String
 	 */
-	public V_GenericEdge(final V_GenericNode src_node,
-			final V_GenericNode target_node, final int degree,
-			final int weight, final boolean directed, final String label) {
-		this.sourceId = src_node.getId();
-		this.targetId = target_node.getId();
-		this.sourceNode = src_node;
-		this.targetNode = target_node;
+	public V_GenericEdge(final V_GenericNode srcNode,
+			final V_GenericNode targetNode, final int degree, final int weight,
+			final boolean directed, final String label) {
+		this.sourceId = srcNode.getId();
+		this.targetId = targetNode.getId();
+		// this.sourceNode = srcNode;
+		// this.targetNode = targetNode;
 		this.degree = degree;
 		this.weight = weight;
 		this.directed = directed;
@@ -96,9 +100,9 @@ public class V_GenericEdge {
 	/**
 	 * Constructor with temporal aspect
 	 * 
-	 * @param src_node
+	 * @param srcNode
 	 *            Generic Node
-	 * @param target_node
+	 * @param targetNode
 	 *            Generic Node
 	 * @param degree
 	 *            int
@@ -114,14 +118,14 @@ public class V_GenericEdge {
 	 * @param year
 	 *            int
 	 */
-	public V_GenericEdge(final V_GenericNode src_node,
-			final V_GenericNode target_node, final int degree,
-			final int weight, final boolean directed, final String label,
-			final int day, final int month, final int year) {
-		this.sourceId = src_node.getId();
-		this.targetId = target_node.getId();
-		this.sourceNode = src_node;
-		this.targetNode = target_node;
+	public V_GenericEdge(final V_GenericNode srcNode,
+			final V_GenericNode targetNode, final int degree, final int weight,
+			final boolean directed, final String label, final int day,
+			final int month, final int year) {
+		this.sourceId = srcNode.getId();
+		this.targetId = targetNode.getId();
+		// this.sourceNode = srcNode;
+		// this.targetNode = targetNode;
 		this.degree = degree;
 		this.weight = weight;
 		this.directed = directed;
@@ -143,77 +147,109 @@ public class V_GenericEdge {
 		}
 	}
 
-	public void aggregate(final int count, final double value) {
-		this.count += count;
-		this.value += value;
-	}
+//	public void aggregate(final int count, final double value) {
+//		this.count += count;
+//		this.value += value;
+//	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		V_GenericEdge other = (V_GenericEdge) obj;
-		if (count != other.count)
+		if (count != other.count) {
 			return false;
+		}
 		if (dataSet == null) {
-			if (other.dataSet != null)
+			if (other.dataSet != null) {
 				return false;
-		} else if (!dataSet.equals(other.dataSet))
+			}
+		} else if (!dataSet.equals(other.dataSet)) {
 			return false;
-		if (day != other.day)
+		}
+		if (day != other.day) {
 			return false;
-		if (degree != other.degree)
+		}
+		if (degree != other.degree) {
 			return false;
-		if (directed != other.directed)
+		}
+		if (directed != other.directed) {
 			return false;
+		}
 		if (idType == null) {
-			if (other.idType != null)
+			if (other.idType != null) {
 				return false;
-		} else if (!idType.equals(other.idType))
+			}
+		} else if (!idType.equals(other.idType)) {
 			return false;
+		}
 		if (idVal == null) {
-			if (other.idVal != null)
+			if (other.idVal != null) {
 				return false;
-		} else if (!idVal.equals(other.idVal))
+			}
+		} else if (!idVal.equals(other.idVal)) {
 			return false;
+		}
 		if (label == null) {
-			if (other.label != null)
+			if (other.label != null) {
 				return false;
-		} else if (!label.equals(other.label))
+			}
+		} else if (!label.equals(other.label)) {
 			return false;
-		if (month != other.month)
+		}
+		if (month != other.month) {
 			return false;
+		}
 		if (sourceId == null) {
-			if (other.sourceId != null)
+			if (other.sourceId != null) {
 				return false;
-		} else if (!sourceId.equals(other.sourceId))
+			}
+		} else if (!sourceId.equals(other.sourceId)) {
 			return false;
-		if (sourceNode == null) {
-			if (other.sourceNode != null)
-				return false;
-		} else if (!sourceNode.equals(other.sourceNode))
-			return false;
+		}
+		// if (sourceNode == null) {
+		// if (other.sourceNode != null) {
+		// return false;
+		// }
+		// } else if (!sourceNode.equals(other.sourceNode)) {
+		// return false;
+		// }
 		if (targetId == null) {
-			if (other.targetId != null)
+			if (other.targetId != null) {
 				return false;
-		} else if (!targetId.equals(other.targetId))
+			}
+		} else if (!targetId.equals(other.targetId)) {
 			return false;
-		if (targetNode == null) {
-			if (other.targetNode != null)
-				return false;
-		} else if (!targetNode.equals(other.targetNode))
-			return false;
+		}
+		// if (targetNode == null) {
+		// if (other.targetNode != null) {
+		// return false;
+		// }
+		// } else if (!targetNode.equals(other.targetNode)) {
+		// return false;
+		// }
 		if (Double.doubleToLongBits(value) != Double
-				.doubleToLongBits(other.value))
+				.doubleToLongBits(other.value)) {
 			return false;
-		if (weight != other.weight)
+		}
+		if (weight != other.weight) {
 			return false;
-		if (year != other.year)
+		}
+		if (year != other.year) {
 			return false;
+		}
 		return true;
 	}
 
@@ -243,6 +279,7 @@ public class V_GenericEdge {
 
 	/**
 	 * XXX:Only used by the graphml flavor of edges, not sure if needed --djue
+	 * 
 	 * @return the degree
 	 */
 	public final int getDegree() {
@@ -272,9 +309,9 @@ public class V_GenericEdge {
 	/**
 	 * @return the sourceNode
 	 */
-	public final V_GenericNode getSourceNode() {
-		return sourceNode;
-	}
+	// public final V_GenericNode getSourceNode() {
+	// return sourceNode;
+	// }
 
 	public final String getTargetId() {
 		return targetId;
@@ -283,9 +320,9 @@ public class V_GenericEdge {
 	/**
 	 * @return the targetNode
 	 */
-	public final V_GenericNode getTargetNode() {
-		return targetNode;
-	}
+	// public final V_GenericNode getTargetNode() {
+	// return targetNode;
+	// }
 
 	public double getValue() {
 		return value;
@@ -298,14 +335,19 @@ public class V_GenericEdge {
 	 * @return
 	 */
 
-	public int getWeight() {
+	public final int getWeight() {
 		return weight;
 	}
 
-	public int getYear() {
+	public final int getYear() {
 		return year;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -321,12 +363,12 @@ public class V_GenericEdge {
 		result = prime * result + month;
 		result = prime * result
 				+ ((sourceId == null) ? 0 : sourceId.hashCode());
-		result = prime * result
-				+ ((sourceNode == null) ? 0 : sourceNode.hashCode());
+		// result = prime * result
+		// + ((sourceNode == null) ? 0 : sourceNode.hashCode());
 		result = prime * result
 				+ ((targetId == null) ? 0 : targetId.hashCode());
-		result = prime * result
-				+ ((targetNode == null) ? 0 : targetNode.hashCode());
+		// result = prime * result
+		// + ((targetNode == null) ? 0 : targetNode.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(value);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -362,13 +404,13 @@ public class V_GenericEdge {
 		if (!sameNodes(ia.getSourceId(), ia.getTargetId())) {
 			return false;
 		}
-		if (matchDay && this.day != ia.day) {
+		if (matchDay && this.day != ia.getDay()) {
 			return false;
 		}
-		if ((matchDay || matchMonth) && this.month != ia.month) {
+		if ((matchDay || matchMonth) && this.month != ia.getMonth()) {
 			return false;
 		}
-		if ((matchDay || matchMonth || matchYear) && this.year != ia.year) {
+		if ((matchDay || matchMonth || matchYear) && this.year != ia.getYear()) {
 			return false;
 		}
 		return true;
@@ -441,6 +483,7 @@ public class V_GenericEdge {
 
 	/**
 	 * XXX:This seems unused.
+	 * 
 	 * @param degree
 	 *            the degree to set
 	 */
@@ -453,7 +496,7 @@ public class V_GenericEdge {
 	}
 
 	public void setDoubleValue(final double v) {
-		this.value = new Double(v);
+		this.value = v;
 	}
 
 	public void setDoubleValue(final String s) {
@@ -463,7 +506,7 @@ public class V_GenericEdge {
 		} catch (NumberFormatException e) {
 		}
 		;
-		this.value = new Double(val);
+		this.value = val;
 	}
 
 	public void setIdType(final String idType) {
@@ -474,12 +517,11 @@ public class V_GenericEdge {
 		this.idVal = idVal;
 	}
 
-	public void setIntValue(final int v) {
-		this.value = new Integer(v);
-	}
+//	public void setIntValue(final int v) {
+//		this.value = v;
+//	}
 
 	public void setLabel(final String label) {
-
 		this.label = label;
 	}
 
@@ -500,9 +542,9 @@ public class V_GenericEdge {
 	 *            the sourceNode to set
 	 */
 
-	public final void setSourceNode(final V_GenericNode sourceNode) {
-		this.sourceNode = sourceNode;
-	}
+	// public final void setSourceNode(final V_GenericNode sourceNode) {
+	// this.sourceNode = sourceNode;
+	// }
 
 	/**
 	 * @param target
@@ -517,9 +559,9 @@ public class V_GenericEdge {
 	 * @param targetNode
 	 *            the targetNode to set
 	 */
-	public final void setTargetNode(final V_GenericNode targetNode) {
-		this.targetNode = targetNode;
-	}
+	// public final void setTargetNode(final V_GenericNode targetNode) {
+	// this.targetNode = targetNode;
+	// }
 
 	public void setValue(final double amount) {
 		this.value = amount;

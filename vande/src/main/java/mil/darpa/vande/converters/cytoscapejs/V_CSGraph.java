@@ -46,32 +46,45 @@ public class V_CSGraph {
 		nodes.add(node);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		V_CSGraph other = (V_CSGraph) obj;
 		if (edges == null) {
-			if (other.edges != null)
+			if (other.edges != null) {
 				return false;
-		} else if (!edges.equals(other.edges))
+			}
+		} else if (!edges.equals(other.edges)) {
 			return false;
-		if (intStatus != other.intStatus)
+		}
+		if (intStatus != other.intStatus) {
 			return false;
+		}
 		if (nodes == null) {
-			if (other.nodes != null)
+			if (other.nodes != null) {
 				return false;
-		} else if (!nodes.equals(other.nodes))
+			}
+		} else if (!nodes.equals(other.nodes)) {
 			return false;
+		}
 		if (strStatus == null) {
-			if (other.strStatus != null)
+			if (other.strStatus != null) {
 				return false;
-		} else if (!strStatus.equals(other.strStatus))
+			}
+		} else if (!strStatus.equals(other.strStatus)) {
 			return false;
+		}
 		return true;
 	}
 
@@ -99,6 +112,9 @@ public class V_CSGraph {
 		return strStatus;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;

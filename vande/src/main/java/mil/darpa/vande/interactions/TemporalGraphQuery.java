@@ -24,7 +24,7 @@ public class TemporalGraphQuery extends V_GraphQuery {
 	private int minLinksPerPeriod = 1;
 	private int minPairValue = 0;
 
-	public TemporalGraphQuery(V_GraphQuery q) {
+	public TemporalGraphQuery(final V_GraphQuery q) {
 		super(q);
 	}
 
@@ -55,7 +55,7 @@ public class TemporalGraphQuery extends V_GraphQuery {
 	 * 
 	 * @return
 	 */
-	public int getMinPairValue() {
+	public final int getMinPairValue() {
 		return minPairValue;
 	}
 
@@ -64,7 +64,7 @@ public class TemporalGraphQuery extends V_GraphQuery {
 	 * 
 	 * @return
 	 */
-	public boolean isByDay() {
+	public final boolean isByDay() {
 		return byDay;
 	}
 
@@ -73,7 +73,7 @@ public class TemporalGraphQuery extends V_GraphQuery {
 	 * 
 	 * @return
 	 */
-	public boolean isByHour() {
+	public final boolean isByHour() {
 		return byHour;
 	}
 
@@ -82,7 +82,7 @@ public class TemporalGraphQuery extends V_GraphQuery {
 	 * 
 	 * @return
 	 */
-	public boolean isByMinute() {
+	public final boolean isByMinute() {
 		return byMinute;
 	}
 
@@ -91,7 +91,7 @@ public class TemporalGraphQuery extends V_GraphQuery {
 	 * 
 	 * @return
 	 */
-	public boolean isByMonth() {
+	public final boolean isByMonth() {
 		return byMonth;
 	}
 
@@ -100,7 +100,7 @@ public class TemporalGraphQuery extends V_GraphQuery {
 	 * 
 	 * @return
 	 */
-	public boolean isByYear() {
+	public final boolean isByYear() {
 		return byYear;
 	}
 
@@ -113,7 +113,7 @@ public class TemporalGraphQuery extends V_GraphQuery {
 	 * 
 	 * @param byHour
 	 */
-	public void setByHour(final boolean byHour) {
+	public final void setByHour(final boolean byHour) {
 		this.byHour = byHour;
 	}
 
@@ -122,11 +122,11 @@ public class TemporalGraphQuery extends V_GraphQuery {
 	 * 
 	 * @param byMinute
 	 */
-	public void setByMinute(final boolean byMinute) {
+	public final void setByMinute(final boolean byMinute) {
 		this.byMinute = byMinute;
 	}
 
-	public void setByMonth(final boolean byMonth) {
+	public final void setByMonth(final boolean byMonth) {
 		this.byMonth = byMonth;
 	}
 
@@ -139,26 +139,28 @@ public class TemporalGraphQuery extends V_GraphQuery {
 	 * 
 	 * @param minEdgeValue
 	 */
-	public void setMinEdgeValue(final int minEdgeValue) {
+	public final void setMinEdgeValue(final int minEdgeValue) {
 		this.minEdgeValue = minEdgeValue;
 	}
 
 	/**
 	 * FIXME: Seems unused
+	 * 
 	 * @param minLinksPerPeriod
 	 *            int. Default 1. Do not show an edge for a period if the number
 	 *            of links for that period between the two nodes is less than
 	 *            this number.
 	 */
-	public void setMinLinksPerPeriod(final int minLinksPerPeriod) {
+	public final void setMinLinksPerPeriod(final int minLinksPerPeriod) {
 		this.minLinksPerPeriod = minLinksPerPeriod;
 	}
 
 	/**
 	 * FIXME: Seems unused
+	 * 
 	 * @param minPairValue
 	 */
-	public void setMinPairValue(final int minPairValue) {
+	public final void setMinPairValue(final int minPairValue) {
 		this.minPairValue = minPairValue;
 	}
 

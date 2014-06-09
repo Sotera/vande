@@ -1,7 +1,6 @@
 package mil.darpa.vande.property;
 
 import mil.darpa.vande.generic.V_GenericGraph;
-import mil.darpa.vande.generic.V_NodeList;
 
 /**
  * This is a copy of InteractionCallback, with the object changed to some
