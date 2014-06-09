@@ -3,8 +3,6 @@ package mil.darpa.vande.generic;
 import java.util.HashSet;
 import java.util.Set;
 
-import mil.darpa.vande.interactions.Interaction;
-
 /**
  * 
  * Updated so that it does not retain the actual node objects, just their ids.
@@ -139,18 +137,18 @@ public class V_GenericEdge {
 		dataSet.add(new V_GraphObjectData(name, value));
 	}
 
-	public void addInteractionProperties(final Interaction ia) {
-		if (ia.getProperties() != null) {
-			for (V_IdProperty p : ia.getProperties()) {
-				addData(p.getIdName(), p.getIdValue());
-			}
-		}
-	}
+	// public void addInteractionProperties(final Interaction ia) {
+	// if (ia.getProperties() != null) {
+	// for (V_IdProperty p : ia.getProperties()) {
+	// addData(p.getIdName(), p.getIdValue());
+	// }
+	// }
+	// }
 
-//	public void aggregate(final int count, final double value) {
-//		this.count += count;
-//		this.value += value;
-//	}
+	// public void aggregate(final int count, final double value) {
+	// this.count += count;
+	// this.value += value;
+	// }
 
 	/*
 	 * (non-Javadoc)
@@ -219,13 +217,6 @@ public class V_GenericEdge {
 		} else if (!sourceId.equals(other.sourceId)) {
 			return false;
 		}
-		// if (sourceNode == null) {
-		// if (other.sourceNode != null) {
-		// return false;
-		// }
-		// } else if (!sourceNode.equals(other.sourceNode)) {
-		// return false;
-		// }
 		if (targetId == null) {
 			if (other.targetId != null) {
 				return false;
@@ -233,13 +224,6 @@ public class V_GenericEdge {
 		} else if (!targetId.equals(other.targetId)) {
 			return false;
 		}
-		// if (targetNode == null) {
-		// if (other.targetNode != null) {
-		// return false;
-		// }
-		// } else if (!targetNode.equals(other.targetNode)) {
-		// return false;
-		// }
 		if (Double.doubleToLongBits(value) != Double
 				.doubleToLongBits(other.value)) {
 			return false;
@@ -306,23 +290,9 @@ public class V_GenericEdge {
 		return sourceId;
 	}
 
-	/**
-	 * @return the sourceNode
-	 */
-	// public final V_GenericNode getSourceNode() {
-	// return sourceNode;
-	// }
-
 	public final String getTargetId() {
 		return targetId;
 	}
-
-	/**
-	 * @return the targetNode
-	 */
-	// public final V_GenericNode getTargetNode() {
-	// return targetNode;
-	// }
 
 	public double getValue() {
 		return value;
@@ -363,12 +333,8 @@ public class V_GenericEdge {
 		result = prime * result + month;
 		result = prime * result
 				+ ((sourceId == null) ? 0 : sourceId.hashCode());
-		// result = prime * result
-		// + ((sourceNode == null) ? 0 : sourceNode.hashCode());
 		result = prime * result
 				+ ((targetId == null) ? 0 : targetId.hashCode());
-		// result = prime * result
-		// + ((targetNode == null) ? 0 : targetNode.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(value);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -398,23 +364,23 @@ public class V_GenericEdge {
 	 *            boolean
 	 * @return boolean true if the interaction matches this edge
 	 */
-	public boolean matchesInteraction(final Interaction ia,
-			final boolean matchDay, final boolean matchMonth,
-			final boolean matchYear) {
-		if (!sameNodes(ia.getSourceId(), ia.getTargetId())) {
-			return false;
-		}
-		if (matchDay && this.day != ia.getDay()) {
-			return false;
-		}
-		if ((matchDay || matchMonth) && this.month != ia.getMonth()) {
-			return false;
-		}
-		if ((matchDay || matchMonth || matchYear) && this.year != ia.getYear()) {
-			return false;
-		}
-		return true;
-	}
+	// public boolean matchesInteraction(final Interaction ia,
+	// final boolean matchDay, final boolean matchMonth,
+	// final boolean matchYear) {
+	// if (!sameNodes(ia.getSourceId(), ia.getTargetId())) {
+	// return false;
+	// }
+	// if (matchDay && this.day != ia.getDay()) {
+	// return false;
+	// }
+	// if ((matchDay || matchMonth) && this.month != ia.getMonth()) {
+	// return false;
+	// }
+	// if ((matchDay || matchMonth || matchYear) && this.year != ia.getYear()) {
+	// return false;
+	// }
+	// return true;
+	// }
 
 	public void removeData(final String type) {
 		Object l = null;
@@ -430,12 +396,24 @@ public class V_GenericEdge {
 		}
 	}
 
+	/**
+	 * Checks the parameters against the ids of the nodes for this edge, to see
+	 * if they deal with the same nodes.
+	 * 
+	 * @param s
+	 * @param t
+	 * @return
+	 */
 	public boolean sameNodes(final String s, final String t) {
+		// See if it is an exact match.
 		if (s.equals(sourceId) && t.equals(targetId)) {
 			return true;
 		} else if (directed) {
+			// if the order mattered, return false because it wasn't an exact
+			// match.
 			return false;
 		} else {
+			// try the other order
 			return t.equals(sourceId) && s.equals(targetId);
 		}
 	}
@@ -517,9 +495,9 @@ public class V_GenericEdge {
 		this.idVal = idVal;
 	}
 
-//	public void setIntValue(final int v) {
-//		this.value = v;
-//	}
+	// public void setIntValue(final int v) {
+	// this.value = v;
+	// }
 
 	public void setLabel(final String label) {
 		this.label = label;

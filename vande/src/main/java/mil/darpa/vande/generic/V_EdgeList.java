@@ -2,10 +2,12 @@ package mil.darpa.vande.generic;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
-import mil.darpa.vande.interactions.Interaction;
+//import mil.darpa.vande.interactions.Interaction;
 import mil.darpa.vande.interactions.TemporalGraphQuery;
 
 /**
@@ -14,12 +16,13 @@ import mil.darpa.vande.interactions.TemporalGraphQuery;
  * trouble causing duplicates by storing a map and forcing classes that add
  * edges to provide a unique key for the interaction/property edge --djue
  * 
- * Updated so that it does not expect genericEdge to contain the actual node objects--just the ids
+ * Updated so that it does not expect genericEdge to contain the actual node
+ * objects--just the ids
  * 
  * @author PWG
  * 
  */
-public class V_EdgeList implements Cloneable{
+public class V_EdgeList implements Cloneable {
 
 	private Set<V_GenericEdge> edges = new HashSet<V_GenericEdge>();
 	private V_GraphQuery query;
@@ -43,29 +46,29 @@ public class V_EdgeList implements Cloneable{
 	 * @param targetNode
 	 *            GenericNode
 	 */
-	public boolean addInteraction(final Interaction ia,
-			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-
-		if (ia.getValue() < tquery.getMinTransValue()) {
-			return false;
-		}
-//
-//		checkGlobal(ia, sourceNode, targetNode);
-//
-//		if (tquery.isByYear()) {
-//			checkYearly(ia, sourceNode, targetNode);
-//		}
-//
-//		if (tquery.isByMonth()) {
-//			checkMonthly(ia, sourceNode, targetNode);
-//		}
-//
-//		if (tquery.isByDay()) {
-//			checkDaily(ia, sourceNode, targetNode);
-//		}
-
-		return true;
-	}
+	// public boolean addInteraction(final Interaction ia,
+	// final V_GenericNode sourceNode, final V_GenericNode targetNode) {
+	//
+	// if (ia.getValue() < tquery.getMinTransValue()) {
+	// return false;
+	// }
+	// //
+	// // checkGlobal(ia, sourceNode, targetNode);
+	// //
+	// // if (tquery.isByYear()) {
+	// // checkYearly(ia, sourceNode, targetNode);
+	// // }
+	// //
+	// // if (tquery.isByMonth()) {
+	// // checkMonthly(ia, sourceNode, targetNode);
+	// // }
+	// //
+	// // if (tquery.isByDay()) {
+	// // checkDaily(ia, sourceNode, targetNode);
+	// // }
+	//
+	// return true;
+	// }
 
 	@Override
 	public String toString() {
@@ -81,28 +84,28 @@ public class V_EdgeList implements Cloneable{
 	 * @param sourceNode
 	 * @param targetNode
 	 */
-//	private void checkDaily(final Interaction ia,
-//			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-//		boolean found = false;
-//
-//		// First, add it to the full aggregation edge
-//
-//		for (V_GenericEdge e : edges) {
-//			if (e.matchesInteraction(ia, true, true, true)) {
-//				e.aggregate(1, ia.getValue());
-//				found = true;
-//				break;
-//			}
-//		}
-//
-//		if (!found) {
-//			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
-//			e.setDay(ia.getDay());
-//			e.setMonth(ia.getMonth());
-//			e.setYear(ia.getYear());
-//			edges.add(e);
-//		}
-//	}
+	// private void checkDaily(final Interaction ia,
+	// final V_GenericNode sourceNode, final V_GenericNode targetNode) {
+	// boolean found = false;
+	//
+	// // First, add it to the full aggregation edge
+	//
+	// for (V_GenericEdge e : edges) {
+	// if (e.matchesInteraction(ia, true, true, true)) {
+	// e.aggregate(1, ia.getValue());
+	// found = true;
+	// break;
+	// }
+	// }
+	//
+	// if (!found) {
+	// V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
+	// e.setDay(ia.getDay());
+	// e.setMonth(ia.getMonth());
+	// e.setYear(ia.getYear());
+	// edges.add(e);
+	// }
+	// }
 
 	/**
 	 * This is stupid, get this aggregation logic out of here. --djue
@@ -111,28 +114,28 @@ public class V_EdgeList implements Cloneable{
 	 * @param sourceNode
 	 * @param targetNode
 	 */
-//	private void checkGlobal(final Interaction ia,
-//			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-//		boolean found = false;
-//
-//		// First, add it to the full aggregation edge
-//
-//		for (V_GenericEdge e : edges) {
-//			if (e.matchesInteraction(ia, false, false, false)) {
-//				e.aggregate(1, ia.getValue());
-//				found = true;
-//				break;
-//			}
-//		}
-//
-//		if (!found) {
-//			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
-//			e.setDay(-1);
-//			e.setMonth(-1);
-//			e.setYear(-1);
-//			edges.add(e);
-//		}
-//	}
+	// private void checkGlobal(final Interaction ia,
+	// final V_GenericNode sourceNode, final V_GenericNode targetNode) {
+	// boolean found = false;
+	//
+	// // First, add it to the full aggregation edge
+	//
+	// for (V_GenericEdge e : edges) {
+	// if (e.matchesInteraction(ia, false, false, false)) {
+	// e.aggregate(1, ia.getValue());
+	// found = true;
+	// break;
+	// }
+	// }
+	//
+	// if (!found) {
+	// V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
+	// e.setDay(-1);
+	// e.setMonth(-1);
+	// e.setYear(-1);
+	// edges.add(e);
+	// }
+	// }
 
 	/**
 	 * This is stupid, get this aggregation logic out of here. --djue
@@ -141,28 +144,28 @@ public class V_EdgeList implements Cloneable{
 	 * @param sourceNode
 	 * @param targetNode
 	 */
-//	private void checkMonthly(final Interaction ia,
-//			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-//		boolean found = false;
-//
-//		// First, add it to the full aggregation edge
-//
-//		for (V_GenericEdge e : edges) {
-//			if (e.matchesInteraction(ia, false, true, true)) {
-//				e.aggregate(1, ia.getValue());
-//				found = true;
-//				break;
-//			}
-//		}
-//
-//		if (!found) {
-//			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
-//			e.setDay(-1);
-//			e.setMonth(ia.getMonth());
-//			e.setYear(ia.getYear());
-//			edges.add(e);
-//		}
-//	}
+	// private void checkMonthly(final Interaction ia,
+	// final V_GenericNode sourceNode, final V_GenericNode targetNode) {
+	// boolean found = false;
+	//
+	// // First, add it to the full aggregation edge
+	//
+	// for (V_GenericEdge e : edges) {
+	// if (e.matchesInteraction(ia, false, true, true)) {
+	// e.aggregate(1, ia.getValue());
+	// found = true;
+	// break;
+	// }
+	// }
+	//
+	// if (!found) {
+	// V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
+	// e.setDay(-1);
+	// e.setMonth(ia.getMonth());
+	// e.setYear(ia.getYear());
+	// edges.add(e);
+	// }
+	// }
 
 	/**
 	 * This is stupid, get this aggregation logic out of here. --djue
@@ -171,28 +174,28 @@ public class V_EdgeList implements Cloneable{
 	 * @param sourceNode
 	 * @param targetNode
 	 */
-//	private void checkYearly(final Interaction ia,
-//			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-//		boolean found = false;
-//
-//		// First, add it to the full aggregation edge
-//
-//		for (V_GenericEdge e : edges) {
-//			if (e.matchesInteraction(ia, false, false, true)) {
-//				e.aggregate(1, ia.getValue());
-//				found = true;
-//				break;
-//			}
-//		}
-//
-//		if (!found) {
-//			V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
-//			e.setDay(-1);
-//			e.setMonth(-1);
-//			e.setYear(ia.getYear());
-//			edges.add(e);
-//		}
-//	}
+	// private void checkYearly(final Interaction ia,
+	// final V_GenericNode sourceNode, final V_GenericNode targetNode) {
+	// boolean found = false;
+	//
+	// // First, add it to the full aggregation edge
+	//
+	// for (V_GenericEdge e : edges) {
+	// if (e.matchesInteraction(ia, false, false, true)) {
+	// e.aggregate(1, ia.getValue());
+	// found = true;
+	// break;
+	// }
+	// }
+	//
+	// if (!found) {
+	// V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
+	// e.setDay(-1);
+	// e.setMonth(-1);
+	// e.setYear(ia.getYear());
+	// edges.add(e);
+	// }
+	// }
 
 	/**
 	 * Why?? --djue
@@ -258,16 +261,16 @@ public class V_EdgeList implements Cloneable{
 				d += e.getValue();
 			}
 		}
-
-		for (String s : pairList.keySet()) {
-			if (pairList.get(s) < v) {
-				String[] ids = s.split(":");
+		Iterator<Entry<String, Double>> iter = pairList.entrySet().iterator();
+		while (iter.hasNext()) {
+			Entry<String, Double> x = iter.next();
+			if (x.getValue() < v) {
+				String[] ids = x.getKey().split(":");
 				for (V_GenericEdge e : edges) {
 					if (e.sameNodes(ids[0], ids[1])) {
 						results.add(e);
 					}
 				}
-
 			}
 		}
 		edges = results;
@@ -284,25 +287,6 @@ public class V_EdgeList implements Cloneable{
 	 */
 	public Set<V_GenericEdge> getEdges() {
 		return edges;
-	}
-
-	private V_GenericEdge makeEdge(final Interaction ia,
-			final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-		V_GenericEdge e = new V_GenericEdge();
-		e.setSourceId(ia.getSourceId());
-		e.setTargetId(ia.getTargetId());
-
-//		e.setSourceNode(sourceNode);
-//		e.setTargetNode(targetNode);
-		e.setValue(ia.getValue());
-		e.setDirected(query.isDirected());
-		e.setCount(1);
-		e.addInteractionProperties(ia);
-
-		// TODO: setLabel? Perhaps this should be in ia, as the choice of
-		// what to use for the label should be customer-specific
-
-		return e;
 	}
 
 	public void addEdge(V_GenericEdge e) {
