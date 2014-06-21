@@ -7,14 +7,20 @@
 	<packaging>jar</packaging>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jackson2.version>2.2.1	</jackson2.version>
 		<testng-release-version>6.3.1</testng-release-version>
+		
+		<!-- properties for github -->
+		<github.global.server>github</github.global.server>
+		
 		<!-- Maven properties -->
 		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
 		<maven.site.plugin.version>3.0</maven.site.plugin.version>
 		<maven.project.info.reports.plugin.version>2.7</maven.project.info.reports.plugin.version>
 		<maven.dependency.plugin.version>2.1</maven.dependency.plugin.version>
 		<maven-surefire-plugin.version>2.16</maven-surefire-plugin.version>
+
 	</properties>
 
 	<dependencies>
@@ -56,6 +62,39 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.1</version>
+				<configuration>
+					<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<artifactId>site-maven-plugin</artifactId>
+				<version>0.8</version>
+				<configuration>
+					<message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
+					<noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
+					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- matches distribution management repository url above -->
+					<branch>refs/heads/mvn-repo</branch>                       <!-- remote branch name -->
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<repositoryName>vande</repositoryName>      <!-- github repo name -->
+					<repositoryOwner>Sotera</repositoryOwner>    <!-- github username -->
+				</configuration>
+				<executions>
+					<!-- run site-maven-plugin's 'site' target as part of the build's normal 
+						'deploy' phase -->
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<!-- enforce inclusion of source plugin to all children of Vande -->
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -73,4 +112,11 @@
 		</plugins>
 
 	</build>
+	<distributionManagement>
+		<repository>
+			<id>internal.repo</id>
+			<name>Temporary Staging Repository</name>
+			<url>file://${project.build.directory}/mvn-repo</url>
+		</repository>
+	</distributionManagement>
 </project>
