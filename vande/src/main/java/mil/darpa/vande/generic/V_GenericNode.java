@@ -254,6 +254,10 @@ public class V_GenericNode extends V_Actor {
 		return entityType;
 	}
 
+	/**
+	 * We use the family to determine what to search on, so be careful what you set it to!
+	 * @return
+	 */
 	public String getFamily() {
 		return family;
 	}
@@ -301,8 +305,9 @@ public class V_GenericNode extends V_Actor {
 		return result;
 	}
 
+	@Deprecated
 	public void incLinks() {
-		++nbrLinks;
+		nbrLinks++;
 	}
 
 	public boolean isCluster() {

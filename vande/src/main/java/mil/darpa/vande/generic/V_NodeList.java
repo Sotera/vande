@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class V_NodeList implements Cloneable {
 
 	private Map<String, V_GenericNode> nodes = new HashMap<String, V_GenericNode>(
@@ -108,6 +111,8 @@ public class V_NodeList implements Cloneable {
 		return results;
 	}
 
+	private Logger logger = LoggerFactory.getLogger(V_NodeList.class);
+
 	/**
 	 * XXX:Remove usage of this, put logic elsewhere.
 	 * 
@@ -127,14 +132,14 @@ public class V_NodeList implements Cloneable {
 	 */
 	public void removeOrphans(final V_EdgeList elist) {
 		Map<String, V_GenericNode> newnodes = new HashMap<String, V_GenericNode>();
-
+		logger.debug("Node list size before cleaning: "+nodes.size());
 		for (V_GenericEdge e : elist.getEdges()) {
-//			newnodes.put(e.getSourceId(), e.getSourceNode());
-//			newnodes.put(e.getTargetId(), e.getTargetNode());
+			// newnodes.put(e.getSourceId(), e.getSourceNode());
+			// newnodes.put(e.getTargetId(), e.getTargetNode());
 			newnodes.put(e.getSourceId(), nodes.get(e.getSourceId()));
 			newnodes.put(e.getTargetId(), nodes.get(e.getTargetId()));
 		}
-
+		logger.debug("Node list size after cleaning: "+newnodes.size());
 		nodes = newnodes;
 	}
 
