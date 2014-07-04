@@ -35,15 +35,10 @@ public class V_EdgeList implements Cloneable {
 		}
 	}
 
-
 	public void addEdge(V_GenericEdge e) {
 		edges.add(e);
 	}
 
-
-	/**
-	 * Why?? --djue
-	 */
 	public V_EdgeList clone() {
 		V_EdgeList list = new V_EdgeList(this.query);
 		list.edges.addAll(edges);

@@ -49,7 +49,9 @@ public class V_NodeList implements Cloneable {
 	}
 
 	public void addNode(final V_GenericNode n) {
-		nodes.put(n.getId(), n);
+		if (n != null && n.getId() != null && !n.getId().isEmpty()) {
+			nodes.put(n.getId(), n);
+		}
 	}
 
 	public V_NodeList clone() {
@@ -132,14 +134,14 @@ public class V_NodeList implements Cloneable {
 	 */
 	public void removeOrphans(final V_EdgeList elist) {
 		Map<String, V_GenericNode> newnodes = new HashMap<String, V_GenericNode>();
-		logger.debug("Node list size before cleaning: "+nodes.size());
+		logger.debug("Node list size before cleaning: " + nodes.size());
 		for (V_GenericEdge e : elist.getEdges()) {
 			// newnodes.put(e.getSourceId(), e.getSourceNode());
 			// newnodes.put(e.getTargetId(), e.getTargetNode());
 			newnodes.put(e.getSourceId(), nodes.get(e.getSourceId()));
 			newnodes.put(e.getTargetId(), nodes.get(e.getTargetId()));
 		}
-		logger.debug("Node list size after cleaning: "+newnodes.size());
+		logger.debug("Node list size after cleaning: " + newnodes.size());
 		nodes = newnodes;
 	}
 
@@ -155,29 +157,7 @@ public class V_NodeList implements Cloneable {
 				n.setTraversed(true);
 			}
 		}
-
 	}
-
-	/**
-	 * XXX:Remove usage of this, put logic elsewhere.
-	 * 
-	 * This seems to essentially remove any nodes that are unused,
-	 * non-identifiers.
-	 */
-	// @Deprecated
-	// public void removeUnused() {
-	// Map<String, V_GenericNode> map = new HashMap<String, V_GenericNode>();
-	// for (V_GenericNode n : nodes.values()) {
-	// if (map.containsKey(n.getKey())) {
-	// continue;
-	// }
-	// if ((n.getEntityType() != EntityRefNode.ENTITY_IDENTIFIER)
-	// || n.isUsed()) {
-	// map.put(n.getKey(), n);
-	// }
-	// }
-	// nodes = map;
-	// }
 
 	public int size() {
 		return nodes.size();

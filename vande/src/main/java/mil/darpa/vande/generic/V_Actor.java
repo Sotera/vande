@@ -33,6 +33,11 @@ public class V_Actor {
 		this.id = id;
 	}
 
+	/**
+	 * Use addData() instead
+	 * @param name
+	 * @param value
+	 */
 	@Deprecated
 	public final void addProperty(final String name, final String value) {
 		addProperty(new V_IdProperty(name, value));
@@ -166,6 +171,9 @@ public class V_Actor {
 		this.properties = properties;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "V_Actor [" + (id != null ? "id=" + id + ", " : "")
