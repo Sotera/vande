@@ -397,6 +397,7 @@ public class V_GenericNode extends V_Actor {
 		if (value == null) {
 			logger.error("Null value being set for key " + key);
 		}
+		
 		// V_GraphObjectData d = new V_GraphObjectData(key, value);
 		for (V_GraphObjectData o : dataSet) {
 			if (o.key.equals(key)) {
