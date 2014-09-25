@@ -29,25 +29,27 @@ public class CSNodeData {
 	}
 
 	public CSNodeData(final V_GenericNode node) {
-		this.id = node.getId();
-		this.label = node.getLabel();
-		this.name = node.getLabel();
-		this.idVal = node.getIdVal();
-		this.idType = node.getIdType();
-		this.origin = node.isOrigin();
-		this.cluster = node.isCluster();
-		this.nbrLinks = node.getNbrLinks();
-		this.color = node.getColor();
-		Set<V_GraphObjectData> s = node.getDataSet();
-		for (V_GraphObjectData d : s) {
-			this.attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
-		}
+		if (node != null) {
+			this.id = node.getId();
+			this.label = node.getLabel();
+			this.name = node.getLabel();
+			this.idVal = node.getIdVal();
+			this.idType = node.getIdType();
+			this.origin = node.isOrigin();
+			this.cluster = node.isCluster();
+			this.nbrLinks = node.getNbrLinks();
+			this.color = node.getColor();
+			Set<V_GraphObjectData> s = node.getDataSet();
+			for (V_GraphObjectData d : s) {
+				this.attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
+			}
 
-		this.attrs.add(new CSAttr("Links", Integer.toString(this.nbrLinks)));
-		if (cluster) {
-			this.attrs.add(new CSAttr("Placeholder", "Too many links"));
+			this.attrs
+					.add(new CSAttr("Links", Integer.toString(this.nbrLinks)));
+			if (cluster) {
+				this.attrs.add(new CSAttr("Placeholder", "Too many links"));
+			}
 		}
-
 	}
 
 	/*
