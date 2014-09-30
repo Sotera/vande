@@ -23,11 +23,23 @@ import mil.darpa.vande.interactions.TemporalGraphQuery;
  * 
  */
 public class V_EdgeList implements Cloneable {
-
+	/**
+	 * 
+	 */
 	private Set<V_GenericEdge> edges = new HashSet<V_GenericEdge>();
+	/**
+	 * 
+	 */
 	private V_GraphQuery query;
+	/**
+	 * 
+	 */
 	private TemporalGraphQuery tquery = null;
 
+	/**
+	 * 
+	 * @param q
+	 */
 	public V_EdgeList(final V_GraphQuery q) {
 		this.query = q;
 		if (q instanceof TemporalGraphQuery) {
@@ -35,11 +47,24 @@ public class V_EdgeList implements Cloneable {
 		}
 	}
 
-	public void addEdge(V_GenericEdge e) {
+	/**
+	 * 
+	 * @param e
+	 */
+	public final void addEdge(V_GenericEdge e) {
 		edges.add(e);
 	}
 
-	public V_EdgeList clone() {
+	/* (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	public final V_EdgeList clone() {
+		try {
+			super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		V_EdgeList list = new V_EdgeList(this.query);
 		list.edges.addAll(edges);
 		return list;
@@ -50,11 +75,11 @@ public class V_EdgeList implements Cloneable {
 	 * between any given pair. This method removes edges that don't qualify. We
 	 * assume that the edges are aggregated already.
 	 * 
-	 * @param q
+	 * @param input
 	 *            GraphQuery
 	 * @return
 	 */
-	public void filterMinEdge(final Set<V_GenericEdge> input) {
+	public final void filterMinEdge(final Set<V_GenericEdge> input) {
 		if (tquery.getMinEdgeValue() == 0) {
 			return;
 		}
@@ -74,13 +99,9 @@ public class V_EdgeList implements Cloneable {
 	 * Takes a set of edges and returns a set of edges where the total value
 	 * between any two nodes is greater than the minValuePerpair in the query
 	 * 
-	 * @param input
-	 *            Set<GenericEdge>
-	 * @param q
-	 *            GraphQuery
-	 * @returns Set<GenericEdge>
+	 * @return
 	 */
-	public void filterMinPair() {
+	public final void filterMinPair() {
 		// TODO FIXME: handle directed versus non directed edges
 
 		double v = tquery.getMinPairValue();
@@ -124,12 +145,15 @@ public class V_EdgeList implements Cloneable {
 	 *            GenericEdge corresponding to a single row from a data set to
 	 *            aggregate
 	 */
-	public Set<V_GenericEdge> getEdges() {
+	public final Set<V_GenericEdge> getEdges() {
 		return edges;
 	}
 
+	/**
+ * 
+ */
 	@Override
-	public String toString() {
+	public final String toString() {
 		return "V_EdgeList [" + (edges != null ? "edges=" + edges + ", " : "")
 				+ (query != null ? "query=" + query + ", " : "")
 				+ (tquery != null ? "tquery=" + tquery : "") + "]";

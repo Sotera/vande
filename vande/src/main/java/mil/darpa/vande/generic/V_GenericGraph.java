@@ -140,11 +140,11 @@ public class V_GenericGraph {
 		this.strStatus = strStatus;
 	}
 
-	public final void addNode(V_GenericNode a) {
+	public final void addNode(final V_GenericNode a) {
 		this.nodes.add(a);
 	}
 
-	public final void addEdge(V_GenericEdge e) {
+	public final void addEdge(final V_GenericEdge e) {
 		this.edges.add(e);
 	}
 
