@@ -19,6 +19,23 @@ public class CSNodeData {
 	private String idVal;
 	private String label;
 	private String name;
+	private String parent;
+
+	/**
+	 * @return the parent
+	 */
+	public final String getParent() {
+		return parent;
+	}
+
+	/**
+	 * @param parent
+	 *            the parent to set
+	 */
+	public final void setParent(String parent) {
+		this.parent = parent;
+	}
+
 	private int nbrLinks = 0;
 	private boolean origin = false;
 	private String type = "circle";
@@ -41,7 +58,11 @@ public class CSNodeData {
 			this.color = node.getColor();
 			Set<V_GraphObjectData> s = node.getDataSet();
 			for (V_GraphObjectData d : s) {
-				this.attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
+				if (d.getKey().equalsIgnoreCase("parent")) {
+					this.parent = d.getKeyVal();
+				} else {
+					this.attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
+				}
 			}
 
 			this.attrs
