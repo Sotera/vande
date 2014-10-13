@@ -1,6 +1,9 @@
 package mil.darpa.vande.converters.graphml;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Used to insert the key definitions as properties in the top level of
@@ -9,13 +12,14 @@ import javax.xml.bind.annotation.XmlAttribute;
  * @author pgofton
  * 
  */
+// @XmlAccessorType(XmlAccessType.PROPERTY)
 public class GraphmlKey {
 
-	@XmlAttribute(name = "for")
+	// @XmlAttribute(name = "for")
 	// Note that "for" is a variable name in graphml
 	private String fore;
 
-	@XmlAttribute
+	// @XmlAttribute
 	private String id;
 
 	@XmlAttribute(name = "attr.name")
@@ -24,11 +28,11 @@ public class GraphmlKey {
 	@XmlAttribute(name = "attr.type")
 	private String type;
 
-	public final String getFore() {
+	public final String getFor() {
 		return fore;
 	}
 
-	public final void setFore(String fore) {
+	public final void setFor(String fore) {
 		this.fore = fore;
 	}
 
@@ -40,6 +44,7 @@ public class GraphmlKey {
 		this.id = id;
 	}
 
+	@XmlTransient
 	public final String getName() {
 		return name;
 	}
@@ -48,6 +53,7 @@ public class GraphmlKey {
 		this.name = name;
 	}
 
+	@XmlTransient
 	public final String getType() {
 		return type;
 	}

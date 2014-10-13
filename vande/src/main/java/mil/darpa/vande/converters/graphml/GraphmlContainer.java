@@ -9,17 +9,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "graphml")
 public class GraphmlContainer {
 
-	@XmlElement(name = "graph")
+	//@XmlElement(name = "graph")
 	private GraphmlGraph graph;
 
-	@XmlElement(name = "key")
+	//@XmlElement(name = "key")
 	private List<GraphmlKey> keys = new ArrayList<GraphmlKey>();
 
-	public List<GraphmlKey> getKeys() {
+	public List<GraphmlKey> getKey() {
 		return keys;
 	}
 
-	public void setKeys(List<GraphmlKey> keys) {
+	public void setKey(List<GraphmlKey> keys) {
 		this.keys = keys;
 	}
 

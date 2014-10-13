@@ -16,18 +16,20 @@ public class GraphmlNode {
 	protected static final Logger logger = LoggerFactory
 			.getLogger(GraphmlNode.class);
 
-	@XmlElement(name = "data")
+	//@XmlElement(name = "data")
 	private SortedSet<V_GraphObjectData> dataSet = new TreeSet<V_GraphObjectData>();
-	@XmlAttribute
+	//@XmlAttribute
 	private String id = "";
 
-	@XmlAttribute
+	//@XmlAttribute
 	private String label = "";
 
 	public final SortedSet<V_GraphObjectData> getDataSet() {
 		return dataSet;
 	}
-
+	public final SortedSet<V_GraphObjectData> getData() {
+		return dataSet;
+	}
 	public final void setDataSet(SortedSet<V_GraphObjectData> dataSet) {
 		this.dataSet = dataSet;
 	}
