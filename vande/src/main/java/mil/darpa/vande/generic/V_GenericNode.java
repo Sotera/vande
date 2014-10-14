@@ -489,4 +489,8 @@ public class V_GenericNode extends V_Actor {
 						: "") + "]";
 	}
 
+	public void inheritPropertiesOf(V_GenericNode a) {
+		this.dataSet.addAll(a.getDataSet());
+	}
+
 }

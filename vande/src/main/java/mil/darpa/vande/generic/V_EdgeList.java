@@ -55,7 +55,9 @@ public class V_EdgeList implements Cloneable {
 		edges.add(e);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#clone()
 	 */
 	public final V_EdgeList clone() {
@@ -147,6 +149,10 @@ public class V_EdgeList implements Cloneable {
 	 */
 	public final Set<V_GenericEdge> getEdges() {
 		return edges;
+	}
+
+	public int size() {
+		return this.edges.size();
 	}
 
 	/**
