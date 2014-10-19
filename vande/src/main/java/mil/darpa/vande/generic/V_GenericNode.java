@@ -1,5 +1,6 @@
 package mil.darpa.vande.generic;
 
+import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -493,4 +494,12 @@ public class V_GenericNode extends V_Actor {
 		this.dataSet.addAll(a.getDataSet());
 	}
 
+	public void inheritPropertiesOfExcept(V_GenericNode a,
+			ArrayList<String> skipTypes) {
+		for (V_GraphObjectData x : a.getDataSet()) {
+			if (!skipTypes.contains(x.getKey())) {
+				this.dataSet.addAll(a.getDataSet());
+			}
+		}
+	}
 }
