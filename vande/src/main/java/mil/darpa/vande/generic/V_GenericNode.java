@@ -1,5 +1,6 @@
 package mil.darpa.vande.generic;
 
+import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -38,8 +39,10 @@ public class V_GenericNode extends V_Actor {
 	 * --djue
 	 */
 	private char entityType;
-
-	private String family;
+	/**
+	 * Used to be called family.
+	 */
+	private String nodeType;
 
 	private boolean isCluster = false;
 	/**
@@ -166,11 +169,11 @@ public class V_GenericNode extends V_Actor {
 		if (entityType != other.entityType) {
 			return false;
 		}
-		if (family == null) {
-			if (other.family != null) {
+		if (nodeType == null) {
+			if (other.nodeType != null) {
 				return false;
 			}
-		} else if (!family.equals(other.family)) {
+		} else if (!nodeType.equals(other.nodeType)) {
 			return false;
 		}
 		if (isCluster != other.isCluster) {
@@ -254,10 +257,6 @@ public class V_GenericNode extends V_Actor {
 		return entityType;
 	}
 
-	public String getFamily() {
-		return family;
-	}
-
 	/*
 	 * XXX: Added from legacy for compatibility; reassess the need for this.
 	 * --djue
@@ -268,6 +267,16 @@ public class V_GenericNode extends V_Actor {
 
 	public int getNbrLinks() {
 		return nbrLinks;
+	}
+
+	/**
+	 * We use the family to determine what to search on, so be careful what you
+	 * set it to!
+	 * 
+	 * @return
+	 */
+	public String getNodeType() {
+		return nodeType;
 	}
 
 	public String getValue() {
@@ -287,7 +296,8 @@ public class V_GenericNode extends V_Actor {
 		result = prime * result + dataSource;
 		result = prime * result + degree;
 		result = prime * result + entityType;
-		result = prime * result + ((family == null) ? 0 : family.hashCode());
+		result = prime * result
+				+ ((nodeType == null) ? 0 : nodeType.hashCode());
 		result = prime * result + (isCluster ? 1231 : 1237);
 		result = prime * result + (isLeaf ? 1231 : 1237);
 		result = prime * result + (isOrigin ? 1231 : 1237);
@@ -301,8 +311,9 @@ public class V_GenericNode extends V_Actor {
 		return result;
 	}
 
+	@Deprecated
 	public void incLinks() {
-		++nbrLinks;
+		nbrLinks++;
 	}
 
 	public boolean isCluster() {
@@ -392,6 +403,7 @@ public class V_GenericNode extends V_Actor {
 		if (value == null) {
 			logger.error("Null value being set for key " + key);
 		}
+
 		// V_GraphObjectData d = new V_GraphObjectData(key, value);
 		for (V_GraphObjectData o : dataSet) {
 			if (o.key.equals(key)) {
@@ -415,10 +427,6 @@ public class V_GenericNode extends V_Actor {
 		this.entityType = entityType;
 	}
 
-	public void setFamily(String family) {
-		this.family = family;
-	}
-
 	/*
 	 * XXX: Added from legacy for compatibility; reassess the need for this.
 	 * --djue
@@ -433,6 +441,10 @@ public class V_GenericNode extends V_Actor {
 
 	public void setNbrLinks(final int nbrLinks) {
 		this.nbrLinks = nbrLinks;
+	}
+
+	public void setNodeType(String family) {
+		this.nodeType = family;
 	}
 
 	public void setOrigin(final boolean isOrigin) {
@@ -471,11 +483,23 @@ public class V_GenericNode extends V_Actor {
 	@Override
 	public String toString() {
 		return "V_GenericNode ["
-				+ (family != null ? "family=" + family + ", " : "")
+				+ (nodeType != null ? "family=" + nodeType + ", " : "")
 				+ (key != null ? "key=" + key + ", " : "")
 				+ (value != null ? "value=" + value + ", " : "")
 				+ (super.toString() != null ? "toString()=" + super.toString()
 						: "") + "]";
 	}
 
+	public void inheritPropertiesOf(V_GenericNode a) {
+		this.dataSet.addAll(a.getDataSet());
+	}
+
+	public void inheritPropertiesOfExcept(V_GenericNode a,
+			ArrayList<String> skipTypes) {
+		for (V_GraphObjectData x : a.getDataSet()) {
+			if (!skipTypes.contains(x.getKey())) {
+				this.dataSet.addAll(a.getDataSet());
+			}
+		}
+	}
 }

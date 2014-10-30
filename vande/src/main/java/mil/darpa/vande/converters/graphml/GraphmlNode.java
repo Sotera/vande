@@ -16,20 +16,20 @@ public class GraphmlNode {
 	protected static final Logger logger = LoggerFactory
 			.getLogger(GraphmlNode.class);
 
-	@XmlElement(name = "data")
-	private SortedSet<V_GraphObjectData> dataSet = new TreeSet<V_GraphObjectData>();
-	@XmlAttribute
+	//@XmlElement(name = "data")
+	private SortedSet<V_GraphObjectData> data = new TreeSet<V_GraphObjectData>();
+	//@XmlAttribute
 	private String id = "";
 
-	@XmlAttribute
+	//@XmlAttribute
 	private String label = "";
 
 	public final SortedSet<V_GraphObjectData> getDataSet() {
-		return dataSet;
+		return data;
 	}
 
 	public final void setDataSet(SortedSet<V_GraphObjectData> dataSet) {
-		this.dataSet = dataSet;
+		this.data = dataSet;
 	}
 
 	public final String getId() {
@@ -47,7 +47,7 @@ public class GraphmlNode {
 	public GraphmlNode(final V_GenericNode node) {
 		this.id = node.getId();
 		this.label = node.getLabel(); // temp - not really part of graphml
-		dataSet.addAll(node.getDataSet());
+		data.addAll(node.getDataSet());
 		setLabel(node.getLabel()); // node-prop format
 	}
 
@@ -74,7 +74,7 @@ public class GraphmlNode {
 
 		// Now add the value
 		boolean need_add = false;
-		for (V_GraphObjectData d : dataSet) {
+		for (V_GraphObjectData d : data) {
 			if (d.getKey().equals(attribute)) {
 				if (d.getKeyVal().equals(value)) {
 					return; // Duplicate attr + value - ignore it
@@ -91,20 +91,20 @@ public class GraphmlNode {
 
 		// So the name doesn't exist in the data set
 
-		dataSet.add(new V_GraphObjectData(attribute, value));
+		data.add(new V_GraphObjectData(attribute, value));
 	}
 
 	private void removeData(final String type) {
 		Object l = null;
 
-		for (V_GraphObjectData d : dataSet) {
+		for (V_GraphObjectData d : data) {
 			if (d.getKey().equals(type)) {
 				l = d;
 				break;
 			}
 		}
 		if (l != null) {
-			dataSet.remove(l);
+			data.remove(l);
 		}
 	}
 

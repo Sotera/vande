@@ -12,15 +12,15 @@ public class GraphmlContainer {
 	@XmlElement(name = "graph")
 	private GraphmlGraph graph;
 
-	@XmlElement(name = "key")
-	private List<GraphmlKey> keys = new ArrayList<GraphmlKey>();
+	//@XmlElement(name = "key")
+	private List<GraphmlKey> key = new ArrayList<GraphmlKey>();
 
 	public List<GraphmlKey> getKeys() {
-		return keys;
+		return key;
 	}
 
 	public void setKeys(List<GraphmlKey> keys) {
-		this.keys = keys;
+		this.key = keys;
 	}
 
 	GraphmlGraph getGraph() {
@@ -55,7 +55,7 @@ public class GraphmlContainer {
 	 * @param value
 	 */
 	public void addNodeKey(final String name, final String value) {
-		keys.add(new GraphmlKey(name, "node", value, "string"));
+		key.add(new GraphmlKey(name, "node", value, "string"));
 	}
 
 	/**

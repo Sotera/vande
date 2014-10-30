@@ -25,17 +25,21 @@ public class V_CSGraph {
 	}
 
 	public V_CSGraph(final V_GenericGraph g, final boolean gqtStyle) {
-		for (V_GenericEdge e : g.getEdges()) {
-			edges.add(new CSEdge(e));
+		if (g == null) {
+			intStatus = 1;
+			strStatus = "Failed to create a CS graph because no valid Generic Graph was supplied.";
+		} else {
+			for (V_GenericEdge e : g.getEdges()) {
+				edges.add(new CSEdge(e));
+			}
+
+			for (V_GenericNode n : g.getNodes()) {
+				nodes.add(new CSNode(n));
+			}
+
+			intStatus = g.getIntStatus();
+			strStatus = g.getStrStatus();
 		}
-
-		for (V_GenericNode n : g.getNodes()) {
-			nodes.add(new CSNode(n));
-		}
-
-		intStatus = g.getIntStatus();
-		strStatus = g.getStrStatus();
-
 	}
 
 	public void addEdge(final CSEdge grEdge) {
@@ -46,7 +50,9 @@ public class V_CSGraph {
 		nodes.add(node);
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -112,7 +118,9 @@ public class V_CSGraph {
 		return strStatus;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override

@@ -11,20 +11,20 @@ import javax.xml.bind.annotation.XmlAttribute;
  */
 public class GraphmlKey {
 
-	@XmlAttribute(name = "for")
+	//@XmlAttribute(name = "for")
 	// Note that "for" is a variable name in graphml
 	private String fore;
 
-	@XmlAttribute
+	//@XmlAttribute
 	private String id;
 
-	@XmlAttribute(name = "attr.name")
+	//@XmlAttribute(name = "attr.name")
 	private String name;
 
-	@XmlAttribute(name = "attr.type")
+	//@XmlAttribute(name = "attr.type")
 	private String type;
 
-	public final String getFore() {
+	public final String getFor() {
 		return fore;
 	}
 

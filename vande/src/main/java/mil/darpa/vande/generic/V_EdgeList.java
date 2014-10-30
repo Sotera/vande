@@ -23,11 +23,23 @@ import mil.darpa.vande.interactions.TemporalGraphQuery;
  * 
  */
 public class V_EdgeList implements Cloneable {
-
+	/**
+	 * 
+	 */
 	private Set<V_GenericEdge> edges = new HashSet<V_GenericEdge>();
+	/**
+	 * 
+	 */
 	private V_GraphQuery query;
+	/**
+	 * 
+	 */
 	private TemporalGraphQuery tquery = null;
 
+	/**
+	 * 
+	 * @param q
+	 */
 	public V_EdgeList(final V_GraphQuery q) {
 		this.query = q;
 		if (q instanceof TemporalGraphQuery) {
@@ -36,171 +48,25 @@ public class V_EdgeList implements Cloneable {
 	}
 
 	/**
-	 * Evaluates the interaction against the query, and if valid assigns it to
-	 * an edge (using temporal bucketing if requested in the query)
 	 * 
-	 * @param ia
-	 *            Interaction
-	 * @param sourceNode
-	 *            GenericNode
-	 * @param targetNode
-	 *            GenericNode
+	 * @param e
 	 */
-	// public boolean addInteraction(final Interaction ia,
-	// final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-	//
-	// if (ia.getValue() < tquery.getMinTransValue()) {
-	// return false;
-	// }
-	// //
-	// // checkGlobal(ia, sourceNode, targetNode);
-	// //
-	// // if (tquery.isByYear()) {
-	// // checkYearly(ia, sourceNode, targetNode);
-	// // }
-	// //
-	// // if (tquery.isByMonth()) {
-	// // checkMonthly(ia, sourceNode, targetNode);
-	// // }
-	// //
-	// // if (tquery.isByDay()) {
-	// // checkDaily(ia, sourceNode, targetNode);
-	// // }
-	//
-	// return true;
-	// }
-
-	@Override
-	public String toString() {
-		return "V_EdgeList [" + (edges != null ? "edges=" + edges + ", " : "")
-				+ (query != null ? "query=" + query + ", " : "")
-				+ (tquery != null ? "tquery=" + tquery : "") + "]";
+	public final void addEdge(V_GenericEdge e) {
+		edges.add(e);
 	}
 
-	/**
-	 * This is stupid, get this aggregation logic out of here. --djue
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param ia
-	 * @param sourceNode
-	 * @param targetNode
+	 * @see java.lang.Object#clone()
 	 */
-	// private void checkDaily(final Interaction ia,
-	// final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-	// boolean found = false;
-	//
-	// // First, add it to the full aggregation edge
-	//
-	// for (V_GenericEdge e : edges) {
-	// if (e.matchesInteraction(ia, true, true, true)) {
-	// e.aggregate(1, ia.getValue());
-	// found = true;
-	// break;
-	// }
-	// }
-	//
-	// if (!found) {
-	// V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
-	// e.setDay(ia.getDay());
-	// e.setMonth(ia.getMonth());
-	// e.setYear(ia.getYear());
-	// edges.add(e);
-	// }
-	// }
-
-	/**
-	 * This is stupid, get this aggregation logic out of here. --djue
-	 * 
-	 * @param ia
-	 * @param sourceNode
-	 * @param targetNode
-	 */
-	// private void checkGlobal(final Interaction ia,
-	// final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-	// boolean found = false;
-	//
-	// // First, add it to the full aggregation edge
-	//
-	// for (V_GenericEdge e : edges) {
-	// if (e.matchesInteraction(ia, false, false, false)) {
-	// e.aggregate(1, ia.getValue());
-	// found = true;
-	// break;
-	// }
-	// }
-	//
-	// if (!found) {
-	// V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
-	// e.setDay(-1);
-	// e.setMonth(-1);
-	// e.setYear(-1);
-	// edges.add(e);
-	// }
-	// }
-
-	/**
-	 * This is stupid, get this aggregation logic out of here. --djue
-	 * 
-	 * @param ia
-	 * @param sourceNode
-	 * @param targetNode
-	 */
-	// private void checkMonthly(final Interaction ia,
-	// final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-	// boolean found = false;
-	//
-	// // First, add it to the full aggregation edge
-	//
-	// for (V_GenericEdge e : edges) {
-	// if (e.matchesInteraction(ia, false, true, true)) {
-	// e.aggregate(1, ia.getValue());
-	// found = true;
-	// break;
-	// }
-	// }
-	//
-	// if (!found) {
-	// V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
-	// e.setDay(-1);
-	// e.setMonth(ia.getMonth());
-	// e.setYear(ia.getYear());
-	// edges.add(e);
-	// }
-	// }
-
-	/**
-	 * This is stupid, get this aggregation logic out of here. --djue
-	 * 
-	 * @param ia
-	 * @param sourceNode
-	 * @param targetNode
-	 */
-	// private void checkYearly(final Interaction ia,
-	// final V_GenericNode sourceNode, final V_GenericNode targetNode) {
-	// boolean found = false;
-	//
-	// // First, add it to the full aggregation edge
-	//
-	// for (V_GenericEdge e : edges) {
-	// if (e.matchesInteraction(ia, false, false, true)) {
-	// e.aggregate(1, ia.getValue());
-	// found = true;
-	// break;
-	// }
-	// }
-	//
-	// if (!found) {
-	// V_GenericEdge e = makeEdge(ia, sourceNode, targetNode);
-	// e.setDay(-1);
-	// e.setMonth(-1);
-	// e.setYear(ia.getYear());
-	// edges.add(e);
-	// }
-	// }
-
-	/**
-	 * Why?? --djue
-	 */
-	public V_EdgeList clone() {
+	public final V_EdgeList clone() {
+		try {
+			super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		V_EdgeList list = new V_EdgeList(this.query);
 		list.edges.addAll(edges);
 		return list;
@@ -211,11 +77,11 @@ public class V_EdgeList implements Cloneable {
 	 * between any given pair. This method removes edges that don't qualify. We
 	 * assume that the edges are aggregated already.
 	 * 
-	 * @param q
+	 * @param input
 	 *            GraphQuery
 	 * @return
 	 */
-	public void filterMinEdge(final Set<V_GenericEdge> input) {
+	public final void filterMinEdge(final Set<V_GenericEdge> input) {
 		if (tquery.getMinEdgeValue() == 0) {
 			return;
 		}
@@ -235,13 +101,9 @@ public class V_EdgeList implements Cloneable {
 	 * Takes a set of edges and returns a set of edges where the total value
 	 * between any two nodes is greater than the minValuePerpair in the query
 	 * 
-	 * @param input
-	 *            Set<GenericEdge>
-	 * @param q
-	 *            GraphQuery
-	 * @returns Set<GenericEdge>
+	 * @return
 	 */
-	public void filterMinPair() {
+	public final void filterMinPair() {
 		// TODO FIXME: handle directed versus non directed edges
 
 		double v = tquery.getMinPairValue();
@@ -285,12 +147,22 @@ public class V_EdgeList implements Cloneable {
 	 *            GenericEdge corresponding to a single row from a data set to
 	 *            aggregate
 	 */
-	public Set<V_GenericEdge> getEdges() {
+	public final Set<V_GenericEdge> getEdges() {
 		return edges;
 	}
 
-	public void addEdge(V_GenericEdge e) {
-		edges.add(e);
+	public int size() {
+		return this.edges.size();
+	}
+
+	/**
+ * 
+ */
+	@Override
+	public final String toString() {
+		return "V_EdgeList [" + (edges != null ? "edges=" + edges + ", " : "")
+				+ (query != null ? "query=" + query + ", " : "")
+				+ (tquery != null ? "tquery=" + tquery : "") + "]";
 	}
 
 }

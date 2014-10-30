@@ -6,6 +6,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class V_NodeList implements Cloneable {
 
 	private Map<String, V_GenericNode> nodes = new HashMap<String, V_GenericNode>(
@@ -46,27 +49,22 @@ public class V_NodeList implements Cloneable {
 	}
 
 	public void addNode(final V_GenericNode n) {
-		nodes.put(n.getId(), n);
+		if (n != null && n.getId() != null && !n.getId().isEmpty()) {
+			nodes.put(n.getId(), n);
+		}
 	}
 
 	public V_NodeList clone() {
+		try {
+			super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		V_NodeList l = new V_NodeList();
 		l.nodes.putAll(nodes);
 		return l;
 
-	}
-
-	/**
-	 * XXX:Remove usage of this, put logic elsewhere. Taken from legacy code.
-	 * This constructs a special key using a prefix of the character you supply
-	 * plus a colon (:).
-	 * 
-	 * @param entityType
-	 * @param value
-	 * @return
-	 */
-	public V_GenericNode getNode(final char entityType, final String value) {
-		return nodes.get(entityType + ":" + value);
 	}
 
 	public V_GenericNode getNode(final String id) {
@@ -77,47 +75,7 @@ public class V_NodeList implements Cloneable {
 		return nodes.values();
 	}
 
-	/**
-	 * XXX:Remove usage of this, put logic elsewhere.
-	 * 
-	 * @param type
-	 * @param degree
-	 * @return
-	 */
-	@Deprecated
-	public Set<String> getUnscannedValues(final char type, final int degree) {
-		Set<String> results = new HashSet<String>();
-		for (V_GenericNode n : nodes.values()) {
-			if (n.getEntityType() != type) {
-				continue;
-			}
-			if (n.isTraversed()) {
-				continue;
-			}
-			if (n.isPlaceholder()) {
-				continue;
-			}
-			if (degree != 0 && n.getDegree() >= degree) {
-				continue;
-			}
-			// Note we don't have a value field anymore
-			// results.add(n.getValue());
-			// try using the id val instead.
-			results.add(n.getIdVal());
-		}
-		return results;
-	}
-
-	/**
-	 * XXX:Remove usage of this, put logic elsewhere.
-	 * 
-	 * @param node
-	 * @return
-	 */
-	@Deprecated
-	public boolean hasNode(final V_GenericNode node) {
-		return nodes.containsKey(node.getKey());
-	}
+	private Logger logger = LoggerFactory.getLogger(V_NodeList.class);
 
 	/**
 	 * What is the compelling reason for this? We would not have added any nodes
@@ -125,56 +83,25 @@ public class V_NodeList implements Cloneable {
 	 * 
 	 * @param elist
 	 */
+	@Deprecated
 	public void removeOrphans(final V_EdgeList elist) {
 		Map<String, V_GenericNode> newnodes = new HashMap<String, V_GenericNode>();
-
+		logger.debug("Node list size before cleaning: " + nodes.size());
 		for (V_GenericEdge e : elist.getEdges()) {
-//			newnodes.put(e.getSourceId(), e.getSourceNode());
-//			newnodes.put(e.getTargetId(), e.getTargetNode());
+			// newnodes.put(e.getSourceId(), e.getSourceNode());
+			// newnodes.put(e.getTargetId(), e.getTargetNode());
 			newnodes.put(e.getSourceId(), nodes.get(e.getSourceId()));
 			newnodes.put(e.getTargetId(), nodes.get(e.getTargetId()));
 		}
-
+		logger.debug("Node list size after cleaning: " + newnodes.size());
 		nodes = newnodes;
 	}
 
-	/**
-	 * XXX:Remove usage of this, put logic elsewhere.
-	 * 
-	 * @param type
-	 */
-	@Deprecated
-	public void setAllScanned(final char type) {
-		for (V_GenericNode n : nodes.values()) {
-			if (n.getEntityType() == type) {
-				n.setTraversed(true);
-			}
-		}
-
-	}
-
-	/**
-	 * XXX:Remove usage of this, put logic elsewhere.
-	 * 
-	 * This seems to essentially remove any nodes that are unused,
-	 * non-identifiers.
-	 */
-	// @Deprecated
-	// public void removeUnused() {
-	// Map<String, V_GenericNode> map = new HashMap<String, V_GenericNode>();
-	// for (V_GenericNode n : nodes.values()) {
-	// if (map.containsKey(n.getKey())) {
-	// continue;
-	// }
-	// if ((n.getEntityType() != EntityRefNode.ENTITY_IDENTIFIER)
-	// || n.isUsed()) {
-	// map.put(n.getKey(), n);
-	// }
-	// }
-	// nodes = map;
-	// }
-
 	public int size() {
 		return nodes.size();
+	}
+
+	public void clear() {
+		nodes.clear();
 	}
 }

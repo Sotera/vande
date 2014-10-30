@@ -1,7 +1,7 @@
 package mil.darpa.vande.generic;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * 
@@ -12,9 +12,10 @@ import java.util.Set;
  */
 
 public class V_GenericEdge {
-
+	// TODO: Add color and styling ability.
+	// TODO: Respect directionality boolean in js code
 	private int count = 1;
-	private Set<V_GraphObjectData> dataSet = new HashSet<V_GraphObjectData>();
+	private Set<V_GraphObjectData> dataSet = new TreeSet<V_GraphObjectData>();
 
 	private int day = -1;
 	private int degree = 0;
@@ -134,7 +135,10 @@ public class V_GenericEdge {
 	}
 
 	public void addData(final String name, final String value) {
-		dataSet.add(new V_GraphObjectData(name, value));
+		if (null != name && !name.isEmpty()) {
+			// null values are ok, but not null keys.
+			dataSet.add(new V_GraphObjectData(name, value));
+		}
 	}
 
 	// public void addInteractionProperties(final Interaction ia) {
@@ -483,7 +487,7 @@ public class V_GenericEdge {
 			val = Double.parseDouble(s);
 		} catch (NumberFormatException e) {
 		}
-		;
+
 		this.value = val;
 	}
 
