@@ -31,6 +31,8 @@ public class V_GenericEdge {
 	// private V_GenericNode targetNode;
 	private double value = 0; // to be a serialized amount to hold aggregated
 
+	private String color = "#23A4FF";
+	
 	// Consider allowing double or Number
 	private int weight = 1;
 
@@ -209,6 +211,9 @@ public class V_GenericEdge {
 		if (directed != other.directed) {
 			return false;
 		}
+		if (color != other.color) {
+			return false;
+		}
 		if (idType == null) {
 			if (other.idType != null) {
 				return false;
@@ -297,6 +302,10 @@ public class V_GenericEdge {
 		return idType;
 	}
 
+	public String getColor() {
+		return color;
+	}
+	
 	public String getIdVal() {
 		return idVal;
 	}
@@ -350,6 +359,7 @@ public class V_GenericEdge {
 		result = prime * result + day;
 		result = prime * result + degree;
 		result = prime * result + (directed ? 1231 : 1237);
+		result = prime * result + ((color == null) ? 0 : color.hashCode());
 		result = prime * result + ((idType == null) ? 0 : idType.hashCode());
 		result = prime * result + ((idVal == null) ? 0 : idVal.hashCode());
 		result = prime * result + ((label == null) ? 0 : label.hashCode());
@@ -492,6 +502,11 @@ public class V_GenericEdge {
 		this.degree = degree;
 	}
 
+	public void setColor(String color) {
+		// TODO: verify string input is color or hex value
+		this.color = color;
+	}
+	
 	public void setDirected(final boolean directed) {
 		this.directed = directed;
 	}
@@ -581,6 +596,7 @@ public class V_GenericEdge {
 		return "V_GenericEdge ["
 				+ (idVal != null ? "idVal=" + idVal + ", " : "")
 				+ (label != null ? "label=" + label + ", " : "")
+				+ (color != null ? "color=" + color + ", " : "")
 				+ (sourceId != null ? "sourceId=" + sourceId + ", " : "")
 				+ (targetId != null ? "targetId=" + targetId : "") + "]";
 	}
