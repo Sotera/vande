@@ -22,9 +22,8 @@ public class CSEdgeData {
 	private int linewidth = 1;
 	private int month = -1;
 	private String source;
-
 	private String target;
-
+	private String color;
 	private String type = "";
 
 	private boolean visible = true;
@@ -52,7 +51,7 @@ public class CSEdgeData {
 		idVal = e.getIdVal();
 
 		amount = Double.toString(e.getValue());
-
+		color = e.getColor();
 		weight = Integer.toString(e.getWeight());
 
 		day = e.getDay();
@@ -80,6 +79,10 @@ public class CSEdgeData {
 
 	public final int getDay() {
 		return day;
+	}
+	
+	public String getColor() {
+		return color;
 	}
 
 	public final String[] getDirection() {
@@ -145,6 +148,11 @@ public class CSEdgeData {
 	public void setCount(String count) {
 		this.count = count;
 	}
+	
+	public void setColor(String color) {
+		// TODO: verify string input is color or hex value
+		this.color = color;
+	}
 
 	public void setDay(int day) {
 		this.day = day;
@@ -207,7 +215,7 @@ public class CSEdgeData {
 		return "CSEdgeData [amount=" + amount + ", attrs=" + attrs + ", count="
 				+ count + ", day=" + day + ", direction="
 				+ Arrays.toString(direction) + ", id=" + id + ", idType="
-				+ idType + ", idVal=" + idVal + ", label=" + label
+				+ idType + ", idVal=" + idVal + ", color=" + color + ", label=" + label
 				+ ", linewidth=" + linewidth + ", month=" + month + ", source="
 				+ source + ", target=" + target + ", type=" + type
 				+ ", visible=" + visible + ", weight=" + weight + ", year="

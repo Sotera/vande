@@ -1,5 +1,6 @@
 package mil.darpa.vande.generic;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -30,20 +31,25 @@ public class V_GenericEdge {
 	// private V_GenericNode targetNode;
 	private double value = 0; // to be a serialized amount to hold aggregated
 
+	private String color = "#23A4FF";
+	
 	// Consider allowing double or Number
 	private int weight = 1;
 
+	private ArrayList<V_GenericEdge> edges;
+	
 	// values
 	// for the total interactions between the nodes
 	// For edges that represent temporal aggregations of links
 	private int year = -1;
 
 	public V_GenericEdge() {
-
+		this.edges = new ArrayList<V_GenericEdge>();
 	}
 
 	public V_GenericEdge(final V_GenericNode src_node,
 			final V_GenericNode target_node) {
+		this.edges = new ArrayList<V_GenericEdge>();
 		this.sourceId = src_node.getId();
 		this.targetId = target_node.getId();
 		// this.sourceNode = src_node;
@@ -59,6 +65,7 @@ public class V_GenericEdge {
 	 */
 	public V_GenericEdge(final V_GenericNode srcNode,
 			final V_GenericNode targetNode, final int degree) {
+		this.edges = new ArrayList<V_GenericEdge>();
 		this.sourceId = srcNode.getId();
 		this.targetId = targetNode.getId();
 		// this.sourceNode = srcNode;
@@ -86,6 +93,7 @@ public class V_GenericEdge {
 	public V_GenericEdge(final V_GenericNode srcNode,
 			final V_GenericNode targetNode, final int degree, final int weight,
 			final boolean directed, final String label) {
+		this.edges = new ArrayList<V_GenericEdge>();
 		this.sourceId = srcNode.getId();
 		this.targetId = targetNode.getId();
 		// this.sourceNode = srcNode;
@@ -121,6 +129,7 @@ public class V_GenericEdge {
 			final V_GenericNode targetNode, final int degree, final int weight,
 			final boolean directed, final String label, final int day,
 			final int month, final int year) {
+		this.edges = new ArrayList<V_GenericEdge>();
 		this.sourceId = srcNode.getId();
 		this.targetId = targetNode.getId();
 		// this.sourceNode = srcNode;
@@ -139,6 +148,18 @@ public class V_GenericEdge {
 			// null values are ok, but not null keys.
 			dataSet.add(new V_GraphObjectData(name, value));
 		}
+	}
+	
+	public boolean addEdge(V_GenericEdge e) {
+		int prevSize = this.edges.size();
+		if (e.sourceId.equals(this.sourceId) && e.targetId.equals(this.targetId)) {
+			this.edges.add(e);
+		}
+		return prevSize < this.edges.size();
+	}
+	
+	public ArrayList<V_GenericEdge> getEdges() {
+		return this.edges;
 	}
 
 	// public void addInteractionProperties(final Interaction ia) {
@@ -188,6 +209,9 @@ public class V_GenericEdge {
 			return false;
 		}
 		if (directed != other.directed) {
+			return false;
+		}
+		if (color != other.color) {
 			return false;
 		}
 		if (idType == null) {
@@ -278,6 +302,10 @@ public class V_GenericEdge {
 		return idType;
 	}
 
+	public String getColor() {
+		return color;
+	}
+	
 	public String getIdVal() {
 		return idVal;
 	}
@@ -331,6 +359,7 @@ public class V_GenericEdge {
 		result = prime * result + day;
 		result = prime * result + degree;
 		result = prime * result + (directed ? 1231 : 1237);
+		result = prime * result + ((color == null) ? 0 : color.hashCode());
 		result = prime * result + ((idType == null) ? 0 : idType.hashCode());
 		result = prime * result + ((idVal == null) ? 0 : idVal.hashCode());
 		result = prime * result + ((label == null) ? 0 : label.hashCode());
@@ -473,6 +502,11 @@ public class V_GenericEdge {
 		this.degree = degree;
 	}
 
+	public void setColor(String color) {
+		// TODO: verify string input is color or hex value
+		this.color = color;
+	}
+	
 	public void setDirected(final boolean directed) {
 		this.directed = directed;
 	}
@@ -562,6 +596,7 @@ public class V_GenericEdge {
 		return "V_GenericEdge ["
 				+ (idVal != null ? "idVal=" + idVal + ", " : "")
 				+ (label != null ? "label=" + label + ", " : "")
+				+ (color != null ? "color=" + color + ", " : "")
 				+ (sourceId != null ? "sourceId=" + sourceId + ", " : "")
 				+ (targetId != null ? "targetId=" + targetId : "") + "]";
 	}
