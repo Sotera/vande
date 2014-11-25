@@ -24,6 +24,7 @@ public class CSEdgeData {
 	private String source;
 	private String target;
 	private String color;
+	private String lineStyle = "solid";
 	private String type = "";
 
 	private boolean visible = true;
@@ -52,6 +53,10 @@ public class CSEdgeData {
 
 		amount = Double.toString(e.getValue());
 		color = e.getColor();
+		
+		 // use setter function to ensure given lineStyle is valid for Cytoscape expectations
+		setLineStyle(e.getLineStyle());
+		
 		weight = Integer.toString(e.getWeight());
 
 		day = e.getDay();
@@ -85,6 +90,10 @@ public class CSEdgeData {
 		return color;
 	}
 
+	public String getLineStyle() {
+		return lineStyle;
+	}
+	
 	public final String[] getDirection() {
 		return direction;
 	}
@@ -153,6 +162,23 @@ public class CSEdgeData {
 		// TODO: verify string input is color or hex value
 		this.color = color;
 	}
+	
+	public void setLineStyle(String style) {
+		switch (style.toLowerCase()) {
+		case "solid" :
+			this.lineStyle = "solid";
+			break;
+		case "dotted" :
+			this.lineStyle = "dotted";
+			break;
+		case "dashed" :
+			this.lineStyle = "dashed";
+			break;
+		default :
+			// invalid input string; don't change existing lineStyle
+			break;
+		}
+	}
 
 	public void setDay(int day) {
 		this.day = day;
@@ -215,7 +241,7 @@ public class CSEdgeData {
 		return "CSEdgeData [amount=" + amount + ", attrs=" + attrs + ", count="
 				+ count + ", day=" + day + ", direction="
 				+ Arrays.toString(direction) + ", id=" + id + ", idType="
-				+ idType + ", idVal=" + idVal + ", color=" + color + ", label=" + label
+				+ idType + ", idVal=" + idVal + ", color=" + color + ", lineStyle=" + lineStyle +", label=" + label
 				+ ", linewidth=" + linewidth + ", month=" + month + ", source="
 				+ source + ", target=" + target + ", type=" + type
 				+ ", visible=" + visible + ", weight=" + weight + ", year="

@@ -26,11 +26,9 @@ public class V_GenericEdge {
 	private String label;
 	private int month = -1;
 	private String sourceId = "src";
-	// private V_GenericNode sourceNode;
 	private String targetId = "target";
-	// private V_GenericNode targetNode;
 	private double value = 0; // to be a serialized amount to hold aggregated
-
+	private String lineStyle = "solid";
 	private String color = "#23A4FF";
 	
 	// Consider allowing double or Number
@@ -214,6 +212,9 @@ public class V_GenericEdge {
 		if (color != other.color) {
 			return false;
 		}
+		if (lineStyle != other.lineStyle) {
+			return false;
+		}
 		if (idType == null) {
 			if (other.idType != null) {
 				return false;
@@ -306,6 +307,10 @@ public class V_GenericEdge {
 		return color;
 	}
 	
+	public String getLineStyle() {
+		return lineStyle;
+	}
+	
 	public String getIdVal() {
 		return idVal;
 	}
@@ -360,14 +365,13 @@ public class V_GenericEdge {
 		result = prime * result + degree;
 		result = prime * result + (directed ? 1231 : 1237);
 		result = prime * result + ((color == null) ? 0 : color.hashCode());
+		result = prime * result + ((lineStyle == null) ? 0 : lineStyle.hashCode());
 		result = prime * result + ((idType == null) ? 0 : idType.hashCode());
 		result = prime * result + ((idVal == null) ? 0 : idVal.hashCode());
 		result = prime * result + ((label == null) ? 0 : label.hashCode());
 		result = prime * result + month;
-		result = prime * result
-				+ ((sourceId == null) ? 0 : sourceId.hashCode());
-		result = prime * result
-				+ ((targetId == null) ? 0 : targetId.hashCode());
+		result = prime * result + ((sourceId == null) ? 0 : sourceId.hashCode());
+		result = prime * result + ((targetId == null) ? 0 : targetId.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(value);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -505,6 +509,17 @@ public class V_GenericEdge {
 	public void setColor(String color) {
 		// TODO: verify string input is color or hex value
 		this.color = color;
+	}
+	
+	/**
+	 * Note: V_GenericEdge can accept <i>any</i> kind of style string. 
+	 * It is up to the graph converter to make sure the 
+	 * V_GenericEdge's line style is compatible with that 
+	 * graph's expected style types.
+	 * @param style "dotted", "dashed", "solid", etc.
+	 */
+	public void setLineStyle(String style) {
+		this.lineStyle = style;
 	}
 	
 	public void setDirected(final boolean directed) {
