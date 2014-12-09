@@ -14,28 +14,38 @@ import org.slf4j.LoggerFactory;
  * @author PWG for DARPA
  */
 public class V_GraphQuery {
-	private boolean directed = true;
-	private Long endTime = null;
-	private int maxEdgesPerNode = 50;
-	private int maxHops = 3;
-	private int maxNodes = 200;
-	private int minLinks = 1;
-	private int minTransValue = 0;
 	private static final Logger logger = LoggerFactory
 			.getLogger(V_GraphQuery.class);
+	private boolean directed = true;
+
+	private Long endTime = null;
+
+	/*
+	 * Used for logging and persistence purposes
+	 */
+	private String id = null;
+
+	private int maxEdgesPerNode = 50;
+
+	private int maxHops = 3;
+
+	private int maxNodes = 200;
+
+	private int minLinks = 1;
+
+	private int minTransValue = 0;
 
 	private Set<String> searchIds = new HashSet<String>();
 	private Long startTime = null;
-
 	// This was added to because legacy graph builders used it as a separate
 	// query parameter. --djue
 	// It is usually something like customer or account
 	private String type = null;
-
+	private String userId = "None";
+	private String userName = "None";
 	public V_GraphQuery() {
 
 	}
-
 	/**
 	 * @param searchIds
 	 *            a Set of initial terms to search for. Must not be empty
@@ -85,7 +95,6 @@ public class V_GraphQuery {
 		this.minLinks = minLinks;
 		this.setMaxHops(maxHops);
 	}
-
 	public V_GraphQuery(V_GraphQuery q) {
 		this.directed = q.directed;
 		this.endTime = q.endTime;
@@ -109,9 +118,12 @@ public class V_GraphQuery {
 
 		}
 	}
-
 	public Long getEndTime() {
 		return endTime;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public int getMaxEdgesPerNode() {
@@ -146,6 +158,14 @@ public class V_GraphQuery {
 		return type;
 	}
 
+	public String getUserId() {
+		return userId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
 	public boolean isDirected() {
 		return directed;
 	}
@@ -156,6 +176,10 @@ public class V_GraphQuery {
 
 	public void setEndTime(final Long endTime) {
 		this.endTime = endTime;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public void setMaxEdgesPerNode(final int maxEdgesPerNode) {
@@ -188,6 +212,14 @@ public class V_GraphQuery {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	@Override

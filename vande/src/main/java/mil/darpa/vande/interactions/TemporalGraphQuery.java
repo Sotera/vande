@@ -24,12 +24,12 @@ public class TemporalGraphQuery extends V_GraphQuery {
 	private int minLinksPerPeriod = 1;
 	private int minPairValue = 0;
 
-	public TemporalGraphQuery(final V_GraphQuery q) {
-		super(q);
-	}
-
 	public TemporalGraphQuery() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public TemporalGraphQuery(final V_GraphQuery q) {
+		super(q);
 	}
 
 	/**
