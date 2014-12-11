@@ -12,7 +12,6 @@ public class GraphmlContainer {
 	@XmlElement(name = "graph")
 	private GraphmlGraph graph;
 
-	//@XmlElement(name = "key")
 	private List<GraphmlKey> key = new ArrayList<GraphmlKey>();
 
 	public List<GraphmlKey> getKeys() {
