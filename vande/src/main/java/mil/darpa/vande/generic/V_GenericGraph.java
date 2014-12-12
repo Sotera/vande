@@ -25,10 +25,12 @@ public class V_GenericGraph {
 	private int intStatus = 0;
 	private Collection<V_GenericNode> nodes = null;
 	private String strStatus = "OK";
-
+	private Collection<V_LegendItem> legend = null;
+	
 	public V_GenericGraph() {
 		nodes = new ArrayList<V_GenericNode>(3);
 		edges = new ArrayList<V_GenericEdge>(3);
+		legend = new ArrayList<V_LegendItem>();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -36,15 +38,27 @@ public class V_GenericGraph {
 			final Collection<V_GenericEdge> edges) {
 		this.nodes = nodes;
 		this.edges = edges;
+		this.legend = new ArrayList<V_LegendItem>();
 	}
 
 	@Override
 	public String toString() {
+		
+		String legendStr = "[";
+		for (int i = 0; i < legend.size(); i++) {
+			legendStr += ((ArrayList<V_LegendItem>)legend).get(i).toString();
+			// postfix each legend item with ',' unless we are at the last one
+			legendStr += ((i < (legend.size() - 1)) ? "," : "");
+		}
+		legendStr += "]";
+		
 		return "V_GenericGraph ["
-				+ (edges != null ? "edges=" + edges + ", " : "") + "intStatus="
-				+ intStatus + ", "
+				+ (edges != null ? "edges=" + edges + ", " : "") 
 				+ (nodes != null ? "nodes=" + nodes + ", " : "")
-				+ (strStatus != null ? "strStatus=" + strStatus : "") + "]";
+				+ "intStatus=" + intStatus + ", "
+				+ "legend=" + legendStr + ","  
+				+ (strStatus != null ? "strStatus=" + strStatus : "")
+				+ "]";
 	}
 
 	/*
@@ -59,8 +73,8 @@ public class V_GenericGraph {
 		result = prime * result + ((edges == null) ? 0 : edges.hashCode());
 		result = prime * result + intStatus;
 		result = prime * result + ((nodes == null) ? 0 : nodes.hashCode());
-		result = prime * result
-				+ ((strStatus == null) ? 0 : strStatus.hashCode());
+		result = prime * result + ((strStatus == null) ? 0 : strStatus.hashCode());
+		result = prime * result + ((legend == null) ? 0 : legend.hashCode());
 		return result;
 	}
 
@@ -105,6 +119,14 @@ public class V_GenericGraph {
 		} else if (!strStatus.equals(other.strStatus)) {
 			return false;
 		}
+		if (legend == null) {
+			if (other.legend != null) {
+				return false;
+			}
+		} else if (!legend.equals(other.legend)) {
+			return false;
+		}
+		
 		return true;
 	}
 
@@ -124,6 +146,10 @@ public class V_GenericGraph {
 		return strStatus;
 	}
 
+	public final Collection<V_LegendItem> getLegend() {
+		return legend;
+	}
+	
 	public void setEdges(final List<V_GenericEdge> edges) {
 		this.edges = edges;
 	}
@@ -146,6 +172,25 @@ public class V_GenericGraph {
 
 	public final void addEdge(final V_GenericEdge e) {
 		this.edges.add(e);
+	}
+	
+	public final void addLegendItem(V_LegendItem li) {
+		//if (!legend.contains(li)) {
+		//	legend.add(li);
+		//}
+		boolean found = false;
+		for (V_LegendItem existing : legend) {
+			if (existing.getColor() == li.getColor() && existing.getText() == li.getText()) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) legend.add(li);
+	}
+	
+	public final void addLegendItem(String color, String text) {
+		V_LegendItem li = new V_LegendItem(color, text);
+		this.addLegendItem(li);
 	}
 
 }

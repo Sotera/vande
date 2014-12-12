@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import mil.darpa.vande.generic.V_GenericEdge;
 import mil.darpa.vande.generic.V_GenericGraph;
 import mil.darpa.vande.generic.V_GenericNode;
+import mil.darpa.vande.generic.V_LegendItem;
 
 @XmlRootElement(name = "csgraph")
 public class V_CSGraph {
@@ -20,6 +21,8 @@ public class V_CSGraph {
 	private List<CSNode> nodes = new ArrayList<CSNode>();
 	private String strStatus = "OK";
 
+	private List<V_LegendItem> legend = new ArrayList<V_LegendItem>();
+	
 	public V_CSGraph() {
 
 	}
@@ -35,6 +38,11 @@ public class V_CSGraph {
 
 			for (V_GenericNode n : g.getNodes()) {
 				nodes.add(new CSNode(n));
+			}
+			
+			for (V_LegendItem li : g.getLegend()) {
+				// TODO convert generic legend item to cytoscape legend item?
+				legend.add(li);
 			}
 
 			intStatus = g.getIntStatus();
@@ -91,6 +99,13 @@ public class V_CSGraph {
 		} else if (!strStatus.equals(other.strStatus)) {
 			return false;
 		}
+		if (legend == null) {
+			if (other.legend != null) {
+				return false;
+			}
+		} else if (!legend.equals(other.legend)) {
+			return false;
+		}
 		return true;
 	}
 
@@ -118,6 +133,11 @@ public class V_CSGraph {
 		return strStatus;
 	}
 
+	@XmlElement
+	public final List<V_LegendItem> getLegend() {
+		return legend;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -130,8 +150,8 @@ public class V_CSGraph {
 		result = prime * result + ((edges == null) ? 0 : edges.hashCode());
 		result = prime * result + intStatus;
 		result = prime * result + ((nodes == null) ? 0 : nodes.hashCode());
-		result = prime * result
-				+ ((strStatus == null) ? 0 : strStatus.hashCode());
+		result = prime * result + ((strStatus == null) ? 0 : strStatus.hashCode());
+		result = prime * result + ((legend == null) ? 0 : legend.hashCode());
 		return result;
 	}
 
@@ -157,7 +177,12 @@ public class V_CSGraph {
 
 	@Override
 	public String toString() {
-		return "V_CSGraph [edges=" + edges + ", intStatus=" + intStatus
-				+ ", nodes=" + nodes + ", strStatus=" + strStatus + "]";
+		// TODO legend.toString();
+		return "V_CSGraph ["
+				+ "edges=" + edges + ", " 
+				+ "intStatus=" + intStatus + ", "
+				+ "nodes=" + nodes + ", " 
+				+ "strStatus=" + strStatus 
+				+ "]";
 	}
 }
