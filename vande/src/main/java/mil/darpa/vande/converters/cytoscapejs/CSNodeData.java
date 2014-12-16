@@ -20,6 +20,15 @@ public class CSNodeData {
 	private String label;
 	private String name;
 	private String parent;
+	private int size;
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
 
 	/**
 	 * @return the parent
@@ -56,6 +65,7 @@ public class CSNodeData {
 			this.cluster = node.isCluster();
 			this.nbrLinks = node.getNbrLinks();
 			this.color = node.getColor();
+			this.size = node.getSize();
 			Set<V_GraphObjectData> s = node.getDataSet();
 			for (V_GraphObjectData d : s) {
 				if (d.getKey().equalsIgnoreCase("parent")) {
@@ -73,84 +83,70 @@ public class CSNodeData {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		CSNodeData other = (CSNodeData) obj;
 		if (attrs == null) {
-			if (other.attrs != null) {
+			if (other.attrs != null)
 				return false;
-			}
-		} else if (!attrs.equals(other.attrs)) {
+		} else if (!attrs.equals(other.attrs))
 			return false;
-		}
-		if (cluster != other.cluster) {
+		if (cluster != other.cluster)
 			return false;
-		}
+		if (color == null) {
+			if (other.color != null)
+				return false;
+		} else if (!color.equals(other.color))
+			return false;
 		if (id == null) {
-			if (other.id != null) {
+			if (other.id != null)
 				return false;
-			}
-		} else if (!id.equals(other.id)) {
+		} else if (!id.equals(other.id))
 			return false;
-		}
 		if (idType == null) {
-			if (other.idType != null) {
+			if (other.idType != null)
 				return false;
-			}
-		} else if (!idType.equals(other.idType)) {
+		} else if (!idType.equals(other.idType))
 			return false;
-		}
 		if (idVal == null) {
-			if (other.idVal != null) {
+			if (other.idVal != null)
 				return false;
-			}
-		} else if (!idVal.equals(other.idVal)) {
+		} else if (!idVal.equals(other.idVal))
 			return false;
-		}
 		if (label == null) {
-			if (other.label != null) {
+			if (other.label != null)
 				return false;
-			}
-		} else if (!label.equals(other.label)) {
+		} else if (!label.equals(other.label))
 			return false;
-		}
 		if (name == null) {
-			if (other.name != null) {
+			if (other.name != null)
 				return false;
-			}
-		} else if (!name.equals(other.name)) {
+		} else if (!name.equals(other.name))
 			return false;
-		}
-		if (nbrLinks != other.nbrLinks) {
+		if (nbrLinks != other.nbrLinks)
 			return false;
-		}
-		if (origin != other.origin) {
+		if (origin != other.origin)
 			return false;
-		}
+		if (parent == null) {
+			if (other.parent != null)
+				return false;
+		} else if (!parent.equals(other.parent))
+			return false;
+		if (size != other.size)
+			return false;
 		if (type == null) {
-			if (other.type != null) {
+			if (other.type != null)
 				return false;
-			}
-		} else if (!type.equals(other.type)) {
+		} else if (!type.equals(other.type))
 			return false;
-		}
-		if (visible != other.visible) {
+		if (visible != other.visible)
 			return false;
-		}
 		return true;
 	}
 
@@ -193,17 +189,13 @@ public class CSNodeData {
 		return type;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((attrs == null) ? 0 : attrs.hashCode());
 		result = prime * result + (cluster ? 1231 : 1237);
+		result = prime * result + ((color == null) ? 0 : color.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((idType == null) ? 0 : idType.hashCode());
 		result = prime * result + ((idVal == null) ? 0 : idVal.hashCode());
@@ -211,6 +203,8 @@ public class CSNodeData {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + nbrLinks;
 		result = prime * result + (origin ? 1231 : 1237);
+		result = prime * result + ((parent == null) ? 0 : parent.hashCode());
+		result = prime * result + size;
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		result = prime * result + (visible ? 1231 : 1237);
 		return result;

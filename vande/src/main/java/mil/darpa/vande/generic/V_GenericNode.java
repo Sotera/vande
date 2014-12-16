@@ -39,12 +39,8 @@ public class V_GenericNode extends V_Actor {
 	 * --djue
 	 */
 	private char entityType;
-	/**
-	 * Used to be called family.
-	 */
-	private String nodeType;
-
 	private boolean isCluster = false;
+
 	/**
 	 * default, until children added
 	 */
@@ -53,7 +49,6 @@ public class V_GenericNode extends V_Actor {
 	 * // true if it's the one searched for
 	 */
 	private boolean isOrigin = false;
-
 	/*
 	 * XXX: Added from legacy for compatibility; reassess the need for this.
 	 * --djue
@@ -67,10 +62,15 @@ public class V_GenericNode extends V_Actor {
 	 * --djue
 	 */
 	private String key; // used to locate in nodeList
-
 	private int nbrLinks = 0;
+	/**
+	 * Used to be called family.
+	 */
+	private String nodeType;
 
 	private boolean scanned = false; // true when we have searched on this value
+
+	private int size = 16;
 
 	private boolean traversed = false;
 
@@ -109,8 +109,8 @@ public class V_GenericNode extends V_Actor {
 		}
 
 		if (value == null || value.length() == 0) {
-			logger.error("Add Data for name " + attribute
-					+ " with null value, returning without adding ");
+			logger.error("Add Data for name '" + attribute
+					+ "' with null value, returning without adding ");
 			return;
 		}
 
@@ -279,6 +279,10 @@ public class V_GenericNode extends V_Actor {
 		return nodeType;
 	}
 
+	public int getSize() {
+		return size;
+	}
+
 	public String getValue() {
 		return value;
 	}
@@ -314,6 +318,19 @@ public class V_GenericNode extends V_Actor {
 	@Deprecated
 	public void incLinks() {
 		nbrLinks++;
+	}
+
+	public void inheritPropertiesOf(V_GenericNode a) {
+		this.dataSet.addAll(a.getDataSet());
+	}
+
+	public void inheritPropertiesOfExcept(V_GenericNode a,
+			ArrayList<String> skipTypes) {
+		for (V_GraphObjectData x : a.getDataSet()) {
+			if (!skipTypes.contains(x.getKey())) {
+				this.dataSet.addAll(a.getDataSet());
+			}
+		}
 	}
 
 	public boolean isCluster() {
@@ -463,6 +480,10 @@ public class V_GenericNode extends V_Actor {
 		this.scanned = scanned;
 	}
 
+	public void setSize(int size) {
+		this.size = size;
+	}
+
 	public void setTraversed(final boolean traversed) {
 		this.traversed = traversed;
 	}
@@ -488,18 +509,5 @@ public class V_GenericNode extends V_Actor {
 				+ (value != null ? "value=" + value + ", " : "")
 				+ (super.toString() != null ? "toString()=" + super.toString()
 						: "") + "]";
-	}
-
-	public void inheritPropertiesOf(V_GenericNode a) {
-		this.dataSet.addAll(a.getDataSet());
-	}
-
-	public void inheritPropertiesOfExcept(V_GenericNode a,
-			ArrayList<String> skipTypes) {
-		for (V_GraphObjectData x : a.getDataSet()) {
-			if (!skipTypes.contains(x.getKey())) {
-				this.dataSet.addAll(a.getDataSet());
-			}
-		}
 	}
 }
