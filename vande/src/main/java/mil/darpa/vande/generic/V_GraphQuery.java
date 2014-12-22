@@ -1,6 +1,7 @@
 package mil.darpa.vande.generic;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,6 +36,7 @@ public class V_GraphQuery {
 
 	private int minTransValue = 0;
 
+	private final long timeInitiated = new Date().getTime();
 	private Set<String> searchIds = new HashSet<String>();
 	private Long startTime = null;
 	// This was added to because legacy graph builders used it as a separate
@@ -43,9 +45,11 @@ public class V_GraphQuery {
 	private String type = null;
 	private String userId = "None";
 	private String userName = "None";
+
 	public V_GraphQuery() {
 
 	}
+
 	/**
 	 * @param searchIds
 	 *            a Set of initial terms to search for. Must not be empty
@@ -93,31 +97,33 @@ public class V_GraphQuery {
 		this.maxNodes = maxNodes;
 		this.directed = directed;
 		this.minLinks = minLinks;
-		this.setMaxHops(maxHops);
+		setMaxHops(maxHops);
 	}
-	public V_GraphQuery(V_GraphQuery q) {
-		this.directed = q.directed;
-		this.endTime = q.endTime;
-		this.maxEdgesPerNode = q.maxEdgesPerNode;
-		this.maxHops = q.maxHops;
-		this.maxNodes = q.maxNodes;
-		this.minLinks = q.minLinks;
-		this.searchIds = q.searchIds;
-		this.startTime = q.startTime;
-		this.type = q.type;
+
+	public V_GraphQuery(final V_GraphQuery q) {
+		directed = q.directed;
+		endTime = q.endTime;
+		maxEdgesPerNode = q.maxEdgesPerNode;
+		maxHops = q.maxHops;
+		maxNodes = q.maxNodes;
+		minLinks = q.minLinks;
+		searchIds = q.searchIds;
+		startTime = q.startTime;
+		type = q.type;
 
 	}
 
 	public void addSearchIds(final String... id) {
-		if (id == null || id.length == 0) {
+		if ((id == null) || (id.length == 0)) {
 			logger.warn("null or empty id provided: " + Arrays.toString(id));
 		} else {
-			for (String x : id) {
+			for (final String x : id) {
 				searchIds.add(x);
 			}
 
 		}
 	}
+
 	public Long getEndTime() {
 		return endTime;
 	}
@@ -154,6 +160,10 @@ public class V_GraphQuery {
 		return startTime;
 	}
 
+	public long getTimeInitiated() {
+		return timeInitiated;
+	}
+
 	public String getType() {
 		return type;
 	}
@@ -178,7 +188,7 @@ public class V_GraphQuery {
 		this.endTime = endTime;
 	}
 
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 
@@ -199,7 +209,7 @@ public class V_GraphQuery {
 	}
 
 	public void setMinTransValue(final int minValue) {
-		this.minTransValue = minValue;
+		minTransValue = minValue;
 	}
 
 	public void setSearchIds(final Set<String> searchIds) {
@@ -210,15 +220,15 @@ public class V_GraphQuery {
 		this.startTime = startTime;
 	}
 
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
 
-	public void setUserId(String userId) {
+	public void setUserId(final String userId) {
 		this.userId = userId;
 	}
 
-	public void setUserName(String userName) {
+	public void setUserName(final String userName) {
 		this.userName = userName;
 	}
 

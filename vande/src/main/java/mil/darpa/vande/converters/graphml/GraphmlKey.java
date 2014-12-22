@@ -1,6 +1,5 @@
 package mil.darpa.vande.converters.graphml;
 
-import javax.xml.bind.annotation.XmlAttribute;
 
 /**
  * Used to insert the key definitions as properties in the top level of

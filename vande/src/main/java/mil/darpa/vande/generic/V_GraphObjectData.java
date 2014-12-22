@@ -27,7 +27,7 @@ public class V_GraphObjectData implements Comparable<V_GraphObjectData> {
 
 	@Override
 	public final int compareTo(final V_GraphObjectData o) {
-		int keyCompare = key.compareTo(o.key);
+		final int keyCompare = key.compareTo(o.key);
 		if (keyCompare == 0) {
 			return keyVal.compareTo(o.keyVal);
 		} else {
@@ -42,7 +42,7 @@ public class V_GraphObjectData implements Comparable<V_GraphObjectData> {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public final boolean equals(final Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -52,12 +52,19 @@ public class V_GraphObjectData implements Comparable<V_GraphObjectData> {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		V_GraphObjectData other = (V_GraphObjectData) obj;
+		final V_GraphObjectData other = (V_GraphObjectData) obj;
 		if (key == null) {
 			if (other.key != null) {
 				return false;
 			}
 		} else if (!key.equals(other.key)) {
+			return false;
+		}
+		if (keyVal == null) {
+			if (other.keyVal != null) {
+				return false;
+			}
+		} else if (!keyVal.equals(other.keyVal)) {
 			return false;
 		}
 		return true;
@@ -80,7 +87,8 @@ public class V_GraphObjectData implements Comparable<V_GraphObjectData> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
+		result = (prime * result) + ((key == null) ? 0 : key.hashCode());
+		result = (prime * result) + ((keyVal == null) ? 0 : keyVal.hashCode());
 		return result;
 	}
 

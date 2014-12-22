@@ -3,9 +3,6 @@ package mil.darpa.vande.converters.graphml;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-
 import mil.darpa.vande.generic.V_GenericNode;
 import mil.darpa.vande.generic.V_GraphObjectData;
 
