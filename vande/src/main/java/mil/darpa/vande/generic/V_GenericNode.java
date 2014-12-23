@@ -20,6 +20,10 @@ public class V_GenericNode extends V_Actor {
 
 	private String color; // added djue
 
+	private double minScore = 0.0d;
+
+	private double priority = 0.0d;
+
 	/**
 	 * Why not just use a map? And is it really critical that it be sorted?
 	 * 
@@ -34,11 +38,13 @@ public class V_GenericNode extends V_Actor {
 	private int dataSource = 0; // TODO: set this value when we have more than
 
 	private int degree = 0;
+
 	/*
 	 * XXX: Added from legacy for compatibility; reassess the need for this.
 	 * --djue
 	 */
 	private char entityType;
+
 	private boolean isCluster = false;
 
 	/**
@@ -49,6 +55,7 @@ public class V_GenericNode extends V_Actor {
 	 * // true if it's the one searched for
 	 */
 	private boolean isOrigin = false;
+
 	/*
 	 * XXX: Added from legacy for compatibility; reassess the need for this.
 	 * --djue
@@ -56,20 +63,18 @@ public class V_GenericNode extends V_Actor {
 	private boolean isPlaceholder = false;
 
 	private boolean isUsed = false;
-
 	/*
 	 * XXX: Added from legacy for compatibility; reassess the need for this.
 	 * --djue
 	 */
 	private String key; // used to locate in nodeList
 	private int nbrLinks = 0;
+
 	/**
 	 * Used to be called family.
 	 */
 	private String nodeType;
-
 	private boolean scanned = false; // true when we have searched on this value
-
 	private int size = 16;
 
 	private boolean traversed = false;
@@ -103,12 +108,12 @@ public class V_GenericNode extends V_Actor {
 		// We can have two entries for an identifier name. But SnagL barfs
 		// if it gets two entries for the same name. So we kludge the name
 		// here
-		if (attribute == null || attribute.length() == 0) {
+		if ((attribute == null) || (attribute.length() == 0)) {
 			logger.error("Add Data with empty attribute name, returning without adding ");
 			return;
 		}
 
-		if (value == null || value.length() == 0) {
+		if ((value == null) || (value.length() == 0)) {
 			logger.error("Add Data for name '" + attribute
 					+ "' with null value, returning without adding ");
 			return;
@@ -116,7 +121,7 @@ public class V_GenericNode extends V_Actor {
 
 		// Now add the value
 		boolean need_add = false;
-		for (V_GraphObjectData d : dataSet) {
+		for (final V_GraphObjectData d : dataSet) {
 			if (d.getKey().equals(attribute)) {
 				if (d.getKeyVal().equals(value)) {
 					return; // Duplicate attr + value - ignore it
@@ -142,7 +147,7 @@ public class V_GenericNode extends V_Actor {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -152,7 +157,7 @@ public class V_GenericNode extends V_Actor {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		V_GenericNode other = (V_GenericNode) obj;
+		final V_GenericNode other = (V_GenericNode) obj;
 		if (dataSet == null) {
 			if (other.dataSet != null) {
 				return false;
@@ -237,7 +242,7 @@ public class V_GenericNode extends V_Actor {
 	}
 
 	public String getDataValue(final String key) {
-		for (V_GraphObjectData o : dataSet) {
+		for (final V_GraphObjectData o : dataSet) {
 			if (o.key.equals(key)) {
 				return o.keyVal;
 			}
@@ -265,6 +270,13 @@ public class V_GenericNode extends V_Actor {
 		return key;
 	}
 
+	/**
+	 * @return the minScore
+	 */
+	public double getMinScore() {
+		return minScore;
+	}
+
 	public int getNbrLinks() {
 		return nbrLinks;
 	}
@@ -277,6 +289,13 @@ public class V_GenericNode extends V_Actor {
 	 */
 	public String getNodeType() {
 		return nodeType;
+	}
+
+	/**
+	 * @return the priority
+	 */
+	public double getPriority() {
+		return priority;
 	}
 
 	public int getSize() {
@@ -296,22 +315,23 @@ public class V_GenericNode extends V_Actor {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((dataSet == null) ? 0 : dataSet.hashCode());
-		result = prime * result + dataSource;
-		result = prime * result + degree;
-		result = prime * result + entityType;
-		result = prime * result
+		result = (prime * result)
+				+ ((dataSet == null) ? 0 : dataSet.hashCode());
+		result = (prime * result) + dataSource;
+		result = (prime * result) + degree;
+		result = (prime * result) + entityType;
+		result = (prime * result)
 				+ ((nodeType == null) ? 0 : nodeType.hashCode());
-		result = prime * result + (isCluster ? 1231 : 1237);
-		result = prime * result + (isLeaf ? 1231 : 1237);
-		result = prime * result + (isOrigin ? 1231 : 1237);
-		result = prime * result + (isPlaceholder ? 1231 : 1237);
-		result = prime * result + (isUsed ? 1231 : 1237);
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
-		result = prime * result + nbrLinks;
-		result = prime * result + (scanned ? 1231 : 1237);
-		result = prime * result + (traversed ? 1231 : 1237);
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
+		result = (prime * result) + (isCluster ? 1231 : 1237);
+		result = (prime * result) + (isLeaf ? 1231 : 1237);
+		result = (prime * result) + (isOrigin ? 1231 : 1237);
+		result = (prime * result) + (isPlaceholder ? 1231 : 1237);
+		result = (prime * result) + (isUsed ? 1231 : 1237);
+		result = (prime * result) + ((key == null) ? 0 : key.hashCode());
+		result = (prime * result) + nbrLinks;
+		result = (prime * result) + (scanned ? 1231 : 1237);
+		result = (prime * result) + (traversed ? 1231 : 1237);
+		result = (prime * result) + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
 
@@ -320,15 +340,15 @@ public class V_GenericNode extends V_Actor {
 		nbrLinks++;
 	}
 
-	public void inheritPropertiesOf(V_GenericNode a) {
-		this.dataSet.addAll(a.getDataSet());
+	public void inheritPropertiesOf(final V_GenericNode a) {
+		dataSet.addAll(a.getDataSet());
 	}
 
-	public void inheritPropertiesOfExcept(V_GenericNode a,
-			ArrayList<String> skipTypes) {
-		for (V_GraphObjectData x : a.getDataSet()) {
+	public void inheritPropertiesOfExcept(final V_GenericNode a,
+			final ArrayList<String> skipTypes) {
+		for (final V_GraphObjectData x : a.getDataSet()) {
 			if (!skipTypes.contains(x.getKey())) {
-				this.dataSet.addAll(a.getDataSet());
+				dataSet.addAll(a.getDataSet());
 			}
 		}
 	}
@@ -373,7 +393,7 @@ public class V_GenericNode extends V_Actor {
 	public void removeData(final String type) {
 		Object l = null;
 
-		for (V_GraphObjectData d : dataSet) {
+		for (final V_GraphObjectData d : dataSet) {
 			if (d.getKey().equals(type)) {
 				l = d;
 				break;
@@ -393,7 +413,7 @@ public class V_GenericNode extends V_Actor {
 	 *            the color to set
 	 */
 	public final void setColor(final String c) {
-		this.color = c;
+		color = c;
 	}
 
 	/**
@@ -404,7 +424,7 @@ public class V_GenericNode extends V_Actor {
 		this.dataSet = dataSet;
 	}
 
-	public void setDataSource(int dataSource) {
+	public void setDataSource(final int dataSource) {
 		this.dataSource = dataSource;
 	}
 
@@ -422,7 +442,7 @@ public class V_GenericNode extends V_Actor {
 		}
 
 		// V_GraphObjectData d = new V_GraphObjectData(key, value);
-		for (V_GraphObjectData o : dataSet) {
+		for (final V_GraphObjectData o : dataSet) {
 			if (o.key.equals(key)) {
 				dataSet.remove(o);
 				break;
@@ -456,12 +476,20 @@ public class V_GenericNode extends V_Actor {
 		this.isLeaf = isLeaf;
 	}
 
+	/**
+	 * @param minScore
+	 *            the minScore to set
+	 */
+	public void setMinScore(final double minScore) {
+		this.minScore = minScore;
+	}
+
 	public void setNbrLinks(final int nbrLinks) {
 		this.nbrLinks = nbrLinks;
 	}
 
-	public void setNodeType(String family) {
-		this.nodeType = family;
+	public void setNodeType(final String family) {
+		nodeType = family;
 	}
 
 	public void setOrigin(final boolean isOrigin) {
@@ -476,11 +504,19 @@ public class V_GenericNode extends V_Actor {
 		this.isPlaceholder = isPlaceholder;
 	}
 
+	/**
+	 * @param priority
+	 *            the priority to set
+	 */
+	public void setPriority(final double priority) {
+		this.priority = priority;
+	}
+
 	public void setScanned(final boolean scanned) {
 		this.scanned = scanned;
 	}
 
-	public void setSize(int size) {
+	public void setSize(final int size) {
 		this.size = size;
 	}
 
@@ -492,7 +528,7 @@ public class V_GenericNode extends V_Actor {
 		this.isUsed = isUsed;
 	}
 
-	public void setValue(String value) {
+	public void setValue(final String value) {
 		this.value = value;
 	}
 
