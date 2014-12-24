@@ -12,20 +12,34 @@ public class CSAttr {
 	private String key;
 	private String val;
 
+	/**
+	 * 
+	 */
 	public CSAttr() {
 
 	}
 
+	/**
+	 * @param key
+	 * @param val
+	 */
 	public CSAttr(final String key, final String val) {
 		this.key = key;
 		this.val = val;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -35,7 +49,7 @@ public class CSAttr {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		CSAttr other = (CSAttr) obj;
+		final CSAttr other = (CSAttr) obj;
 		if (key == null) {
 			if (other.key != null) {
 				return false;
@@ -53,34 +67,58 @@ public class CSAttr {
 		return true;
 	}
 
+	/**
+	 * @return
+	 */
 	public final String getKey() {
 		return key;
 	}
 
+	/**
+	 * @return
+	 */
 	public final String getVal() {
 		return val;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((key == null) ? 0 : key.hashCode());
-		result = prime * result + ((val == null) ? 0 : val.hashCode());
+		result = (prime * result) + ((key == null) ? 0 : key.hashCode());
+		result = (prime * result) + ((val == null) ? 0 : val.hashCode());
 		return result;
 	}
 
+	/**
+	 * @param key
+	 */
 	public void setKey(final String key) {
 		this.key = key;
 	}
 
+	/**
+	 * @param val
+	 */
 	public void setVal(final String val) {
 		this.val = val;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "CSAttr [key=" + key + ", val=" + val + "]";

@@ -26,6 +26,11 @@ public class CSEdgeData {
 	private String color;
 	private String lineStyle = "solid";
 	private String type = "";
+	private boolean generated = false;
+
+	private List<String> old_targets;
+
+	private List<String> old_sources;
 
 	private boolean visible = true;
 
@@ -53,10 +58,11 @@ public class CSEdgeData {
 
 		amount = Double.toString(e.getValue());
 		color = e.getColor();
-		
-		 // use setter function to ensure given lineStyle is valid for Cytoscape expectations
+
+		// use setter function to ensure given lineStyle is valid for Cytoscape
+		// expectations
 		setLineStyle(e.getLineStyle());
-		
+
 		weight = Integer.toString(e.getWeight());
 
 		day = e.getDay();
@@ -64,9 +70,9 @@ public class CSEdgeData {
 		year = e.getYear();
 		count = Integer.toString(e.getCount());
 
-		Set<V_GraphObjectData> s = e.getDataSet();
-		for (V_GraphObjectData d : s) {
-			this.attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
+		final Set<V_GraphObjectData> s = e.getDataSet();
+		for (final V_GraphObjectData d : s) {
+			attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
 		}
 	}
 
@@ -78,6 +84,10 @@ public class CSEdgeData {
 		return attrs;
 	}
 
+	public String getColor() {
+		return color;
+	}
+
 	public final String getCount() {
 		return count;
 	}
@@ -85,15 +95,7 @@ public class CSEdgeData {
 	public final int getDay() {
 		return day;
 	}
-	
-	public String getColor() {
-		return color;
-	}
 
-	public String getLineStyle() {
-		return lineStyle;
-	}
-	
 	public final String[] getDirection() {
 		return direction;
 	}
@@ -114,12 +116,30 @@ public class CSEdgeData {
 		return label;
 	}
 
+	public String getLineStyle() {
+		return lineStyle;
+	}
+
 	public final int getLinewidth() {
 		return linewidth;
 	}
 
 	public final int getMonth() {
 		return month;
+	}
+
+	/**
+	 * @return the old_sources
+	 */
+	public List<String> getOld_sources() {
+		return old_sources;
+	}
+
+	/**
+	 * @return the old_targets
+	 */
+	public List<String> getOld_targets() {
+		return old_targets;
 	}
 
 	public final String getSource() {
@@ -142,97 +162,128 @@ public class CSEdgeData {
 		return year;
 	}
 
+	/**
+	 * @return the generated
+	 */
+	public boolean isGenerated() {
+		return generated;
+	}
+
 	public final boolean isVisible() {
 		return visible;
 	}
 
-	public void setAmount(String amount) {
+	public void setAmount(final String amount) {
 		this.amount = amount;
 	}
 
-	public void setAttrs(List<CSAttr> attrs) {
+	public void setAttrs(final List<CSAttr> attrs) {
 		this.attrs = attrs;
 	}
 
-	public void setCount(String count) {
-		this.count = count;
-	}
-	
-	public void setColor(String color) {
+	public void setColor(final String color) {
 		// TODO: verify string input is color or hex value
 		this.color = color;
 	}
-	
-	public void setLineStyle(String style) {
+
+	public void setCount(final String count) {
+		this.count = count;
+	}
+
+	public void setDay(final int day) {
+		this.day = day;
+	}
+
+	public final void setDirection(final String[] direction) {
+		this.direction = direction;
+	}
+
+	/**
+	 * @param generated
+	 *            the generated to set
+	 */
+	public void setGenerated(final boolean generated) {
+		this.generated = generated;
+	}
+
+	public final void setId(final String id) {
+		this.id = id;
+	}
+
+	public final void setIdType(final String idType) {
+		this.idType = idType;
+	}
+
+	public final void setIdVal(final String idVal) {
+		this.idVal = idVal;
+	}
+
+	public final void setLabel(final String label) {
+		this.label = label;
+	}
+
+	public void setLineStyle(final String style) {
 		switch (style.toLowerCase()) {
-		case "solid" :
-			this.lineStyle = "solid";
+		case "solid":
+			lineStyle = "solid";
 			break;
-		case "dotted" :
-			this.lineStyle = "dotted";
+		case "dotted":
+			lineStyle = "dotted";
 			break;
-		case "dashed" :
-			this.lineStyle = "dashed";
+		case "dashed":
+			lineStyle = "dashed";
 			break;
-		default :
+		default:
 			// invalid input string; don't change existing lineStyle
 			break;
 		}
 	}
 
-	public void setDay(int day) {
-		this.day = day;
-	}
-
-	public final void setDirection(String[] direction) {
-		this.direction = direction;
-	}
-
-	public final void setId(String id) {
-		this.id = id;
-	}
-
-	public final void setIdType(String idType) {
-		this.idType = idType;
-	}
-
-	public final void setIdVal(String idVal) {
-		this.idVal = idVal;
-	}
-
-	public final void setLabel(String label) {
-		this.label = label;
-	}
-
-	public final void setLinewidth(int linewidth) {
+	public final void setLinewidth(final int linewidth) {
 		this.linewidth = linewidth;
 	}
 
-	public final void setMonth(int month) {
+	public final void setMonth(final int month) {
 		this.month = month;
 	}
 
-	public final void setSource(String source) {
+	/**
+	 * @param old_sources
+	 *            the old_sources to set
+	 */
+	public void setOld_sources(final List<String> old_sources) {
+		this.old_sources = old_sources;
+	}
+
+	/**
+	 * @param old_targets
+	 *            the old_targets to set
+	 */
+	public void setOld_targets(final List<String> old_targets) {
+		this.old_targets = old_targets;
+	}
+
+	public final void setSource(final String source) {
 		this.source = source;
 	}
 
-	public void setTarget(String target) {
+	public void setTarget(final String target) {
 		this.target = target;
 	}
 
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
 
-	public final void setVisible(boolean visible) {
+	public final void setVisible(final boolean visible) {
 		this.visible = visible;
 	}
 
-	public final void setWeight(String weight) {
+	public final void setWeight(final String weight) {
 		this.weight = weight;
 	}
 
-	public final void setYear(int year) {
+	public final void setYear(final int year) {
 		this.year = year;
 	}
 
@@ -241,7 +292,8 @@ public class CSEdgeData {
 		return "CSEdgeData [amount=" + amount + ", attrs=" + attrs + ", count="
 				+ count + ", day=" + day + ", direction="
 				+ Arrays.toString(direction) + ", id=" + id + ", idType="
-				+ idType + ", idVal=" + idVal + ", color=" + color + ", lineStyle=" + lineStyle +", label=" + label
+				+ idType + ", idVal=" + idVal + ", color=" + color
+				+ ", lineStyle=" + lineStyle + ", label=" + label
 				+ ", linewidth=" + linewidth + ", month=" + month + ", source="
 				+ source + ", target=" + target + ", type=" + type
 				+ ", visible=" + visible + ", weight=" + weight + ", year="
