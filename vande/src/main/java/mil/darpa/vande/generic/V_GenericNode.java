@@ -109,13 +109,13 @@ public class V_GenericNode extends V_Actor {
 		// if it gets two entries for the same name. So we kludge the name
 		// here
 		if ((attribute == null) || (attribute.length() == 0)) {
-			logger.error("Add Data with empty attribute name, returning without adding ");
+			// logger.error("Add Data with empty attribute name, returning without adding ");
 			return;
 		}
 
 		if ((value == null) || (value.length() == 0)) {
-			logger.error("Add Data for name '" + attribute
-					+ "' with null value, returning without adding ");
+			// logger.error("Add Data for name '" + attribute
+			// + "' with null value, returning without adding ");
 			return;
 		}
 
