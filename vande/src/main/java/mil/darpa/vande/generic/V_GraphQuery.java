@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author PWG for DARPA
  */
 public class V_GraphQuery {
-	private static final Logger logger = LoggerFactory
-			.getLogger(V_GraphQuery.class);
+	private static final Logger logger = LoggerFactory.getLogger(V_GraphQuery.class);
 	private boolean directed = true;
 
 	private Long endTime = null;
@@ -33,18 +32,20 @@ public class V_GraphQuery {
 	private int maxNodes = 200;
 
 	private int minLinks = 1;
+	private String username = "unknown";
+	private String userId = "unknown";
 
 	private int minTransValue = 0;
 
 	private final long timeInitiated = new Date().getTime();
+
 	private Set<String> searchIds = new HashSet<String>();
+
 	private Long startTime = null;
 	// This was added to because legacy graph builders used it as a separate
 	// query parameter. --djue
 	// It is usually something like customer or account
 	private String type = null;
-	private String userId = "None";
-	private String userName = "None";
 
 	public V_GraphQuery() {
 
@@ -85,10 +86,8 @@ public class V_GraphQuery {
 	 * 
 	 **/
 
-	public V_GraphQuery(final Set<String> searchIds, final Long startTime,
-			final Long endTime, final int minTransValue,
-			final int maxEdgesPerNode, final int maxNodes,
-			final boolean directed, final int minLinks, final int maxHops) {
+	public V_GraphQuery(final Set<String> searchIds, final Long startTime, final Long endTime, final int minTransValue,
+			final int maxEdgesPerNode, final int maxNodes, final boolean directed, final int minLinks, final int maxHops) {
 		this.searchIds = searchIds;
 		this.startTime = startTime;
 		this.endTime = endTime;
@@ -97,7 +96,7 @@ public class V_GraphQuery {
 		this.maxNodes = maxNodes;
 		this.directed = directed;
 		this.minLinks = minLinks;
-		setMaxHops(maxHops);
+		this.maxHops = maxHops;
 	}
 
 	public V_GraphQuery(final V_GraphQuery q) {
@@ -168,12 +167,18 @@ public class V_GraphQuery {
 		return type;
 	}
 
+	/**
+	 * @return the userId
+	 */
 	public String getUserId() {
 		return userId;
 	}
 
-	public String getUserName() {
-		return userName;
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
 	}
 
 	public boolean isDirected() {
@@ -224,24 +229,34 @@ public class V_GraphQuery {
 		this.type = type;
 	}
 
+	/**
+	 * @param userId
+	 *            the userId to set
+	 */
 	public void setUserId(final String userId) {
 		this.userId = userId;
 	}
 
-	public void setUserName(final String userName) {
-		this.userName = userName;
+	/**
+	 * @param username
+	 *            the username to set
+	 */
+	public void setUsername(final String username) {
+		this.username = username;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "V_GraphQuery [directed=" + directed + ", "
-				+ (endTime != null ? "endTime=" + endTime + ", " : "")
-				+ "maxEdgesPerNode=" + maxEdgesPerNode + ", maxHops=" + maxHops
-				+ ", maxNodes=" + maxNodes + ", minLinks=" + minLinks
-				+ ", minTransValue=" + minTransValue + ", "
-				+ (searchIds != null ? "searchIds=" + searchIds + ", " : "")
-				+ (startTime != null ? "startTime=" + startTime + ", " : "")
-				+ (type != null ? "type=" + type : "") + "]";
+		return "V_GraphQuery [directed=" + directed + ", endTime=" + endTime + ", id=" + id + ", maxEdgesPerNode="
+				+ maxEdgesPerNode + ", maxHops=" + maxHops + ", maxNodes=" + maxNodes + ", minLinks=" + minLinks
+				+ ", username=" + username + ", userId=" + userId + ", minTransValue=" + minTransValue
+				+ ", timeInitiated=" + timeInitiated + ", searchIds=" + searchIds + ", startTime=" + startTime
+				+ ", type=" + type + "]";
 	}
 
 }

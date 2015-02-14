@@ -14,12 +14,15 @@ import java.util.List;
 public class V_GenericGraph {
 
 	private Collection<V_GenericEdge> edges = null;
-
+	private String userId = "None";
+	private String username = "None";
 	private int intStatus = 0;
 
 	private Collection<V_GenericNode> nodes = null;
 	private String strStatus = "OK";
 	private Collection<V_LegendItem> legend = null;
+	private int numNodes;
+	private int numEdges;
 
 	public V_GenericGraph() {
 		nodes = new ArrayList<V_GenericNode>(3);
@@ -28,8 +31,7 @@ public class V_GenericGraph {
 		// TODO Auto-generated constructor stub
 	}
 
-	public V_GenericGraph(final Collection<V_GenericNode> nodes,
-			final Collection<V_GenericEdge> edges) {
+	public V_GenericGraph(final Collection<V_GenericNode> nodes, final Collection<V_GenericEdge> edges) {
 		this.nodes = nodes;
 		this.edges = edges;
 		legend = new ArrayList<V_LegendItem>();
@@ -131,8 +133,36 @@ public class V_GenericGraph {
 		return nodes;
 	}
 
+	/**
+	 * @return the numEdges
+	 */
+	public int getNumEdges() {
+		return numEdges;
+	}
+
+	/**
+	 * @return the numNodes
+	 */
+	public int getNumNodes() {
+		return numNodes;
+	}
+
 	public final String getStrStatus() {
 		return strStatus;
+	}
+
+	/**
+	 * @return the userId
+	 */
+	public String getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @return the username
+	 */
+	public String getUserName() {
+		return username;
 	}
 
 	/*
@@ -147,8 +177,7 @@ public class V_GenericGraph {
 		result = (prime * result) + ((edges == null) ? 0 : edges.hashCode());
 		result = (prime * result) + intStatus;
 		result = (prime * result) + ((nodes == null) ? 0 : nodes.hashCode());
-		result = (prime * result)
-				+ ((strStatus == null) ? 0 : strStatus.hashCode());
+		result = (prime * result) + ((strStatus == null) ? 0 : strStatus.hashCode());
 		result = (prime * result) + ((legend == null) ? 0 : legend.hashCode());
 		return result;
 	}
@@ -165,6 +194,14 @@ public class V_GenericGraph {
 		this.intStatus = intStatus;
 	}
 
+	/**
+	 * @param legend
+	 *            the legend to set
+	 */
+	public void setLegend(final Collection<V_LegendItem> legend) {
+		this.legend = legend;
+	}
+
 	public void setNodes(final Collection<V_GenericNode> nodes) {
 		this.nodes = nodes;
 	}
@@ -173,8 +210,40 @@ public class V_GenericGraph {
 		this.nodes = nodes;
 	}
 
+	/**
+	 * @param numEdges
+	 *            the numEdges to set
+	 */
+	public void setNumEdges(final int numEdges) {
+		this.numEdges = numEdges;
+	}
+
+	/**
+	 * @param numNodes
+	 *            the numNodes to set
+	 */
+	public void setNumNodes(final int numNodes) {
+		this.numNodes = numNodes;
+	}
+
 	public final void setStrStatus(final String strStatus) {
 		this.strStatus = strStatus;
+	}
+
+	/**
+	 * @param userId
+	 *            the userId to set
+	 */
+	public void setUserId(final String userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * @param username
+	 *            the username to set
+	 */
+	public void setUserName(final String username) {
+		this.username = username;
 	}
 
 	@Override
@@ -188,11 +257,9 @@ public class V_GenericGraph {
 		}
 		legendStr += "]";
 
-		return "V_GenericGraph ["
-				+ (edges != null ? "edges=" + edges + ", " : "")
-				+ (nodes != null ? "nodes=" + nodes + ", " : "") + "intStatus="
-				+ intStatus + ", " + "legend=" + legendStr + ","
-				+ (strStatus != null ? "strStatus=" + strStatus : "") + "]";
+		return "V_GenericGraph [" + (edges != null ? "edges=" + edges + ", " : "")
+				+ (nodes != null ? "nodes=" + nodes + ", " : "") + "intStatus=" + intStatus + ", " + "legend="
+				+ legendStr + "," + (strStatus != null ? "strStatus=" + strStatus : "") + "]";
 	}
 
 }
