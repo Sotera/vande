@@ -37,6 +37,7 @@ public class CSEdgeData {
 	private String weight = "0";
 
 	private int year = -1;
+	private boolean edited = false;
 
 	public CSEdgeData() {
 
@@ -55,7 +56,6 @@ public class CSEdgeData {
 		label = e.getLabel();
 		idType = e.getIdType();
 		idVal = e.getIdVal();
-
 		amount = Double.toString(e.getValue());
 		color = e.getColor();
 
@@ -69,7 +69,7 @@ public class CSEdgeData {
 		month = e.getMonth();
 		year = e.getYear();
 		count = Integer.toString(e.getCount());
-
+		edited = e.isEdited();
 		final Set<V_GraphObjectData> s = e.getDataSet();
 		for (final V_GraphObjectData d : s) {
 			attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
@@ -171,6 +171,14 @@ public class CSEdgeData {
 
 	public final boolean isVisible() {
 		return visible;
+	}
+	
+	public final boolean isEdited() {
+		return edited;
+	}
+	
+	public void setEdited(final boolean isEdited) {
+		this.edited = isEdited;
 	}
 
 	public void setAmount(final String amount) {

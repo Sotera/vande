@@ -24,6 +24,7 @@ public class V_Actor {
 	// will also be used as the id for the node
 	private String label;
 	private List<V_IdProperty> properties = null;
+	private boolean edited = false;
 
 	public V_Actor() {
 		// TODO Auto-generated constructor stub
@@ -102,6 +103,9 @@ public class V_Actor {
 		} else if (!label.equals(other.label)) {
 			return false;
 		}
+		if (edited != other.edited) {
+			return false;
+		}
 		if (properties == null) {
 			if (other.properties != null) {
 				return false;
@@ -126,6 +130,10 @@ public class V_Actor {
 
 	public final String getLabel() {
 		return label;
+	}
+	
+	public final boolean isEdited() {
+		return edited;
 	}
 
 	@Deprecated
@@ -169,6 +177,10 @@ public class V_Actor {
 
 	public void setProperties(final List<V_IdProperty> properties) {
 		this.properties = properties;
+	}
+	
+	public void setEdited(final boolean isEdited) {
+		this.edited = isEdited;
 	}
 
 	/* (non-Javadoc)

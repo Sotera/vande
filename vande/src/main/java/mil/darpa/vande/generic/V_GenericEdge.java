@@ -40,6 +40,7 @@ public class V_GenericEdge {
 	// for the total interactions between the nodes
 	// For edges that represent temporal aggregations of links
 	private int year = -1;
+	private boolean edited = false;
 
 	public V_GenericEdge() {
 		this.edges = new ArrayList<V_GenericEdge>();
@@ -210,6 +211,9 @@ public class V_GenericEdge {
 			return false;
 		}
 		if (color != other.color) {
+			return false;
+		}
+		if (edited != other.edited) {
 			return false;
 		}
 		if (lineStyle != other.lineStyle) {
@@ -383,6 +387,10 @@ public class V_GenericEdge {
 	public boolean isDirected() {
 		return directed;
 	}
+	
+	public boolean isEdited() {
+		return edited;
+	}
 
 	public boolean matches(final String s, final String t, final int day,
 			final int month, final int year) {
@@ -524,6 +532,10 @@ public class V_GenericEdge {
 	
 	public void setDirected(final boolean directed) {
 		this.directed = directed;
+	}
+	
+	public void setEdited(final boolean isEdited) {
+		this.edited = isEdited;
 	}
 
 	public void setDoubleValue(final double v) {

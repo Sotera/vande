@@ -11,33 +11,22 @@ public class CSNodeData {
 	private List<CSAttr> attrs = new ArrayList<CSAttr>();
 
 	private boolean cluster = false;
-
 	private String color = "bababa";
-
 	private boolean expanded, generated;
-
 	private String id;
-
 	private String idType;
 	private List<CSNode> subNodes;
-
 	private String idVal;
-
 	private String label;
-
 	private String reason;
-
 	private String name;
 	private String parent;
 	private int size;
-
 	private int nbrLinks = 0;
-
 	private boolean origin = false;
-
 	private String type = "circle";
-
 	private boolean visible = true;
+	private boolean edited = false;
 
 	public CSNodeData() {
 
@@ -55,6 +44,7 @@ public class CSNodeData {
 			nbrLinks = node.getNbrLinks();
 			color = node.getColor();
 			size = node.getSize();
+			edited = node.isEdited();
 			final Set<V_GraphObjectData> s = node.getDataSet();
 			for (final V_GraphObjectData d : s) {
 				if (d.getKey().equalsIgnoreCase("parent")) {
@@ -197,6 +187,10 @@ public class CSNodeData {
 
 	public final int getNbrLinks() {
 		return nbrLinks;
+	}
+	
+	public final boolean isEdited() {
+		return edited;
 	}
 
 	/**
@@ -353,6 +347,10 @@ public class CSNodeData {
 
 	public void setSize(final int size) {
 		this.size = size;
+	}
+	
+	public void setEdited(final boolean isEdited) {
+		this.edited = isEdited;
 	}
 
 	/**
