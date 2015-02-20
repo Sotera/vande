@@ -1,6 +1,7 @@
 package mil.darpa.vande.converters.cytoscapejs;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -29,6 +30,8 @@ public class V_CSGraph {
 	private int numNodes;
 	private int numEdges;
 
+	private HashMap<String, CSPosition> positionMapping = null;
+	
 	public V_CSGraph() {
 
 	}
@@ -57,6 +60,7 @@ public class V_CSGraph {
 			userId = g.getUserId();
 			numEdges = edges.size();
 			numNodes = nodes.size();
+			createPositionMapping();
 		}
 
 	}
@@ -206,6 +210,21 @@ public class V_CSGraph {
 		this.intStatus = intStatus;
 	}
 
+	public void createPositionMapping() {
+		positionMapping = new HashMap<String, CSPosition>();
+		for (final CSNode node : nodes) {
+			String id = node.getData().getId();
+			CSPosition pos = node.getPosition();
+			if (pos != null) {
+				positionMapping.put(id, pos);
+			}
+		}
+	}
+	
+	public HashMap<String, CSPosition> getPositionMapping() {
+		return positionMapping;
+	}
+	
 	/**
 	 * @param legend
 	 *            the legend to set
