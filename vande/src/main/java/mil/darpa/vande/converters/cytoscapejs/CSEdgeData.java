@@ -12,32 +12,27 @@ public class CSEdgeData {
 
 	private String amount;
 	private List<CSAttr> attrs = new ArrayList<CSAttr>();
+	private String color;
 	private String count;
 	private int day = -1;
 	private String[] direction = null;
+	private boolean edited = false;
+	private boolean generated = false;
 	private String id;
 	private String idType;
 	private String idVal;
 	private String label;
 	private int linewidth = 1;
+	private String lineStyle = "solid";
 	private int month = -1;
+	private List<String> old_targets;
+	private List<String> old_sources;
 	private String source;
 	private String target;
-	private String color;
-	private String lineStyle = "solid";
 	private String type = "";
-	private boolean generated = false;
-
-	private List<String> old_targets;
-
-	private List<String> old_sources;
-
 	private boolean visible = true;
-
 	private String weight = "0";
-
 	private int year = -1;
-	private boolean edited = false;
 
 	public CSEdgeData() {
 
@@ -59,8 +54,7 @@ public class CSEdgeData {
 		amount = Double.toString(e.getValue());
 		color = e.getColor();
 
-		// use setter function to ensure given lineStyle is valid for Cytoscape
-		// expectations
+		// use setter function to ensure given lineStyle is valid for Cytoscape expectations
 		setLineStyle(e.getLineStyle());
 
 		weight = Integer.toString(e.getWeight());
@@ -70,12 +64,17 @@ public class CSEdgeData {
 		year = e.getYear();
 		count = Integer.toString(e.getCount());
 		edited = e.isEdited();
+		
 		final Set<V_GraphObjectData> s = e.getDataSet();
 		for (final V_GraphObjectData d : s) {
 			attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
 		}
 	}
-
+	
+	/* * * * * * * * * * * * * * * * * */
+	/*             GETTERS             */
+	/* * * * * * * * * * * * * * * * * */
+	
 	public final String getAmount() {
 		return amount;
 	}
@@ -98,6 +97,14 @@ public class CSEdgeData {
 
 	public final String[] getDirection() {
 		return direction;
+	}
+	
+	public final boolean isEdited() {
+		return edited;
+	}
+
+	public boolean isGenerated() {
+		return generated;
 	}
 
 	public final String getId() {
@@ -128,16 +135,10 @@ public class CSEdgeData {
 		return month;
 	}
 
-	/**
-	 * @return the old_sources
-	 */
 	public List<String> getOld_sources() {
 		return old_sources;
 	}
 
-	/**
-	 * @return the old_targets
-	 */
 	public List<String> getOld_targets() {
 		return old_targets;
 	}
@@ -154,6 +155,10 @@ public class CSEdgeData {
 		return type;
 	}
 
+	public final boolean isVisible() {
+		return visible;
+	}
+	
 	public final String getWeight() {
 		return weight;
 	}
@@ -161,26 +166,11 @@ public class CSEdgeData {
 	public final int getYear() {
 		return year;
 	}
-
-	/**
-	 * @return the generated
-	 */
-	public boolean isGenerated() {
-		return generated;
-	}
-
-	public final boolean isVisible() {
-		return visible;
-	}
 	
-	public final boolean isEdited() {
-		return edited;
-	}
+	/* * * * * * * * * * * * * * * * * */
+	/*             SETTERS             */
+	/* * * * * * * * * * * * * * * * * */		
 	
-	public void setEdited(final boolean isEdited) {
-		this.edited = isEdited;
-	}
-
 	public void setAmount(final String amount) {
 		this.amount = amount;
 	}
@@ -206,10 +196,10 @@ public class CSEdgeData {
 		this.direction = direction;
 	}
 
-	/**
-	 * @param generated
-	 *            the generated to set
-	 */
+	public void setEdited(final boolean isEdited) {
+		this.edited = isEdited;
+	}
+
 	public void setGenerated(final boolean generated) {
 		this.generated = generated;
 	}
@@ -233,13 +223,13 @@ public class CSEdgeData {
 	public void setLineStyle(final String style) {
 		switch (style.toLowerCase()) {
 		case "solid":
-			lineStyle = "solid";
+			this.lineStyle = "solid";
 			break;
 		case "dotted":
-			lineStyle = "dotted";
+			this.lineStyle = "dotted";
 			break;
 		case "dashed":
-			lineStyle = "dashed";
+			this.lineStyle = "dashed";
 			break;
 		default:
 			// invalid input string; don't change existing lineStyle
@@ -255,18 +245,10 @@ public class CSEdgeData {
 		this.month = month;
 	}
 
-	/**
-	 * @param old_sources
-	 *            the old_sources to set
-	 */
 	public void setOld_sources(final List<String> old_sources) {
 		this.old_sources = old_sources;
 	}
 
-	/**
-	 * @param old_targets
-	 *            the old_targets to set
-	 */
 	public void setOld_targets(final List<String> old_targets) {
 		this.old_targets = old_targets;
 	}
@@ -294,6 +276,10 @@ public class CSEdgeData {
 	public final void setYear(final int year) {
 		this.year = year;
 	}
+	
+	/* * * * * * * * * * * * * * * * * */
+	/*             METHODS             */
+	/* * * * * * * * * * * * * * * * * */
 
 	@Override
 	public String toString() {

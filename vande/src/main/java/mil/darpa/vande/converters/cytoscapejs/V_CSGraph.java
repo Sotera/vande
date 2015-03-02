@@ -16,21 +16,15 @@ import mil.darpa.vande.generic.V_LegendItem;
 public class V_CSGraph {
 
 	private List<CSEdge> edges = new ArrayList<CSEdge>();
-	private String userId = "None";
-
-	private String username = "None";
-
 	private int intStatus = 0;
-
-	private List<CSNode> nodes = new ArrayList<CSNode>();
-
-	private String strStatus = "OK";
-
 	private List<V_LegendItem> legend = new ArrayList<V_LegendItem>();
-	private int numNodes;
+	private List<CSNode> nodes = new ArrayList<CSNode>();
 	private int numEdges;
-
+	private int numNodes;
 	private HashMap<String, CSPosition> positionMapping = null;
+	private String strStatus = "OK";
+	private String userId = "None";
+	private String username = "None";
 	
 	public V_CSGraph() {
 
@@ -62,15 +56,116 @@ public class V_CSGraph {
 			numNodes = nodes.size();
 			createPositionMapping();
 		}
-
 	}
 
+	/* * * * * * * * * * * * * * * * * */
+	/*             GETTERS             */
+	/* * * * * * * * * * * * * * * * * */
+
+	@XmlElement
+	public List<CSEdge> getEdges() {
+		return edges;
+	}
+
+	public int getIntStatus() {
+		return intStatus;
+	}
+
+	@XmlElement
+	public final List<V_LegendItem> getLegend() {
+		return legend;
+	}
+
+	@XmlElement
+	public final List<CSNode> getNodes() {
+		return nodes;
+	}
+
+	public int getNumEdges() {
+		return numEdges;
+	}
+
+	public int getNumNodes() {
+		return numNodes;
+	}
+
+	public String getStrStatus() {
+		return strStatus;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public String getUserName() {
+		return username;
+	}
+	
+	/* * * * * * * * * * * * * * * * * */
+	/*             SETTERS             */
+	/* * * * * * * * * * * * * * * * * */	
+
+	public final void setEdges(final List<CSEdge> edges) {
+		this.edges = edges;
+	}
+
+	public void setIntStatus(final int intStatus) {
+		this.intStatus = intStatus;
+	}
+	
+	public void setLegend(final List<V_LegendItem> legend) {
+		this.legend = legend;
+	}
+
+	public void setNodes(final List<CSNode> nodes) {
+		this.nodes = nodes;
+	}
+
+	public void setNumEdges(final int numEdges) {
+		this.numEdges = numEdges;
+	}
+
+	public void setNumNodes(final int numNodes) {
+		this.numNodes = numNodes;
+	}
+
+	public HashMap<String, CSPosition> getPositionMapping() {
+		return positionMapping;
+	}
+	
+	public void setStrStatus(final String strStatus) {
+		this.strStatus = strStatus;
+	}
+	
+	public void setUserId(final String userId) {
+		this.userId = userId;
+	}
+
+	public void setUserName(final String username) {
+		this.username = username;
+	}
+	
+	/* * * * * * * * * * * * * * * * * */
+	/*             METHODS             */
+	/* * * * * * * * * * * * * * * * * */
+	
 	public void addEdge(final CSEdge grEdge) {
 		edges.add(grEdge);
 	}
 
 	public void addNode(final CSNode node) {
 		nodes.add(node);
+	}
+
+	public void createPositionMapping() {
+		positionMapping = new HashMap<String, CSPosition>();
+		for (final CSNode node : nodes) {
+			String id = node.getData().getId();
+			CSPosition pos = node.getPosition();
+			if (pos != null) {
+				positionMapping.put(id, pos);
+			}
+		}
 	}
 
 	/*
@@ -124,63 +219,6 @@ public class V_CSGraph {
 		return true;
 	}
 
-	/**
-	 * @return the edges
-	 */
-	@XmlElement
-	public List<CSEdge> getEdges() {
-		return edges;
-	}
-
-	public int getIntStatus() {
-		return intStatus;
-	}
-
-	@XmlElement
-	public final List<V_LegendItem> getLegend() {
-		return legend;
-	}
-
-	/**
-	 * @return the nodes
-	 */
-	@XmlElement
-	public final List<CSNode> getNodes() {
-		return nodes;
-	}
-
-	/**
-	 * @return the numEdges
-	 */
-	public int getNumEdges() {
-		return numEdges;
-	}
-
-	/**
-	 * @return the numNodes
-	 */
-	public int getNumNodes() {
-		return numNodes;
-	}
-
-	public String getStrStatus() {
-		return strStatus;
-	}
-
-	/**
-	 * @return the userId
-	 */
-	public String getUserId() {
-		return userId;
-	}
-
-	/**
-	 * @return the username
-	 */
-	public String getUserName() {
-		return username;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -196,81 +234,6 @@ public class V_CSGraph {
 		result = (prime * result) + ((strStatus == null) ? 0 : strStatus.hashCode());
 		result = (prime * result) + ((legend == null) ? 0 : legend.hashCode());
 		return result;
-	}
-
-	/**
-	 * @param edges
-	 *            the edges to set
-	 */
-	public final void setEdges(final List<CSEdge> edges) {
-		this.edges = edges;
-	}
-
-	public void setIntStatus(final int intStatus) {
-		this.intStatus = intStatus;
-	}
-
-	public void createPositionMapping() {
-		positionMapping = new HashMap<String, CSPosition>();
-		for (final CSNode node : nodes) {
-			String id = node.getData().getId();
-			CSPosition pos = node.getPosition();
-			if (pos != null) {
-				positionMapping.put(id, pos);
-			}
-		}
-	}
-	
-	public HashMap<String, CSPosition> getPositionMapping() {
-		return positionMapping;
-	}
-	
-	/**
-	 * @param legend
-	 *            the legend to set
-	 */
-	public void setLegend(final List<V_LegendItem> legend) {
-		this.legend = legend;
-	}
-
-	public void setNodes(final List<CSNode> nodes) {
-		this.nodes = nodes;
-	}
-
-	/**
-	 * @param numEdges
-	 *            the numEdges to set
-	 */
-	public void setNumEdges(final int numEdges) {
-		this.numEdges = numEdges;
-	}
-
-	/**
-	 * @param numNodes
-	 *            the numNodes to set
-	 */
-	public void setNumNodes(final int numNodes) {
-		this.numNodes = numNodes;
-	}
-
-	public void setStrStatus(final String strStatus) {
-		this.strStatus = strStatus;
-	}
-
-	/**
-	 * @param userId
-	 *            the userId to set
-	 */
-	public void setUserId(final String userId) {
-		this.userId = userId;
-	}
-
-	/**
-	 * @param username
-	 *            the username to set
-	 */
-	public void setUserName(final String username) {
-		this.username = username;
 	}
 
 	@Override

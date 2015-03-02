@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class V_IdProperty implements Comparable<V_IdProperty> {
+	
 	private String idName;
 	private String idValue;
 

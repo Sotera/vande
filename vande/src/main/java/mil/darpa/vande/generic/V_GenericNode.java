@@ -15,76 +15,50 @@ import org.slf4j.LoggerFactory;
  */
 public class V_GenericNode extends V_Actor {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(V_GenericNode.class);
-
-	private String color; // added djue
-
-	private double minScore = 0.0d;
-
-	private double priority = 0.0d;
-
+	private static final Logger logger = LoggerFactory.getLogger(V_GenericNode.class);
+	
 	/**
 	 * Why not just use a map? And is it really critical that it be sorted?
 	 * 
 	 * from and to nodes
 	 */
 	private SortedSet<V_GraphObjectData> dataSet = new TreeSet<V_GraphObjectData>();
-
-	/**
-	 * XXX: Added from legacy for compatibility; reassess the need for this.
-	 * --djue
-	 */
-	private int dataSource = 0; // TODO: set this value when we have more than
-
+	
+	private String color; // added djue
 	private int degree = 0;
-
-	/*
-	 * XXX: Added from legacy for compatibility; reassess the need for this.
-	 * --djue
-	 */
-	private char entityType;
-
 	private boolean isCluster = false;
-
-	/**
-	 * default, until children added
-	 */
-	private boolean isLeaf = true;
-	/**
-	 * // true if it's the one searched for
-	 */
-	private boolean isOrigin = false;
-
-	/*
-	 * XXX: Added from legacy for compatibility; reassess the need for this.
-	 * --djue
-	 */
-	private boolean isPlaceholder = false;
-
 	private boolean isUsed = false;
-	/*
-	 * XXX: Added from legacy for compatibility; reassess the need for this.
-	 * --djue
-	 */
-	private String key; // used to locate in nodeList
+	private double minScore = 0.0d;
 	private int nbrLinks = 0;
-
-	/**
-	 * Used to be called family.
-	 */
-	private String nodeType;
+	private double priority = 0.0d;
 	private boolean scanned = false; // true when we have searched on this value
 	private int size = 16;
-
 	private boolean traversed = false;
 
-	/*
-	 * XXX: Added from legacy for compatibility; reassess the need for this.
-	 * Might just use idVal from superclass. --djue
-	 */
+	/** default, until children added */
+	private boolean isLeaf = true;
+	
+	/** true if it's the one searched for */
+	private boolean isOrigin = false;
+	
+	/** Used to be called family. */
+	private String nodeType;
+	
+	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
+	private int dataSource = 0; // TODO: set this value when we have more than
+	
+	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
+	private char entityType;
+	
+	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
+	private boolean isPlaceholder = false;
+	
+	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
+	private String key; // used to locate in nodeList
+	
+	/* XXX: Added from legacy for compatibility; reassess the need for this. Might just use idVal from superclass. --djue */
 	private String value;
-
+	
 	public V_GenericNode() {
 		super();
 	}
@@ -93,6 +67,219 @@ public class V_GenericNode extends V_Actor {
 		super(id);
 	}
 
+	/* * * * * * * * * * * * * * * * * */
+	/*             GETTERS             */
+	/* * * * * * * * * * * * * * * * * */
+	
+	public final String getColor() {
+		return color;
+	}
+
+	public boolean isCluster() {
+		return isCluster;
+	}
+	
+	public SortedSet<V_GraphObjectData> getDataSet() {
+		return dataSet;
+	}
+
+	public int getDegree() {
+		return degree;
+	}
+
+	public boolean isLeaf() {
+		return isLeaf;
+	}
+
+	public boolean isOrigin() {
+		return isOrigin;
+	}
+	
+	public boolean isUsed() {
+		return isUsed;
+	}
+	
+	public double getMinScore() {
+		return minScore;
+	}
+
+	public int getNbrLinks() {
+		return nbrLinks;
+	}
+	
+	/**
+	 * We use the family to determine what to search on, so be careful what you set it to!
+	 * 
+	 * @return
+	 */
+	public String getNodeType() {
+		return nodeType;
+	}
+	
+	public double getPriority() {
+		return priority;
+	}
+	
+	public boolean isScanned() {
+		return scanned;
+	}
+
+	public int getSize() {
+		return size;
+	}
+	
+	public boolean isTraversed() {
+		return traversed;
+	}
+	
+	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
+	public int getDataSource() {
+		return dataSource;
+	}
+	
+	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
+	public char getEntityType() {
+		return entityType;
+	}
+
+	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
+	public boolean isPlaceholder() {
+		return isPlaceholder;
+	}
+	
+	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
+	public String getKey() {
+		return key;
+	}
+
+	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
+	public String getValue() {
+		return value;
+	}
+
+	/* * * * * * * * * * * * * * * * * */
+	/*             SETTERS             */
+	/* * * * * * * * * * * * * * * * * */
+	
+	public final void setColor(final String c) {
+		this.color = c;
+	}
+	
+	public final void setDataSet(final SortedSet<V_GraphObjectData> dataSet) {
+		this.dataSet = dataSet;
+	}
+	
+	public void setDegree(final int degree) {
+		this.degree = degree;
+	}
+	
+	public void setCluster(final boolean isCluster) {
+		this.isCluster = isCluster;
+	}
+
+	public void setLeaf(final boolean isLeaf) {
+		this.isLeaf = isLeaf;
+	}
+
+	public void setOrigin(final boolean isOrigin) {
+		this.isOrigin = isOrigin;
+	}
+	
+	public void setUsed(final boolean isUsed) {
+		this.isUsed = isUsed;
+	}
+	
+	public void setMinScore(final double minScore) {
+		this.minScore = minScore;
+	}
+
+	public void setNbrLinks(final int nbrLinks) {
+		this.nbrLinks = nbrLinks;
+	}
+
+	public void setNodeType(final String family) {
+		this.nodeType = family;
+	}
+	
+	public void setPriority(final double priority) {
+		this.priority = priority;
+	}
+
+	public void setScanned(final boolean scanned) {
+		this.scanned = scanned;
+	}
+
+	public void setSize(final int size) {
+		this.size = size;
+	}
+
+	public void setTraversed(final boolean traversed) {
+		this.traversed = traversed;
+	}
+	
+	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
+	public void setDataSource(final int dataSource) {
+		this.dataSource = dataSource;
+	}
+
+	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
+	public void setEntityType(final char entityType) {
+		this.entityType = entityType;
+	}
+
+	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
+	public void setPlaceholder(final boolean isPlaceholder) {
+		this.isPlaceholder = isPlaceholder;
+	}
+	
+	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
+	public void setKey(final String key) {
+		this.key = key;
+	}
+	
+	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
+	public void setValue(final String value) {
+		this.value = value;
+	}
+
+
+	/* * * * * * * * * * * * * * * * * */
+	/*             METHODS             */
+	/* * * * * * * * * * * * * * * * * */
+	
+	public String getDataValue(final String key) {
+		for (final V_GraphObjectData o : dataSet) {
+			if (o.key.equals(key)) {
+				return o.keyVal;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Change the existing value of an attribute or add a new one. <BR>
+	 * Different from addData which handles dupes by appending an underscore to
+	 * the key
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	public void setDataValue(final String key, final String value) {
+		if (value == null) {
+			logger.error("Null value being set for key " + key);
+		}
+
+		// V_GraphObjectData d = new V_GraphObjectData(key, value);
+		for (final V_GraphObjectData o : dataSet) {
+			if (o.key.equals(key)) {
+				dataSet.remove(o);
+				break;
+			}
+		}
+
+		addData(key, value);
+	}
+	
 	/**
 	 * Adds a key value pair to the dataSet list that appears in the keys
 	 * section of graphml. If an entry with this attribute already exsists,
@@ -139,6 +326,41 @@ public class V_GenericNode extends V_Actor {
 		// So the name doesn't exist in the data set
 
 		dataSet.add(new V_GraphObjectData(attribute, value));
+	}
+
+	/**
+	 * 
+	 * @param type will be compared to the key of the object data
+	 */
+	public void removeData(final String type) {
+		Object l = null;
+
+		for (final V_GraphObjectData d : dataSet) {
+			if (d.getKey().equals(type)) {
+				l = d;
+				break;
+			}
+		}
+		if (l != null) {
+			dataSet.remove(l);
+		}
+	}
+	
+	@Deprecated
+	public void incLinks() {
+		nbrLinks++;
+	}
+
+	public void inheritPropertiesOf(final V_GenericNode a) {
+		dataSet.addAll(a.getDataSet());
+	}
+
+	public void inheritPropertiesOfExcept(final V_GenericNode a, final ArrayList<String> skipTypes) {
+		for (final V_GraphObjectData x : a.getDataSet()) {
+			if (!skipTypes.contains(x.getKey())) {
+				dataSet.addAll(a.getDataSet());
+			}
+		}
 	}
 
 	/*
@@ -222,90 +444,6 @@ public class V_GenericNode extends V_Actor {
 		return true;
 	}
 
-	/**
-	 * @return the color
-	 */
-	public final String getColor() {
-		return color;
-	}
-
-	/**
-	 * @return the dataSet
-	 */
-
-	public SortedSet<V_GraphObjectData> getDataSet() {
-		return dataSet;
-	}
-
-	public int getDataSource() {
-		return dataSource;
-	}
-
-	public String getDataValue(final String key) {
-		for (final V_GraphObjectData o : dataSet) {
-			if (o.key.equals(key)) {
-				return o.keyVal;
-			}
-		}
-		return null;
-	}
-
-	public int getDegree() {
-		return degree;
-	}
-
-	/*
-	 * XXX: Added from legacy for compatibility; reassess the need for this.
-	 * --djue
-	 */
-	public char getEntityType() {
-		return entityType;
-	}
-
-	/*
-	 * XXX: Added from legacy for compatibility; reassess the need for this.
-	 * --djue
-	 */
-	public String getKey() {
-		return key;
-	}
-
-	/**
-	 * @return the minScore
-	 */
-	public double getMinScore() {
-		return minScore;
-	}
-
-	public int getNbrLinks() {
-		return nbrLinks;
-	}
-
-	/**
-	 * We use the family to determine what to search on, so be careful what you
-	 * set it to!
-	 * 
-	 * @return
-	 */
-	public String getNodeType() {
-		return nodeType;
-	}
-
-	/**
-	 * @return the priority
-	 */
-	public double getPriority() {
-		return priority;
-	}
-
-	public int getSize() {
-		return size;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -315,13 +453,11 @@ public class V_GenericNode extends V_Actor {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = (prime * result)
-				+ ((dataSet == null) ? 0 : dataSet.hashCode());
+		result = (prime * result) + ((dataSet == null) ? 0 : dataSet.hashCode());
 		result = (prime * result) + dataSource;
 		result = (prime * result) + degree;
 		result = (prime * result) + entityType;
-		result = (prime * result)
-				+ ((nodeType == null) ? 0 : nodeType.hashCode());
+		result = (prime * result) + ((nodeType == null) ? 0 : nodeType.hashCode());
 		result = (prime * result) + (isCluster ? 1231 : 1237);
 		result = (prime * result) + (isLeaf ? 1231 : 1237);
 		result = (prime * result) + (isOrigin ? 1231 : 1237);
@@ -334,204 +470,7 @@ public class V_GenericNode extends V_Actor {
 		result = (prime * result) + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
-
-	@Deprecated
-	public void incLinks() {
-		nbrLinks++;
-	}
-
-	public void inheritPropertiesOf(final V_GenericNode a) {
-		dataSet.addAll(a.getDataSet());
-	}
-
-	public void inheritPropertiesOfExcept(final V_GenericNode a,
-			final ArrayList<String> skipTypes) {
-		for (final V_GraphObjectData x : a.getDataSet()) {
-			if (!skipTypes.contains(x.getKey())) {
-				dataSet.addAll(a.getDataSet());
-			}
-		}
-	}
-
-	public boolean isCluster() {
-		return isCluster;
-	}
-
-	public boolean isLeaf() {
-		return isLeaf;
-	}
-
-	public boolean isOrigin() {
-		return isOrigin;
-	}
-
-	/*
-	 * XXX: Added from legacy for compatibility; reassess the need for this.
-	 * --djue
-	 */
-	public boolean isPlaceholder() {
-		return isPlaceholder;
-	}
-
-	public boolean isScanned() {
-		return scanned;
-	}
-
-	public boolean isTraversed() {
-		return traversed;
-	}
-
-	public boolean isUsed() {
-		return isUsed;
-	}
-
-	/**
-	 * 
-	 * @param type
-	 *            will be compared to the key of the object data
-	 */
-	public void removeData(final String type) {
-		Object l = null;
-
-		for (final V_GraphObjectData d : dataSet) {
-			if (d.getKey().equals(type)) {
-				l = d;
-				break;
-			}
-		}
-		if (l != null) {
-			dataSet.remove(l);
-		}
-	}
-
-	public void setCluster(final boolean isCluster) {
-		this.isCluster = isCluster;
-	}
-
-	/**
-	 * @param c
-	 *            the color to set
-	 */
-	public final void setColor(final String c) {
-		color = c;
-	}
-
-	/**
-	 * @param dataSet
-	 *            the dataSet to set
-	 */
-	public final void setDataSet(final SortedSet<V_GraphObjectData> dataSet) {
-		this.dataSet = dataSet;
-	}
-
-	public void setDataSource(final int dataSource) {
-		this.dataSource = dataSource;
-	}
-
-	/**
-	 * Change the existing value of an attribute or add a new one. <BR>
-	 * Different from addData which handles dupes by appending an underscore to
-	 * the key
-	 * 
-	 * @param key
-	 * @param value
-	 */
-	public void setDataValue(final String key, final String value) {
-		if (value == null) {
-			logger.error("Null value being set for key " + key);
-		}
-
-		// V_GraphObjectData d = new V_GraphObjectData(key, value);
-		for (final V_GraphObjectData o : dataSet) {
-			if (o.key.equals(key)) {
-				dataSet.remove(o);
-				break;
-			}
-		}
-
-		addData(key, value);
-	}
-
-	public void setDegree(final int degree) {
-		this.degree = degree;
-	}
-
-	/*
-	 * XXX: Added from legacy for compatibility; reassess the need for this.
-	 * --djue
-	 */
-	public void setEntityType(final char entityType) {
-		this.entityType = entityType;
-	}
-
-	/*
-	 * XXX: Added from legacy for compatibility; reassess the need for this.
-	 * --djue
-	 */
-	public void setKey(final String key) {
-		this.key = key;
-	}
-
-	public void setLeaf(final boolean isLeaf) {
-		this.isLeaf = isLeaf;
-	}
-
-	/**
-	 * @param minScore
-	 *            the minScore to set
-	 */
-	public void setMinScore(final double minScore) {
-		this.minScore = minScore;
-	}
-
-	public void setNbrLinks(final int nbrLinks) {
-		this.nbrLinks = nbrLinks;
-	}
-
-	public void setNodeType(final String family) {
-		nodeType = family;
-	}
-
-	public void setOrigin(final boolean isOrigin) {
-		this.isOrigin = isOrigin;
-	}
-
-	/*
-	 * XXX: Added from legacy for compatibility; reassess the need for this.
-	 * --djue
-	 */
-	public void setPlaceholder(final boolean isPlaceholder) {
-		this.isPlaceholder = isPlaceholder;
-	}
-
-	/**
-	 * @param priority
-	 *            the priority to set
-	 */
-	public void setPriority(final double priority) {
-		this.priority = priority;
-	}
-
-	public void setScanned(final boolean scanned) {
-		this.scanned = scanned;
-	}
-
-	public void setSize(final int size) {
-		this.size = size;
-	}
-
-	public void setTraversed(final boolean traversed) {
-		this.traversed = traversed;
-	}
-
-	public void setUsed(final boolean isUsed) {
-		this.isUsed = isUsed;
-	}
-
-	public void setValue(final String value) {
-		this.value = value;
-	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 

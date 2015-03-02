@@ -9,9 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class V_NodeList implements Cloneable {
 
-	private Map<String, V_GenericNode> nodes = new HashMap<String, V_GenericNode>(
-			4);
-
+	private Map<String, V_GenericNode> nodes = new HashMap<String, V_GenericNode>(4);
 	private final Logger logger = LoggerFactory.getLogger(V_NodeList.class);
 
 	public void add(final V_NodeList otherNodeList) {
@@ -21,7 +19,6 @@ public class V_NodeList implements Cloneable {
 	/**
 	 * Make a new node for the Actor if one doesn't already exist, and adds it
 	 * to the list
-	 * 
 	 * 
 	 * @param a
 	 *            Actor
@@ -49,6 +46,24 @@ public class V_NodeList implements Cloneable {
 		}
 	}
 
+	/**
+	 * Gets the node from the map based on it's ID
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public V_GenericNode getNode(final String id) {
+		return nodes.get(id);
+	}
+
+	public Collection<V_GenericNode> getNodes() {
+		return nodes.values();
+	}
+
+	public int size() {
+		return nodes.size();
+	}
+
 	public void clear() {
 		nodes.clear();
 	}
@@ -68,20 +83,6 @@ public class V_NodeList implements Cloneable {
 	}
 
 	/**
-	 * Gets the node from the map based on it's ID
-	 * 
-	 * @param id
-	 * @return
-	 */
-	public V_GenericNode getNode(final String id) {
-		return nodes.get(id);
-	}
-
-	public Collection<V_GenericNode> getNodes() {
-		return nodes.values();
-	}
-
-	/**
 	 * What is the compelling reason for this? We would not have added any nodes
 	 * to the list unless an edge was possible.
 	 * 
@@ -92,17 +93,11 @@ public class V_NodeList implements Cloneable {
 		final Map<String, V_GenericNode> newnodes = new HashMap<String, V_GenericNode>();
 		logger.debug("Node list size before cleaning: " + nodes.size());
 		for (final V_GenericEdge e : elist.getEdges()) {
-			// newnodes.put(e.getSourceId(), e.getSourceNode());
-			// newnodes.put(e.getTargetId(), e.getTargetNode());
 			newnodes.put(e.getSourceId(), nodes.get(e.getSourceId()));
 			newnodes.put(e.getTargetId(), nodes.get(e.getTargetId()));
 		}
 		logger.debug("Node list size after cleaning: " + newnodes.size());
 		nodes = newnodes;
-	}
-
-	public int size() {
-		return nodes.size();
 	}
 
 	@Override

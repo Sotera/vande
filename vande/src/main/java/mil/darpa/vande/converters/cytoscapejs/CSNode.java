@@ -4,13 +4,17 @@ import mil.darpa.vande.generic.V_GenericNode;
 
 public class CSNode {
 
-	private String bypass = null, classes = null;
+	private String bypass = null;
+	private String classes = null;
 	private CSNodeData data;
+	private boolean	grabbable = true;
+	private boolean	grabbed = false;
 	private String group;
+	private boolean	locked = false;
 	private CSPosition position;
-
-	private boolean removed = false, selected = false, selectable = true,
-			locked = false, grabbed = false, grabbable = true;
+	private boolean removed = false;
+	private boolean	selectable = true;
+	private boolean	selected = false;
 
 	public CSNode() {
 
@@ -20,33 +24,10 @@ public class CSNode {
 		data = new CSNodeData(node);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(final Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final CSNode other = (CSNode) obj;
-		if (data == null) {
-			if (other.data != null) {
-				return false;
-			}
-		} else if (!data.equals(other.data)) {
-			return false;
-		}
-		return true;
-	}
-
+	/* * * * * * * * * * * * * * * * * */
+	/*             GETTERS             */
+	/* * * * * * * * * * * * * * * * * */
+	
 	public String getBypass() {
 		return bypass;
 	}
@@ -58,28 +39,7 @@ public class CSNode {
 	public CSNodeData getData() {
 		return data;
 	}
-
-	public String getGroup() {
-		return group;
-	}
-
-	public CSPosition getPosition() {
-		return position;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((data == null) ? 0 : data.hashCode());
-		return result;
-	}
-
+	
 	public boolean isGrabbable() {
 		return grabbable;
 	}
@@ -87,9 +47,17 @@ public class CSNode {
 	public boolean isGrabbed() {
 		return grabbed;
 	}
+	
+	public String getGroup() {
+		return group;
+	}
 
 	public boolean isLocked() {
 		return locked;
+	}
+
+	public CSPosition getPosition() {
+		return position;
 	}
 
 	public boolean isRemoved() {
@@ -104,6 +72,10 @@ public class CSNode {
 		return selected;
 	}
 
+	/* * * * * * * * * * * * * * * * * */
+	/*             SETTERS             */
+	/* * * * * * * * * * * * * * * * * */
+	
 	public void setBypass(final String bypass) {
 		this.bypass = bypass;
 	}
@@ -147,10 +119,53 @@ public class CSNode {
 	public void setSelected(final boolean selected) {
 		this.selected = selected;
 	}
+	
+	/* * * * * * * * * * * * * * * * * */
+	/*             METHODS             */
+	/* * * * * * * * * * * * * * * * * */
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final CSNode other = (CSNode) obj;
+		if (data == null) {
+			if (other.data != null) {
+				return false;
+			}
+		} else if (!data.equals(other.data)) {
+			return false;
+		}
+		return true;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((data == null) ? 0 : data.hashCode());
+		return result;
+	}
+	
 	@Override
 	public String toString() {
 		return "CSNode [data=" + data + "]";
 	}
-
 }

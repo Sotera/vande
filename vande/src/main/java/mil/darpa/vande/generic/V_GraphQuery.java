@@ -16,36 +16,22 @@ import org.slf4j.LoggerFactory;
  */
 public class V_GraphQuery {
 	private static final Logger logger = LoggerFactory.getLogger(V_GraphQuery.class);
+	
 	private boolean directed = true;
-
 	private Long endTime = null;
-
-	/*
-	 * Used for logging and persistence purposes
-	 */
-	private String id = null;
-
+	private String id = null; //Used for logging and persistence purposes
 	private int maxEdgesPerNode = 50;
-
 	private int maxHops = 3;
-
 	private int maxNodes = 200;
-
 	private int minLinks = 1;
-	private String username = "unknown";
-	private String userId = "unknown";
-
 	private int minTransValue = 0;
-
-	private final long timeInitiated = new Date().getTime();
-
 	private Set<String> searchIds = new HashSet<String>();
-
 	private Long startTime = null;
-	// This was added to because legacy graph builders used it as a separate
-	// query parameter. --djue
-	// It is usually something like customer or account
+	private final long timeInitiated = new Date().getTime();
+	/* This was added to because legacy graph builders used it as a separate query parameter. --djue. It is usually something like customer or account */
 	private String type = null;
+	private String userId = "unknown";
+	private String username = "unknown";
 
 	public V_GraphQuery() {
 
@@ -112,17 +98,14 @@ public class V_GraphQuery {
 
 	}
 
-	public void addSearchIds(final String... id) {
-		if ((id == null) || (id.length == 0)) {
-			logger.warn("null or empty id provided: " + Arrays.toString(id));
-		} else {
-			for (final String x : id) {
-				searchIds.add(x);
-			}
+	/* * * * * * * * * * * * * * * * * */
+	/*             GETTERS             */
+	/* * * * * * * * * * * * * * * * * */
 
-		}
+	public boolean isDirected() {
+		return directed;
 	}
-
+	
 	public Long getEndTime() {
 		return endTime;
 	}
@@ -166,24 +149,18 @@ public class V_GraphQuery {
 	public String getType() {
 		return type;
 	}
-
-	/**
-	 * @return the userId
-	 */
+	
 	public String getUserId() {
 		return userId;
 	}
-
-	/**
-	 * @return the username
-	 */
+	
 	public String getUsername() {
 		return username;
 	}
 
-	public boolean isDirected() {
-		return directed;
-	}
+	/* * * * * * * * * * * * * * * * * */
+	/*             SETTERS             */
+	/* * * * * * * * * * * * * * * * * */
 
 	public void setDirected(final boolean directed) {
 		this.directed = directed;
@@ -214,7 +191,7 @@ public class V_GraphQuery {
 	}
 
 	public void setMinTransValue(final int minValue) {
-		minTransValue = minValue;
+		this.minTransValue = minValue;
 	}
 
 	public void setSearchIds(final Set<String> searchIds) {
@@ -229,20 +206,23 @@ public class V_GraphQuery {
 		this.type = type;
 	}
 
-	/**
-	 * @param userId
-	 *            the userId to set
-	 */
 	public void setUserId(final String userId) {
 		this.userId = userId;
 	}
 
-	/**
-	 * @param username
-	 *            the username to set
-	 */
 	public void setUsername(final String username) {
 		this.username = username;
+	}
+	
+	public void addSearchIds(final String... id) {
+		if ((id == null) || (id.length == 0)) {
+			logger.warn("null or empty id provided: " + Arrays.toString(id));
+		} else {
+			for (final String x : id) {
+				searchIds.add(x);
+			}
+
+		}
 	}
 
 	/*
@@ -258,5 +238,4 @@ public class V_GraphQuery {
 				+ ", timeInitiated=" + timeInitiated + ", searchIds=" + searchIds + ", startTime=" + startTime
 				+ ", type=" + type + "]";
 	}
-
 }

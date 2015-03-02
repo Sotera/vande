@@ -1,7 +1,8 @@
 package mil.darpa.vande.converters.cytoscapejs;
 
 public class CSPosition {
-	private double x, y;
+	private double x;
+	private double y;
 
 	public double getX() {
 		return x;

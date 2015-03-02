@@ -14,33 +14,127 @@ import java.util.List;
 public class V_GenericGraph {
 
 	private Collection<V_GenericEdge> edges = null;
+	private int intStatus = 0;
+	private Collection<V_LegendItem> legend = null;
+	private Collection<V_GenericNode> nodes = null;
+	private int numEdges;
+	private int numNodes;
+	private String strStatus = "OK";
 	private String userId = "None";
 	private String username = "None";
-	private int intStatus = 0;
-
-	private Collection<V_GenericNode> nodes = null;
-	private String strStatus = "OK";
-	private Collection<V_LegendItem> legend = null;
-	private int numNodes;
-	private int numEdges;
 
 	public V_GenericGraph() {
-		nodes = new ArrayList<V_GenericNode>(3);
-		edges = new ArrayList<V_GenericEdge>(3);
-		legend = new ArrayList<V_LegendItem>();
-		// TODO Auto-generated constructor stub
+		this.nodes = new ArrayList<V_GenericNode>(3);
+		this.edges = new ArrayList<V_GenericEdge>(3);
+		this.legend = new ArrayList<V_LegendItem>();
 	}
 
 	public V_GenericGraph(final Collection<V_GenericNode> nodes, final Collection<V_GenericEdge> edges) {
 		this.nodes = nodes;
 		this.edges = edges;
-		legend = new ArrayList<V_LegendItem>();
+		this.legend = new ArrayList<V_LegendItem>();
 	}
 
+	/* * * * * * * * * * * * * * * * * */
+	/*             GETTERS             */
+	/* * * * * * * * * * * * * * * * * */
+
+	public final Collection<V_GenericEdge> getEdges() {
+		return edges;
+	}
+
+	public final int getIntStatus() {
+		return intStatus;
+	}
+
+	public final Collection<V_LegendItem> getLegend() {
+		return legend;
+	}
+
+	public final Collection<V_GenericNode> getNodes() {
+		return nodes;
+	}
+
+	public int getNumEdges() {
+		return numEdges;
+	}
+
+	public int getNumNodes() {
+		return numNodes;
+	}
+
+	public final String getStrStatus() {
+		return strStatus;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public String getUserName() {
+		return username;
+	}
+	
+	/* * * * * * * * * * * * * * * * * */
+	/*             SETTERS             */
+	/* * * * * * * * * * * * * * * * * */	
+
+	public void setEdges(final Collection<V_GenericEdge> edges) {
+		this.edges = edges;
+	}
+
+	public void setEdges(final List<V_GenericEdge> edges) {
+		this.edges = edges;
+	}
+
+	public final void setIntStatus(final int intStatus) {
+		this.intStatus = intStatus;
+	}
+
+	public void setLegend(final Collection<V_LegendItem> legend) {
+		this.legend = legend;
+	}
+
+	public void setNodes(final Collection<V_GenericNode> nodes) {
+		this.nodes = nodes;
+	}
+
+	public final void setNodes(final List<V_GenericNode> nodes) {
+		this.nodes = nodes;
+	}
+
+	public void setNumEdges(final int numEdges) {
+		this.numEdges = numEdges;
+	}
+	
+	public void setNumNodes(final int numNodes) {
+		this.numNodes = numNodes;
+	}
+
+	public final void setStrStatus(final String strStatus) {
+		this.strStatus = strStatus;
+	}
+
+	public void setUserId(final String userId) {
+		this.userId = userId;
+	}
+
+	public void setUserName(final String username) {
+		this.username = username;
+	}
+	
+	/* * * * * * * * * * * * * * * * * */
+	/*             METHODS             */
+	/* * * * * * * * * * * * * * * * * */
+	
 	public final void addEdge(final V_GenericEdge e) {
 		edges.add(e);
 	}
 
+	public final void addNode(final V_GenericNode a) {
+		nodes.add(a);
+	}
+	
 	public final void addLegendItem(final String color, final String text) {
 		final V_LegendItem li = new V_LegendItem(color, text);
 		this.addLegendItem(li);
@@ -50,19 +144,16 @@ public class V_GenericGraph {
 		if (!legend.contains(li)) {
 			legend.add(li);
 		}
-		// boolean found = false;
-		// for (V_LegendItem existing : legend) {
-		// if (existing.getColor() == li.getColor() && existing.getText() ==
-		// li.getText()) {
-		// found = true;
-		// break;
-		// }
-		// }
-		// if (!found) legend.add(li);
-	}
-
-	public final void addNode(final V_GenericNode a) {
-		nodes.add(a);
+		/*
+		boolean found = false;
+		for (V_LegendItem existing : legend) {
+			if (existing.getColor() == li.getColor() && existing.getText() == li.getText()) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) legend.add(li);
+		*/
 	}
 
 	/*
@@ -117,54 +208,6 @@ public class V_GenericGraph {
 		return true;
 	}
 
-	public final Collection<V_GenericEdge> getEdges() {
-		return edges;
-	}
-
-	public final int getIntStatus() {
-		return intStatus;
-	}
-
-	public final Collection<V_LegendItem> getLegend() {
-		return legend;
-	}
-
-	public final Collection<V_GenericNode> getNodes() {
-		return nodes;
-	}
-
-	/**
-	 * @return the numEdges
-	 */
-	public int getNumEdges() {
-		return numEdges;
-	}
-
-	/**
-	 * @return the numNodes
-	 */
-	public int getNumNodes() {
-		return numNodes;
-	}
-
-	public final String getStrStatus() {
-		return strStatus;
-	}
-
-	/**
-	 * @return the userId
-	 */
-	public String getUserId() {
-		return userId;
-	}
-
-	/**
-	 * @return the username
-	 */
-	public String getUserName() {
-		return username;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -181,71 +224,7 @@ public class V_GenericGraph {
 		result = (prime * result) + ((legend == null) ? 0 : legend.hashCode());
 		return result;
 	}
-
-	public void setEdges(final Collection<V_GenericEdge> edges) {
-		this.edges = edges;
-	}
-
-	public void setEdges(final List<V_GenericEdge> edges) {
-		this.edges = edges;
-	}
-
-	public final void setIntStatus(final int intStatus) {
-		this.intStatus = intStatus;
-	}
-
-	/**
-	 * @param legend
-	 *            the legend to set
-	 */
-	public void setLegend(final Collection<V_LegendItem> legend) {
-		this.legend = legend;
-	}
-
-	public void setNodes(final Collection<V_GenericNode> nodes) {
-		this.nodes = nodes;
-	}
-
-	public final void setNodes(final List<V_GenericNode> nodes) {
-		this.nodes = nodes;
-	}
-
-	/**
-	 * @param numEdges
-	 *            the numEdges to set
-	 */
-	public void setNumEdges(final int numEdges) {
-		this.numEdges = numEdges;
-	}
-
-	/**
-	 * @param numNodes
-	 *            the numNodes to set
-	 */
-	public void setNumNodes(final int numNodes) {
-		this.numNodes = numNodes;
-	}
-
-	public final void setStrStatus(final String strStatus) {
-		this.strStatus = strStatus;
-	}
-
-	/**
-	 * @param userId
-	 *            the userId to set
-	 */
-	public void setUserId(final String userId) {
-		this.userId = userId;
-	}
-
-	/**
-	 * @param username
-	 *            the username to set
-	 */
-	public void setUserName(final String username) {
-		this.username = username;
-	}
-
+	
 	@Override
 	public String toString() {
 

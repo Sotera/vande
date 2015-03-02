@@ -12,27 +12,31 @@ public class CSAttr {
 	private String key;
 	private String val;
 
-	/**
-	 * 
-	 */
 	public CSAttr() {
 
 	}
-
-	/**
-	 * @param key
-	 * @param val
-	 */
+	
 	public CSAttr(final String key, final String val) {
 		this.key = key;
 		this.val = val;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+	public final String getKey() {
+		return key;
+	}
+	
+	public final String getVal() {
+		return val;
+	}
+	
+	public void setKey(final String key) {
+		this.key = key;
+	}
+	
+	public void setVal(final String val) {
+		this.val = val;
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -67,25 +71,6 @@ public class CSAttr {
 		return true;
 	}
 
-	/**
-	 * @return
-	 */
-	public final String getKey() {
-		return key;
-	}
-
-	/**
-	 * @return
-	 */
-	public final String getVal() {
-		return val;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
-	 */
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -98,20 +83,6 @@ public class CSAttr {
 		result = (prime * result) + ((key == null) ? 0 : key.hashCode());
 		result = (prime * result) + ((val == null) ? 0 : val.hashCode());
 		return result;
-	}
-
-	/**
-	 * @param key
-	 */
-	public void setKey(final String key) {
-		this.key = key;
-	}
-
-	/**
-	 * @param val
-	 */
-	public void setVal(final String val) {
-		this.val = val;
 	}
 
 	/*

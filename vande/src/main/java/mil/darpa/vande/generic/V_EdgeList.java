@@ -23,17 +23,9 @@ import mil.darpa.vande.interactions.TemporalGraphQuery;
  * 
  */
 public class V_EdgeList implements Cloneable {
-	/**
-	 * 
-	 */
+
 	private Set<V_GenericEdge> edges = new HashSet<V_GenericEdge>();
-	/**
-	 * 
-	 */
 	private V_GraphQuery query;
-	/**
-	 * 
-	 */
 	private TemporalGraphQuery tquery = null;
 
 	/**
@@ -47,29 +39,20 @@ public class V_EdgeList implements Cloneable {
 		}
 	}
 
+	public final Set<V_GenericEdge> getEdges() {
+		return edges;
+	}
+
+	public int size() {
+		return this.edges.size();
+	}
+	
 	/**
 	 * 
 	 * @param e
 	 */
 	public final void addEdge(V_GenericEdge e) {
 		edges.add(e);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#clone()
-	 */
-	public final V_EdgeList clone() {
-		try {
-			super.clone();
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		V_EdgeList list = new V_EdgeList(this.query);
-		list.edges.addAll(edges);
-		return list;
 	}
 
 	/**
@@ -138,31 +121,30 @@ public class V_EdgeList implements Cloneable {
 		edges = results;
 	}
 
-	/**
-	 * Add a new edge to a set of edges, aggregating the value if it already
-	 * exists. Effectively buckets into time periods also because if month is
-	 * different for example it makes a new edge for that month
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param transaction
-	 *            GenericEdge corresponding to a single row from a data set to
-	 *            aggregate
+	 * @see java.lang.Object#clone()
 	 */
-	public final Set<V_GenericEdge> getEdges() {
-		return edges;
+	public final V_EdgeList clone() {
+		try {
+			super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		V_EdgeList list = new V_EdgeList(this.query);
+		list.edges.addAll(edges);
+		return list;
 	}
-
-	public int size() {
-		return this.edges.size();
-	}
-
+	
 	/**
- * 
- */
+	 * 
+	 */
 	@Override
 	public final String toString() {
 		return "V_EdgeList [" + (edges != null ? "edges=" + edges + ", " : "")
 				+ (query != null ? "query=" + query + ", " : "")
 				+ (tquery != null ? "tquery=" + tquery : "") + "]";
 	}
-
 }

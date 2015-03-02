@@ -15,6 +15,28 @@ public class V_LegendItem {
 		this.text = new V_GraphObjectData("text", text);
 	}
 
+	public String getColor() {
+		return color.getKeyVal();
+	}
+
+	public String getText() {
+		return text.getKeyVal();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	public void setColor(final String color) {
+		// TODO make sure color is valid hex
+		this.color.setKeyVal(color);
+	}
+
+	public void setText(final String text) {
+		this.text.setKeyVal(text);
+	}
+
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -44,14 +66,6 @@ public class V_LegendItem {
 		return true;
 	}
 
-	public String getColor() {
-		return color.getKeyVal();
-	}
-
-	public String getText() {
-		return text.getKeyVal();
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -66,23 +80,8 @@ public class V_LegendItem {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	public void setColor(final String color) {
-		// TODO make sure color is valid hex
-		this.color.setKeyVal(color);
-	}
-
-	public void setText(final String text) {
-		this.text.setKeyVal(text);
-	}
-
 	@Override
 	public String toString() {
-		return "{color: " + color.getKeyVal() + ",text: " + text.getKeyVal()
-				+ "}";
+		return "{color: " + color.getKeyVal() + ",text: " + text.getKeyVal() + "}";
 	}
 }

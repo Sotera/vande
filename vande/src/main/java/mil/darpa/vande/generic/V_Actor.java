@@ -11,17 +11,10 @@ import java.util.List;
  * 
  */
 public class V_Actor {
-	/**
-	 * must be enough to identify the entity
-	 */
+
 	private String id;
-	/**
-	 * Might serve the purpose of valueType in the old code, which was soemthing
-	 * like customer or account.
-	 */
 	private String idType;
 	private String idVal;
-	// will also be used as the id for the node
 	private String label;
 	private List<V_IdProperty> properties = null;
 	private boolean edited = false;
@@ -34,6 +27,55 @@ public class V_Actor {
 		this.id = id;
 	}
 
+	public final String getId() {
+		return id;
+	}
+
+	public final String getIdType() {
+		return idType;
+	}
+
+	public final String getIdVal() {
+		return idVal;
+	}
+
+	public final String getLabel() {
+		return label;
+	}
+	
+	public final boolean isEdited() {
+		return edited;
+	}
+
+	@Deprecated
+	public final List<V_IdProperty> getProperties() {
+		return properties;
+	}
+	
+	public void setId(final String id) {
+		this.id = id;
+	}
+
+	public void setIdType(final String idType) {
+		this.idType = idType;
+	}
+
+	public void setIdVal(final String idVal) {
+		this.idVal = idVal;
+	}
+
+	public void setLabel(final String label) {
+		this.label = label;
+	}
+
+	public void setProperties(final List<V_IdProperty> properties) {
+		this.properties = properties;
+	}
+	
+	public void setEdited(final boolean isEdited) {
+		this.edited = isEdited;
+	}
+	
 	/**
 	 * Use addData() instead
 	 * @param name
@@ -116,31 +158,6 @@ public class V_Actor {
 		return true;
 	}
 
-	public final String getId() {
-		return id;
-	}
-
-	public final String getIdType() {
-		return idType;
-	}
-
-	public final String getIdVal() {
-		return idVal;
-	}
-
-	public final String getLabel() {
-		return label;
-	}
-	
-	public final boolean isEdited() {
-		return edited;
-	}
-
-	@Deprecated
-	public final List<V_IdProperty> getProperties() {
-		return properties;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -154,33 +171,8 @@ public class V_Actor {
 		result = prime * result + ((idType == null) ? 0 : idType.hashCode());
 		result = prime * result + ((idVal == null) ? 0 : idVal.hashCode());
 		result = prime * result + ((label == null) ? 0 : label.hashCode());
-		result = prime * result
-				+ ((properties == null) ? 0 : properties.hashCode());
+		result = prime * result + ((properties == null) ? 0 : properties.hashCode());
 		return result;
-	}
-
-	public void setId(final String id) {
-		this.id = id;
-	}
-
-	public void setIdType(final String idType) {
-		this.idType = idType;
-	}
-
-	public void setIdVal(final String idVal) {
-		this.idVal = idVal;
-	}
-
-	public void setLabel(final String label) {
-		this.label = label;
-	}
-
-	public void setProperties(final List<V_IdProperty> properties) {
-		this.properties = properties;
-	}
-	
-	public void setEdited(final boolean isEdited) {
-		this.edited = isEdited;
 	}
 
 	/* (non-Javadoc)

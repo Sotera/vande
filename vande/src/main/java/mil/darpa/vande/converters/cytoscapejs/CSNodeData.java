@@ -8,25 +8,26 @@ import mil.darpa.vande.generic.V_GenericNode;
 import mil.darpa.vande.generic.V_GraphObjectData;
 
 public class CSNodeData {
+	
 	private List<CSAttr> attrs = new ArrayList<CSAttr>();
-
 	private boolean cluster = false;
 	private String color = "bababa";
-	private boolean expanded, generated;
+	private boolean edited = false;
+	private boolean expanded;
+	private boolean generated;
 	private String id;
 	private String idType;
-	private List<CSNode> subNodes;
 	private String idVal;
 	private String label;
-	private String reason;
 	private String name;
-	private String parent;
-	private int size;
 	private int nbrLinks = 0;
 	private boolean origin = false;
+	private String parent;
+	private String reason;
+	private int size;
+	private List<CSNode> subNodes;
 	private String type = "circle";
 	private boolean visible = true;
-	private boolean edited = false;
 
 	public CSNodeData() {
 
@@ -61,6 +62,191 @@ public class CSNodeData {
 		}
 	}
 
+	/* * * * * * * * * * * * * * * * * */
+	/*             GETTERS             */
+	/* * * * * * * * * * * * * * * * * */
+
+	public final List<CSAttr> getAttrs() {
+		return attrs;
+	}
+
+	public boolean isCluster() {
+		return cluster;
+	}
+	
+	public final String getColor() {
+		return color;
+	}
+
+	public final boolean isEdited() {
+		return edited;
+	}
+
+	public boolean isExpanded() {
+		return expanded;
+	}
+
+	public boolean isGenerated() {
+		return generated;
+	}
+
+	public final String getId() {
+		return id;
+	}
+
+	public final String getIdType() {
+		return idType;
+	}
+
+	public final String getIdVal() {
+		return idVal;
+	}
+
+	public final String getLabel() {
+		return label;
+	}
+
+	public final String getName() {
+		return name;
+	}
+
+	public final int getNbrLinks() {
+		return nbrLinks;
+	}
+
+	public boolean isOrigin() {
+		return origin;
+	}
+	
+	public final String getParent() {
+		return parent;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public List<CSNode> getSubNodes() {
+		return subNodes;
+	}
+
+	public final String getType() {
+		return type;
+	}
+	
+	public boolean isVisible() {
+		return visible;
+	}
+	
+	/* * * * * * * * * * * * * * * * * */
+	/*             SETTERS             */
+	/* * * * * * * * * * * * * * * * * */	
+	
+	public void setAttrs(final List<CSAttr> attrs) {
+		this.attrs = attrs;
+	}
+
+	public void setCluster(final boolean cluster) {
+		this.cluster = cluster;
+	}
+
+	final void setColor(final String color) {
+		this.color = color;
+	}
+	
+	public void setEdited(final boolean isEdited) {
+		this.edited = isEdited;
+	}
+
+	public void setExpanded(final boolean expanded) {
+		this.expanded = expanded;
+	}
+
+	public void setGenerated(final boolean generated) {
+		this.generated = generated;
+	}
+
+	public void setId(final String id) {
+		this.id = id;
+	}
+
+	public void setIdType(final String idType) {
+		this.idType = idType;
+	}
+
+	public void setIdVal(final String idVal) {
+		this.idVal = idVal;
+	}
+
+	public void setLabel(final String label) {
+		this.label = label;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public void setNbrLinks(final int nbrLinks) {
+		this.nbrLinks = nbrLinks;
+	}
+
+	public void setOrigin(final boolean origin) {
+		this.origin = origin;
+	}
+	
+	public final void setParent(final String parent) {
+		this.parent = parent;
+	}
+
+	public void setReason(final String reason) {
+		this.reason = reason;
+	}
+
+	public void setSize(final int size) {
+		this.size = size;
+	}
+	
+	public void setSubNodes(final List<CSNode> subNodes) {
+		this.subNodes = subNodes;
+	}
+
+	public void setType(final String type) {
+		this.type = type;
+	}
+
+	public void setVisible(final boolean visible) {
+		this.visible = visible;
+	}
+	
+	/* * * * * * * * * * * * * * * * * */
+	/*             METHODS             */
+	/* * * * * * * * * * * * * * * * * */
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = (prime * result) + ((attrs == null) ? 0 : attrs.hashCode());
+		result = (prime * result) + (cluster ? 1231 : 1237);
+		result = (prime * result) + ((color == null) ? 0 : color.hashCode());
+		result = (prime * result) + ((id == null) ? 0 : id.hashCode());
+		result = (prime * result) + ((idType == null) ? 0 : idType.hashCode());
+		result = (prime * result) + ((idVal == null) ? 0 : idVal.hashCode());
+		result = (prime * result) + ((label == null) ? 0 : label.hashCode());
+		result = (prime * result) + ((name == null) ? 0 : name.hashCode());
+		result = (prime * result) + nbrLinks;
+		result = (prime * result) + (origin ? 1231 : 1237);
+		result = (prime * result) + ((parent == null) ? 0 : parent.hashCode());
+		result = (prime * result) + size;
+		result = (prime * result) + ((type == null) ? 0 : type.hashCode());
+		result = (prime * result) + (visible ? 1231 : 1237);
+		return result;
+	}
+	
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) {
@@ -153,222 +339,7 @@ public class CSNodeData {
 		}
 		return true;
 	}
-
-	public final List<CSAttr> getAttrs() {
-		return attrs;
-	}
-
-	/**
-	 * @return the color
-	 */
-	public final String getColor() {
-		return color;
-	}
-
-	public final String getId() {
-		return id;
-	}
-
-	public final String getIdType() {
-		return idType;
-	}
-
-	public final String getIdVal() {
-		return idVal;
-	}
-
-	public final String getLabel() {
-		return label;
-	}
-
-	public final String getName() {
-		return name;
-	}
-
-	public final int getNbrLinks() {
-		return nbrLinks;
-	}
 	
-	public final boolean isEdited() {
-		return edited;
-	}
-
-	/**
-	 * @return the parent
-	 */
-	public final String getParent() {
-		return parent;
-	}
-
-	/**
-	 * @return the reason
-	 */
-	public String getReason() {
-		return reason;
-	}
-
-	public int getSize() {
-		return size;
-	}
-
-	/**
-	 * @return the subNodes
-	 */
-	public List<CSNode> getSubNodes() {
-		return subNodes;
-	}
-
-	public final String getType() {
-		return type;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = (prime * result) + ((attrs == null) ? 0 : attrs.hashCode());
-		result = (prime * result) + (cluster ? 1231 : 1237);
-		result = (prime * result) + ((color == null) ? 0 : color.hashCode());
-		result = (prime * result) + ((id == null) ? 0 : id.hashCode());
-		result = (prime * result) + ((idType == null) ? 0 : idType.hashCode());
-		result = (prime * result) + ((idVal == null) ? 0 : idVal.hashCode());
-		result = (prime * result) + ((label == null) ? 0 : label.hashCode());
-		result = (prime * result) + ((name == null) ? 0 : name.hashCode());
-		result = (prime * result) + nbrLinks;
-		result = (prime * result) + (origin ? 1231 : 1237);
-		result = (prime * result) + ((parent == null) ? 0 : parent.hashCode());
-		result = (prime * result) + size;
-		result = (prime * result) + ((type == null) ? 0 : type.hashCode());
-		result = (prime * result) + (visible ? 1231 : 1237);
-		return result;
-	}
-
-	public boolean isCluster() {
-		return cluster;
-	}
-
-	/**
-	 * @return the expanded
-	 */
-	public boolean isExpanded() {
-		return expanded;
-	}
-
-	/**
-	 * @return the generated
-	 */
-	public boolean isGenerated() {
-		return generated;
-	}
-
-	public boolean isOrigin() {
-		return origin;
-	}
-
-	public boolean isVisible() {
-		return visible;
-	}
-
-	public void setAttrs(final List<CSAttr> attrs) {
-		this.attrs = attrs;
-	}
-
-	public void setCluster(final boolean cluster) {
-		this.cluster = cluster;
-	}
-
-	/**
-	 * @param color
-	 *            the color to set
-	 */
-	final void setColor(final String color) {
-		this.color = color;
-	}
-
-	/**
-	 * @param expanded
-	 *            the expanded to set
-	 */
-	public void setExpanded(final boolean expanded) {
-		this.expanded = expanded;
-	}
-
-	/**
-	 * @param generated
-	 *            the generated to set
-	 */
-	public void setGenerated(final boolean generated) {
-		this.generated = generated;
-	}
-
-	public void setId(final String id) {
-		this.id = id;
-	}
-
-	public void setIdType(final String idType) {
-		this.idType = idType;
-	}
-
-	public void setIdVal(final String idVal) {
-		this.idVal = idVal;
-	}
-
-	public void setLabel(final String label) {
-		this.label = label;
-	}
-
-	public void setName(final String name) {
-		this.name = name;
-	}
-
-	public void setNbrLinks(final int nbrLinks) {
-		this.nbrLinks = nbrLinks;
-	}
-
-	public void setOrigin(final boolean origin) {
-		this.origin = origin;
-	}
-
-	/**
-	 * @param parent
-	 *            the parent to set
-	 */
-	public final void setParent(final String parent) {
-		this.parent = parent;
-	}
-
-	/**
-	 * @param reason
-	 *            the reason to set
-	 */
-	public void setReason(final String reason) {
-		this.reason = reason;
-	}
-
-	public void setSize(final int size) {
-		this.size = size;
-	}
-	
-	public void setEdited(final boolean isEdited) {
-		this.edited = isEdited;
-	}
-
-	/**
-	 * @param subNodes
-	 *            the subNodes to set
-	 */
-	public void setSubNodes(final List<CSNode> subNodes) {
-		this.subNodes = subNodes;
-	}
-
-	public void setType(final String type) {
-		this.type = type;
-	}
-
-	public void setVisible(final boolean visible) {
-		this.visible = visible;
-	}
-
 	@Override
 	public String toString() {
 		return "CSNodeData [attrs=" + attrs + ", cluster=" + cluster + ", id="
@@ -377,5 +348,4 @@ public class CSNodeData {
 				+ ", origin=" + origin + ", type=" + type + ", visible="
 				+ visible + "]";
 	}
-
 }
