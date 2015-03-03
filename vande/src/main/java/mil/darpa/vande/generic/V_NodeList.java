@@ -16,30 +16,6 @@ public class V_NodeList implements Cloneable {
 		nodes.putAll(otherNodeList.nodes);
 	}
 
-	/**
-	 * Make a new node for the Actor if one doesn't already exist, and adds it
-	 * to the list
-	 * 
-	 * @param a
-	 *            Actor
-	 */
-	public void addActor(final V_Actor a) {
-		final String id = a.getId();
-		if (!nodes.containsKey(id)) {
-			final V_GenericNode n = new V_GenericNode(id);
-			n.setLabel(a.getLabel());
-			n.setIdType(a.getIdType());
-			n.setIdVal(a.getIdVal());
-			if (a.getProperties() != null) {
-				for (final V_IdProperty p : a.getProperties()) {
-					n.addData(p.getIdName(), p.getIdValue());
-				}
-
-			}
-			nodes.put(id, n);
-		}
-	}
-
 	public void addNode(final V_GenericNode n) {
 		if ((n != null) && (n.getId() != null) && !n.getId().isEmpty()) {
 			nodes.put(n.getId(), n);

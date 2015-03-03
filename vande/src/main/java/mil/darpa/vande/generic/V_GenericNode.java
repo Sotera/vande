@@ -1,6 +1,7 @@
 package mil.darpa.vande.generic;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -13,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author PWG
  * 
  */
-public class V_GenericNode extends V_Actor {
+public class V_GenericNode {
 
 	private static final Logger logger = LoggerFactory.getLogger(V_GenericNode.class);
 	
@@ -24,7 +25,14 @@ public class V_GenericNode extends V_Actor {
 	 */
 	private SortedSet<V_GraphObjectData> dataSet = new TreeSet<V_GraphObjectData>();
 	
-	private String color; // added djue
+	/* fields from deprecated V_Actor */
+	private boolean edited = false;
+	private String id;
+	private String idType;
+	private String idVal;
+	private String label;
+	
+	private String color;
 	private int degree = 0;
 	private boolean isCluster = false;
 	private boolean isUsed = false;
@@ -44,27 +52,12 @@ public class V_GenericNode extends V_Actor {
 	/** Used to be called family. */
 	private String nodeType;
 	
-	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
-	private int dataSource = 0; // TODO: set this value when we have more than
-	
-	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
-	private char entityType;
-	
-	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
-	private boolean isPlaceholder = false;
-	
-	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
-	private String key; // used to locate in nodeList
-	
-	/* XXX: Added from legacy for compatibility; reassess the need for this. Might just use idVal from superclass. --djue */
-	private String value;
-	
 	public V_GenericNode() {
-		super();
+		
 	}
 
 	public V_GenericNode(final String id) {
-		super(id);
+		this.id = id;
 	}
 
 	/* * * * * * * * * * * * * * * * * */
@@ -86,7 +79,23 @@ public class V_GenericNode extends V_Actor {
 	public int getDegree() {
 		return degree;
 	}
+	
+	public final boolean isEdited() {
+		return edited;
+	}
 
+	public String getId() {
+		return id;
+	}
+	
+	public final String getIdType() {
+		return idType;
+	}
+	
+	public final String getIdVal() {
+		return idVal;
+	}
+	
 	public boolean isLeaf() {
 		return isLeaf;
 	}
@@ -97,6 +106,10 @@ public class V_GenericNode extends V_Actor {
 	
 	public boolean isUsed() {
 		return isUsed;
+	}
+
+	public final String getLabel() {
+		return label;
 	}
 	
 	public double getMinScore() {
@@ -131,31 +144,6 @@ public class V_GenericNode extends V_Actor {
 	public boolean isTraversed() {
 		return traversed;
 	}
-	
-	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
-	public int getDataSource() {
-		return dataSource;
-	}
-	
-	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
-	public char getEntityType() {
-		return entityType;
-	}
-
-	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
-	public boolean isPlaceholder() {
-		return isPlaceholder;
-	}
-	
-	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
-	public String getKey() {
-		return key;
-	}
-
-	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
-	public String getValue() {
-		return value;
-	}
 
 	/* * * * * * * * * * * * * * * * * */
 	/*             SETTERS             */
@@ -173,6 +161,22 @@ public class V_GenericNode extends V_Actor {
 		this.degree = degree;
 	}
 	
+	public void setEdited(final boolean isEdited) {
+		this.edited = isEdited;
+	}
+	
+	public void setId(final String id) {
+		this.id = id;
+	}
+
+	public void setIdType(final String idType) {
+		this.idType = idType;
+	}
+
+	public void setIdVal(final String idVal) {
+		this.idVal = idVal;
+	}
+	
 	public void setCluster(final boolean isCluster) {
 		this.isCluster = isCluster;
 	}
@@ -187,6 +191,10 @@ public class V_GenericNode extends V_Actor {
 	
 	public void setUsed(final boolean isUsed) {
 		this.isUsed = isUsed;
+	}
+	
+	public void setLabel(final String label) {
+		this.label = label;
 	}
 	
 	public void setMinScore(final double minScore) {
@@ -215,31 +223,6 @@ public class V_GenericNode extends V_Actor {
 
 	public void setTraversed(final boolean traversed) {
 		this.traversed = traversed;
-	}
-	
-	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
-	public void setDataSource(final int dataSource) {
-		this.dataSource = dataSource;
-	}
-
-	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
-	public void setEntityType(final char entityType) {
-		this.entityType = entityType;
-	}
-
-	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
-	public void setPlaceholder(final boolean isPlaceholder) {
-		this.isPlaceholder = isPlaceholder;
-	}
-	
-	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
-	public void setKey(final String key) {
-		this.key = key;
-	}
-	
-	/* XXX: Added from legacy for compatibility; reassess the need for this. --djue */
-	public void setValue(final String value) {
-		this.value = value;
 	}
 
 
@@ -373,27 +356,49 @@ public class V_GenericNode extends V_Actor {
 		if (this == obj) {
 			return true;
 		}
-		if (!super.equals(obj)) {
+		if (obj == null) {
 			return false;
 		}
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		final V_GenericNode other = (V_GenericNode) obj;
+		if (id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
+			return false;
+		}
+		if (idType == null) {
+			if (other.idType != null) {
+				return false;
+			}
+		} else if (!idType.equals(other.idType)) {
+			return false;
+		}
+		if (idVal == null) {
+			if (other.idVal != null) {
+				return false;
+			}
+		} else if (!idVal.equals(other.idVal)) {
+			return false;
+		}
+		if (label == null) {
+			if (other.label != null) {
+				return false;
+			}
+		} else if (!label.equals(other.label)) {
+			return false;
+		}
+		if (edited != other.edited) {
+			return false;
+		}
 		if (dataSet == null) {
 			if (other.dataSet != null) {
 				return false;
 			}
 		} else if (!dataSet.equals(other.dataSet)) {
-			return false;
-		}
-		if (dataSource != other.dataSource) {
-			return false;
-		}
-		if (degree != other.degree) {
-			return false;
-		}
-		if (entityType != other.entityType) {
 			return false;
 		}
 		if (nodeType == null) {
@@ -412,17 +417,7 @@ public class V_GenericNode extends V_Actor {
 		if (isOrigin != other.isOrigin) {
 			return false;
 		}
-		if (isPlaceholder != other.isPlaceholder) {
-			return false;
-		}
 		if (isUsed != other.isUsed) {
-			return false;
-		}
-		if (key == null) {
-			if (other.key != null) {
-				return false;
-			}
-		} else if (!key.equals(other.key)) {
 			return false;
 		}
 		if (nbrLinks != other.nbrLinks) {
@@ -432,13 +427,6 @@ public class V_GenericNode extends V_Actor {
 			return false;
 		}
 		if (traversed != other.traversed) {
-			return false;
-		}
-		if (value == null) {
-			if (other.value != null) {
-				return false;
-			}
-		} else if (!value.equals(other.value)) {
 			return false;
 		}
 		return true;
@@ -453,21 +441,20 @@ public class V_GenericNode extends V_Actor {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
+		result = (prime * result) + ((id == null) ? 0 : id.hashCode());
+		result = (prime * result) + ((idType == null) ? 0 : idType.hashCode());
+		result = (prime * result) + ((idVal == null) ? 0 : idVal.hashCode());
+		result = (prime * result) + ((label == null) ? 0 : label.hashCode());
 		result = (prime * result) + ((dataSet == null) ? 0 : dataSet.hashCode());
-		result = (prime * result) + dataSource;
 		result = (prime * result) + degree;
-		result = (prime * result) + entityType;
 		result = (prime * result) + ((nodeType == null) ? 0 : nodeType.hashCode());
 		result = (prime * result) + (isCluster ? 1231 : 1237);
 		result = (prime * result) + (isLeaf ? 1231 : 1237);
 		result = (prime * result) + (isOrigin ? 1231 : 1237);
-		result = (prime * result) + (isPlaceholder ? 1231 : 1237);
 		result = (prime * result) + (isUsed ? 1231 : 1237);
-		result = (prime * result) + ((key == null) ? 0 : key.hashCode());
 		result = (prime * result) + nbrLinks;
 		result = (prime * result) + (scanned ? 1231 : 1237);
 		result = (prime * result) + (traversed ? 1231 : 1237);
-		result = (prime * result) + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
 	
@@ -479,10 +466,12 @@ public class V_GenericNode extends V_Actor {
 	@Override
 	public String toString() {
 		return "V_GenericNode ["
-				+ (nodeType != null ? "family=" + nodeType + ", " : "")
-				+ (key != null ? "key=" + key + ", " : "")
-				+ (value != null ? "value=" + value + ", " : "")
-				+ (super.toString() != null ? "toString()=" + super.toString()
-						: "") + "]";
+				+ (id != null ? "id=" + id + ", " : "")
+				+ (idType != null ? "idType=" + idType + ", " : "")
+				+ (idVal != null ? "idVal=" + idVal + ", " : "")
+				+ (label != null ? "label=" + label + ", " : "")
+				+ (nodeType != null ? "nodeType=" + nodeType + ", ": "")
+				+ (dataSet != null ? "dataSet=" + dataSet : "")
+				+ "]";
 	}
 }
