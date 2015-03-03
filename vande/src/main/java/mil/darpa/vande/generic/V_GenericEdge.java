@@ -23,6 +23,7 @@ public class V_GenericEdge {
 	private boolean directed = false;
 	private ArrayList<V_GenericEdge> edges;
 	private boolean edited = false;
+	private boolean expanded = false;
 	private String idType = "";
 	private String idVal = "";
 	private String label;
@@ -173,6 +174,10 @@ public class V_GenericEdge {
 	public boolean isEdited() {
 		return edited;
 	}
+
+	public final boolean isExpanded() {
+		return expanded;
+	}
 	
 	public String getIdType() {
 		return idType;
@@ -288,6 +293,10 @@ public class V_GenericEdge {
 		this.edited = isEdited;
 	}
 
+	public void setExpanded(final boolean isExpanded) {
+		this.expanded = isExpanded;
+	}
+	
 	public void setIdType(final String idType) {
 		this.idType = idType;
 	}

@@ -17,6 +17,7 @@ public class CSEdgeData {
 	private int day = -1;
 	private String[] direction = null;
 	private boolean edited = false;
+	private boolean expanded = false;
 	private boolean generated = false;
 	private String id;
 	private String idType;
@@ -64,6 +65,7 @@ public class CSEdgeData {
 		year = e.getYear();
 		count = Integer.toString(e.getCount());
 		edited = e.isEdited();
+		expanded = e.isExpanded();
 		
 		final Set<V_GraphObjectData> s = e.getDataSet();
 		for (final V_GraphObjectData d : s) {
@@ -103,6 +105,10 @@ public class CSEdgeData {
 		return edited;
 	}
 
+	public final boolean isExpanded() {
+		return expanded;
+	}
+	
 	public boolean isGenerated() {
 		return generated;
 	}
@@ -199,6 +205,10 @@ public class CSEdgeData {
 	public void setEdited(final boolean isEdited) {
 		this.edited = isEdited;
 	}
+	
+	public void setExpanded(final boolean isExpanded) {
+		this.expanded = isExpanded;
+	}
 
 	public void setGenerated(final boolean generated) {
 		this.generated = generated;
@@ -283,15 +293,18 @@ public class CSEdgeData {
 
 	@Override
 	public String toString() {
-		return "CSEdgeData [amount=" + amount + ", attrs=" + attrs + ", count="
-				+ count + ", day=" + day + ", direction="
-				+ Arrays.toString(direction) + ", id=" + id + ", idType="
-				+ idType + ", idVal=" + idVal + ", color=" + color
-				+ ", lineStyle=" + lineStyle + ", label=" + label
-				+ ", linewidth=" + linewidth + ", month=" + month + ", source="
-				+ source + ", target=" + target + ", type=" + type
-				+ ", visible=" + visible + ", weight=" + weight + ", year="
-				+ year + "]";
+		return "CSEdgeData ["
+				+ "amount=" + amount + ", " + "attrs=" + attrs + ", " 
+				+ "count=" + count + ", " + "day=" + day + ", " 
+				+ "direction=" + Arrays.toString(direction) + ", " + "id=" + id + ", " 
+				+ "idType=" + idType + ", " + "idVal=" + idVal + ", " 
+				+ "color=" + color + ", " + "lineStyle=" + lineStyle + ", " 
+				+ "isEdited=" + edited + ", " + "label=" + label + ", " 
+				+ "linewidth=" + linewidth + ", " + "month=" + month + ", " 
+				+ "source=" + source + ", " + "target=" + target + ", " 
+				+ "type=" + type + ", " + "visible=" + visible + ", "
+				+ "weight=" + weight + ", " + "year=" + year 
+				+ "]";
 	}
 
 }
