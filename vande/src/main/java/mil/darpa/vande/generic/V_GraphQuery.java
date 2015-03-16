@@ -14,12 +14,13 @@ import org.slf4j.LoggerFactory;
  * 
  * @author PWG for DARPA
  */
+@Deprecated
 public class V_GraphQuery {
 	private static final Logger logger = LoggerFactory.getLogger(V_GraphQuery.class);
-	
+
 	private boolean directed = true;
 	private Long endTime = null;
-	private String id = null; //Used for logging and persistence purposes
+	private String id = null; // Used for logging and persistence purposes
 	private int maxEdgesPerNode = 50;
 	private int maxHops = 3;
 	private int maxNodes = 200;
@@ -28,7 +29,10 @@ public class V_GraphQuery {
 	private Set<String> searchIds = new HashSet<String>();
 	private Long startTime = null;
 	private final long timeInitiated = new Date().getTime();
-	/* This was added to because legacy graph builders used it as a separate query parameter. --djue. It is usually something like customer or account */
+	/*
+	 * This was added to because legacy graph builders used it as a separate
+	 * query parameter. --djue. It is usually something like customer or account
+	 */
 	private String type = null;
 	private String userId = "unknown";
 	private String username = "unknown";
@@ -99,13 +103,20 @@ public class V_GraphQuery {
 	}
 
 	/* * * * * * * * * * * * * * * * * */
-	/*             GETTERS             */
+	/* GETTERS */
 	/* * * * * * * * * * * * * * * * * */
 
-	public boolean isDirected() {
-		return directed;
+	public void addSearchIds(final String... id) {
+		if ((id == null) || (id.length == 0)) {
+			logger.warn("null or empty id provided: " + Arrays.toString(id));
+		} else {
+			for (final String x : id) {
+				searchIds.add(x);
+			}
+
+		}
 	}
-	
+
 	public Long getEndTime() {
 		return endTime;
 	}
@@ -149,18 +160,22 @@ public class V_GraphQuery {
 	public String getType() {
 		return type;
 	}
-	
+
 	public String getUserId() {
 		return userId;
 	}
-	
+
 	public String getUsername() {
 		return username;
 	}
 
 	/* * * * * * * * * * * * * * * * * */
-	/*             SETTERS             */
+	/* SETTERS */
 	/* * * * * * * * * * * * * * * * * */
+
+	public boolean isDirected() {
+		return directed;
+	}
 
 	public void setDirected(final boolean directed) {
 		this.directed = directed;
@@ -191,7 +206,7 @@ public class V_GraphQuery {
 	}
 
 	public void setMinTransValue(final int minValue) {
-		this.minTransValue = minValue;
+		minTransValue = minValue;
 	}
 
 	public void setSearchIds(final Set<String> searchIds) {
@@ -212,17 +227,6 @@ public class V_GraphQuery {
 
 	public void setUsername(final String username) {
 		this.username = username;
-	}
-	
-	public void addSearchIds(final String... id) {
-		if ((id == null) || (id.length == 0)) {
-			logger.warn("null or empty id provided: " + Arrays.toString(id));
-		} else {
-			for (final String x : id) {
-				searchIds.add(x);
-			}
-
-		}
 	}
 
 	/*

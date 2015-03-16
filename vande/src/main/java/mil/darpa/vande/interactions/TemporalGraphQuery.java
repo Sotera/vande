@@ -13,6 +13,7 @@ import mil.darpa.vande.generic.V_GraphQuery;
  * @author PWG for DARPA
  * 
  */
+@Deprecated
 public class TemporalGraphQuery extends V_GraphQuery {
 
 	private boolean byDay = false;
@@ -166,10 +167,8 @@ public class TemporalGraphQuery extends V_GraphQuery {
 
 	@Override
 	public String toString() {
-		return super.toString() + "TemporalGraphQuery [byMonth=" + byMonth
-				+ ", byDay=" + byDay + ", byYear=" + byYear + ", byHour="
-				+ byHour + ", byMinute=" + byMinute + ", minLinksPerPeriod="
-				+ minLinksPerPeriod + "]";
+		return super.toString() + "TemporalGraphQuery [byMonth=" + byMonth + ", byDay=" + byDay + ", byYear=" + byYear
+				+ ", byHour=" + byHour + ", byMinute=" + byMinute + ", minLinksPerPeriod=" + minLinksPerPeriod + "]";
 	}
 
 }
