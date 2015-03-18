@@ -2,7 +2,8 @@ package mil.darpa.vande.generic;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Used internally for graph generation, and converted into the appropriate
@@ -13,10 +14,13 @@ import java.util.List;
  */
 public class V_GenericGraph {
 
-	private Collection<V_GenericEdge> edges = null;
+	private Map<String, V_GenericEdge> edges = null;
+
 	private int intStatus = 0;
+
 	private Collection<V_LegendItem> legend = null;
-	private Collection<V_GenericNode> nodes = null;
+
+	private Map<String, V_GenericNode> nodes = null;
 	private int numEdges;
 	private int numNodes;
 	private String strStatus = "OK";
@@ -24,117 +28,21 @@ public class V_GenericGraph {
 	private String username = "None";
 
 	public V_GenericGraph() {
-		this.nodes = new ArrayList<V_GenericNode>(3);
-		this.edges = new ArrayList<V_GenericEdge>(3);
-		this.legend = new ArrayList<V_LegendItem>();
+		nodes = new HashMap<String, V_GenericNode>(3);
+		edges = new HashMap<String, V_GenericEdge>(3);
+		legend = new ArrayList<V_LegendItem>();
 	}
 
-	public V_GenericGraph(final Collection<V_GenericNode> nodes, final Collection<V_GenericEdge> edges) {
+	public V_GenericGraph(final Map<String, V_GenericNode> nodes, final Map<String, V_GenericEdge> edges) {
 		this.nodes = nodes;
 		this.edges = edges;
-		this.legend = new ArrayList<V_LegendItem>();
+		legend = new ArrayList<V_LegendItem>();
 	}
 
-	/* * * * * * * * * * * * * * * * * */
-	/*             GETTERS             */
-	/* * * * * * * * * * * * * * * * * */
-
-	public final Collection<V_GenericEdge> getEdges() {
-		return edges;
-	}
-
-	public final int getIntStatus() {
-		return intStatus;
-	}
-
-	public final Collection<V_LegendItem> getLegend() {
-		return legend;
-	}
-
-	public final Collection<V_GenericNode> getNodes() {
-		return nodes;
-	}
-
-	public int getNumEdges() {
-		return numEdges;
-	}
-
-	public int getNumNodes() {
-		return numNodes;
-	}
-
-	public final String getStrStatus() {
-		return strStatus;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public String getUserName() {
-		return username;
-	}
-	
-	/* * * * * * * * * * * * * * * * * */
-	/*             SETTERS             */
-	/* * * * * * * * * * * * * * * * * */	
-
-	public void setEdges(final Collection<V_GenericEdge> edges) {
-		this.edges = edges;
-	}
-
-	public void setEdges(final List<V_GenericEdge> edges) {
-		this.edges = edges;
-	}
-
-	public final void setIntStatus(final int intStatus) {
-		this.intStatus = intStatus;
-	}
-
-	public void setLegend(final Collection<V_LegendItem> legend) {
-		this.legend = legend;
-	}
-
-	public void setNodes(final Collection<V_GenericNode> nodes) {
-		this.nodes = nodes;
-	}
-
-	public final void setNodes(final List<V_GenericNode> nodes) {
-		this.nodes = nodes;
-	}
-
-	public void setNumEdges(final int numEdges) {
-		this.numEdges = numEdges;
-	}
-	
-	public void setNumNodes(final int numNodes) {
-		this.numNodes = numNodes;
-	}
-
-	public final void setStrStatus(final String strStatus) {
-		this.strStatus = strStatus;
-	}
-
-	public void setUserId(final String userId) {
-		this.userId = userId;
-	}
-
-	public void setUserName(final String username) {
-		this.username = username;
-	}
-	
-	/* * * * * * * * * * * * * * * * * */
-	/*             METHODS             */
-	/* * * * * * * * * * * * * * * * * */
-	
 	public final void addEdge(final V_GenericEdge e) {
-		edges.add(e);
+		edges.put(e.getId(), e);
 	}
 
-	public final void addNode(final V_GenericNode a) {
-		nodes.add(a);
-	}
-	
 	public final void addLegendItem(final String color, final String text) {
 		final V_LegendItem li = new V_LegendItem(color, text);
 		this.addLegendItem(li);
@@ -145,15 +53,18 @@ public class V_GenericGraph {
 			legend.add(li);
 		}
 		/*
-		boolean found = false;
-		for (V_LegendItem existing : legend) {
-			if (existing.getColor() == li.getColor() && existing.getText() == li.getText()) {
-				found = true;
-				break;
-			}
-		}
-		if (!found) legend.add(li);
-		*/
+		 * boolean found = false; for (V_LegendItem existing : legend) { if
+		 * (existing.getColor() == li.getColor() && existing.getText() ==
+		 * li.getText()) { found = true; break; } } if (!found) legend.add(li);
+		 */
+	}
+
+	/* * * * * * * * * * * * * * * * * */
+	/* GETTERS */
+	/* * * * * * * * * * * * * * * * * */
+
+	public final void addNode(final V_GenericNode a) {
+		nodes.put(a.getId(), a);
 	}
 
 	/*
@@ -208,6 +119,49 @@ public class V_GenericGraph {
 		return true;
 	}
 
+	public final Map<String, V_GenericEdge> getEdges() {
+		return edges;
+	}
+
+	public final int getIntStatus() {
+		return intStatus;
+	}
+
+	public final Collection<V_LegendItem> getLegend() {
+		return legend;
+	}
+
+	public final Map<String, V_GenericNode> getNodes() {
+		return nodes;
+	}
+
+	public int getNumEdges() {
+		return numEdges;
+	}
+
+	public int getNumNodes() {
+		return numNodes;
+	}
+
+	public final String getStrStatus() {
+		return strStatus;
+	}
+
+	/* * * * * * * * * * * * * * * * * */
+	/* SETTERS */
+	/* * * * * * * * * * * * * * * * * */
+
+	public String getUserId() {
+		return userId;
+	}
+
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -224,7 +178,55 @@ public class V_GenericGraph {
 		result = (prime * result) + ((legend == null) ? 0 : legend.hashCode());
 		return result;
 	}
-	
+
+	/**
+	 * @param edges
+	 *            the edges to set
+	 */
+	public void setEdges(final Map<String, V_GenericEdge> edges) {
+		this.edges = edges;
+	}
+
+	public final void setIntStatus(final int intStatus) {
+		this.intStatus = intStatus;
+	}
+
+	public void setLegend(final Collection<V_LegendItem> legend) {
+		this.legend = legend;
+	}
+
+	public void setNodes(final Map<String, V_GenericNode> nodes) {
+		this.nodes = nodes;
+	}
+
+	/* * * * * * * * * * * * * * * * * */
+	/* METHODS */
+	/* * * * * * * * * * * * * * * * * */
+
+	public void setNumEdges(final int numEdges) {
+		this.numEdges = numEdges;
+	}
+
+	public void setNumNodes(final int numNodes) {
+		this.numNodes = numNodes;
+	}
+
+	public final void setStrStatus(final String strStatus) {
+		this.strStatus = strStatus;
+	}
+
+	public void setUserId(final String userId) {
+		this.userId = userId;
+	}
+
+	/**
+	 * @param username
+	 *            the username to set
+	 */
+	public void setUsername(final String username) {
+		this.username = username;
+	}
+
 	@Override
 	public String toString() {
 

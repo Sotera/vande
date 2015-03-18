@@ -1,7 +1,6 @@
 package mil.darpa.vande.generic;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -17,21 +16,21 @@ import org.slf4j.LoggerFactory;
 public class V_GenericNode {
 
 	private static final Logger logger = LoggerFactory.getLogger(V_GenericNode.class);
-	
+
 	/**
 	 * Why not just use a map? And is it really critical that it be sorted?
 	 * 
 	 * from and to nodes
 	 */
 	private SortedSet<V_GraphObjectData> dataSet = new TreeSet<V_GraphObjectData>();
-	
+
 	/* fields from deprecated V_Actor */
 	private boolean edited = false;
 	private String id;
 	private String idType;
 	private String idVal;
 	private String label;
-	
+
 	private String color;
 	private int degree = 0;
 	private boolean isCluster = false;
@@ -45,15 +44,15 @@ public class V_GenericNode {
 
 	/** default, until children added */
 	private boolean isLeaf = true;
-	
+
 	/** true if it's the one searched for */
 	private boolean isOrigin = false;
-	
+
 	/** Used to be called family. */
 	private String nodeType;
-	
+
 	public V_GenericNode() {
-		
+
 	}
 
 	public V_GenericNode(final String id) {
@@ -61,208 +60,9 @@ public class V_GenericNode {
 	}
 
 	/* * * * * * * * * * * * * * * * * */
-	/*             GETTERS             */
+	/* GETTERS */
 	/* * * * * * * * * * * * * * * * * */
-	
-	public final String getColor() {
-		return color;
-	}
 
-	public boolean isCluster() {
-		return isCluster;
-	}
-	
-	public SortedSet<V_GraphObjectData> getDataSet() {
-		return dataSet;
-	}
-
-	public int getDegree() {
-		return degree;
-	}
-	
-	public final boolean isEdited() {
-		return edited;
-	}
-
-	public String getId() {
-		return id;
-	}
-	
-	public final String getIdType() {
-		return idType;
-	}
-	
-	public final String getIdVal() {
-		return idVal;
-	}
-	
-	public boolean isLeaf() {
-		return isLeaf;
-	}
-
-	public boolean isOrigin() {
-		return isOrigin;
-	}
-	
-	public boolean isUsed() {
-		return isUsed;
-	}
-
-	public final String getLabel() {
-		return label;
-	}
-	
-	public double getMinScore() {
-		return minScore;
-	}
-
-	public int getNbrLinks() {
-		return nbrLinks;
-	}
-	
-	/**
-	 * We use the family to determine what to search on, so be careful what you set it to!
-	 * 
-	 * @return
-	 */
-	public String getNodeType() {
-		return nodeType;
-	}
-	
-	public double getPriority() {
-		return priority;
-	}
-	
-	public boolean isScanned() {
-		return scanned;
-	}
-
-	public int getSize() {
-		return size;
-	}
-	
-	public boolean isTraversed() {
-		return traversed;
-	}
-
-	/* * * * * * * * * * * * * * * * * */
-	/*             SETTERS             */
-	/* * * * * * * * * * * * * * * * * */
-	
-	public final void setColor(final String c) {
-		this.color = c;
-	}
-	
-	public final void setDataSet(final SortedSet<V_GraphObjectData> dataSet) {
-		this.dataSet = dataSet;
-	}
-	
-	public void setDegree(final int degree) {
-		this.degree = degree;
-	}
-	
-	public void setEdited(final boolean isEdited) {
-		this.edited = isEdited;
-	}
-	
-	public void setId(final String id) {
-		this.id = id;
-	}
-
-	public void setIdType(final String idType) {
-		this.idType = idType;
-	}
-
-	public void setIdVal(final String idVal) {
-		this.idVal = idVal;
-	}
-	
-	public void setCluster(final boolean isCluster) {
-		this.isCluster = isCluster;
-	}
-
-	public void setLeaf(final boolean isLeaf) {
-		this.isLeaf = isLeaf;
-	}
-
-	public void setOrigin(final boolean isOrigin) {
-		this.isOrigin = isOrigin;
-	}
-	
-	public void setUsed(final boolean isUsed) {
-		this.isUsed = isUsed;
-	}
-	
-	public void setLabel(final String label) {
-		this.label = label;
-	}
-	
-	public void setMinScore(final double minScore) {
-		this.minScore = minScore;
-	}
-
-	public void setNbrLinks(final int nbrLinks) {
-		this.nbrLinks = nbrLinks;
-	}
-
-	public void setNodeType(final String family) {
-		this.nodeType = family;
-	}
-	
-	public void setPriority(final double priority) {
-		this.priority = priority;
-	}
-
-	public void setScanned(final boolean scanned) {
-		this.scanned = scanned;
-	}
-
-	public void setSize(final int size) {
-		this.size = size;
-	}
-
-	public void setTraversed(final boolean traversed) {
-		this.traversed = traversed;
-	}
-
-
-	/* * * * * * * * * * * * * * * * * */
-	/*             METHODS             */
-	/* * * * * * * * * * * * * * * * * */
-	
-	public String getDataValue(final String key) {
-		for (final V_GraphObjectData o : dataSet) {
-			if (o.key.equals(key)) {
-				return o.keyVal;
-			}
-		}
-		return null;
-	}
-	
-	/**
-	 * Change the existing value of an attribute or add a new one. <BR>
-	 * Different from addData which handles dupes by appending an underscore to
-	 * the key
-	 * 
-	 * @param key
-	 * @param value
-	 */
-	public void setDataValue(final String key, final String value) {
-		if (value == null) {
-			logger.error("Null value being set for key " + key);
-		}
-
-		// V_GraphObjectData d = new V_GraphObjectData(key, value);
-		for (final V_GraphObjectData o : dataSet) {
-			if (o.key.equals(key)) {
-				dataSet.remove(o);
-				break;
-			}
-		}
-
-		addData(key, value);
-	}
-	
 	/**
 	 * Adds a key value pair to the dataSet list that appears in the keys
 	 * section of graphml. If an entry with this attribute already exsists,
@@ -309,41 +109,6 @@ public class V_GenericNode {
 		// So the name doesn't exist in the data set
 
 		dataSet.add(new V_GraphObjectData(attribute, value));
-	}
-
-	/**
-	 * 
-	 * @param type will be compared to the key of the object data
-	 */
-	public void removeData(final String type) {
-		Object l = null;
-
-		for (final V_GraphObjectData d : dataSet) {
-			if (d.getKey().equals(type)) {
-				l = d;
-				break;
-			}
-		}
-		if (l != null) {
-			dataSet.remove(l);
-		}
-	}
-	
-	@Deprecated
-	public void incLinks() {
-		nbrLinks++;
-	}
-
-	public void inheritPropertiesOf(final V_GenericNode a) {
-		dataSet.addAll(a.getDataSet());
-	}
-
-	public void inheritPropertiesOfExcept(final V_GenericNode a, final ArrayList<String> skipTypes) {
-		for (final V_GraphObjectData x : a.getDataSet()) {
-			if (!skipTypes.contains(x.getKey())) {
-				dataSet.addAll(a.getDataSet());
-			}
-		}
 	}
 
 	/*
@@ -432,6 +197,69 @@ public class V_GenericNode {
 		return true;
 	}
 
+	public final String getColor() {
+		return color;
+	}
+
+	public SortedSet<V_GraphObjectData> getDataSet() {
+		return dataSet;
+	}
+
+	public String getDataValue(final String key) {
+		for (final V_GraphObjectData o : dataSet) {
+			if (o.key.equals(key)) {
+				return o.keyVal;
+			}
+		}
+		return null;
+	}
+
+	public int getDegree() {
+		return degree;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public final String getIdType() {
+		return idType;
+	}
+
+	public final String getIdVal() {
+		return idVal;
+	}
+
+	public final String getLabel() {
+		return label;
+	}
+
+	public double getMinScore() {
+		return minScore;
+	}
+
+	public int getNbrLinks() {
+		return nbrLinks;
+	}
+
+	/**
+	 * We use the family to determine what to search on, so be careful what you
+	 * set it to!
+	 * 
+	 * @return
+	 */
+	public String getNodeType() {
+		return nodeType;
+	}
+
+	public double getPriority() {
+		return priority;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -457,7 +285,179 @@ public class V_GenericNode {
 		result = (prime * result) + (traversed ? 1231 : 1237);
 		return result;
 	}
-	
+
+	@Deprecated
+	public void incLinks() {
+		nbrLinks++;
+	}
+
+	public void inheritPropertiesOf(final V_GenericNode a) {
+		dataSet.addAll(a.getDataSet());
+	}
+
+	public void inheritPropertiesOfExcept(final V_GenericNode a, final ArrayList<String> skipTypes) {
+		for (final V_GraphObjectData x : a.getDataSet()) {
+			if (!skipTypes.contains(x.getKey())) {
+				dataSet.addAll(a.getDataSet());
+			}
+		}
+	}
+
+	/* * * * * * * * * * * * * * * * * */
+	/* SETTERS */
+	/* * * * * * * * * * * * * * * * * */
+
+	public boolean isCluster() {
+		return isCluster;
+	}
+
+	public final boolean isEdited() {
+		return edited;
+	}
+
+	public boolean isLeaf() {
+		return isLeaf;
+	}
+
+	public boolean isOrigin() {
+		return isOrigin;
+	}
+
+	public boolean isScanned() {
+		return scanned;
+	}
+
+	public boolean isTraversed() {
+		return traversed;
+	}
+
+	public boolean isUsed() {
+		return isUsed;
+	}
+
+	/**
+	 * 
+	 * @param type
+	 *            will be compared to the key of the object data
+	 */
+	public void removeData(final String type) {
+		Object l = null;
+
+		for (final V_GraphObjectData d : dataSet) {
+			if (d.getKey().equals(type)) {
+				l = d;
+				break;
+			}
+		}
+		if (l != null) {
+			dataSet.remove(l);
+		}
+	}
+
+	public void setCluster(final boolean isCluster) {
+		this.isCluster = isCluster;
+	}
+
+	public final void setColor(final String c) {
+		color = c;
+	}
+
+	public final void setDataSet(final SortedSet<V_GraphObjectData> dataSet) {
+		this.dataSet = dataSet;
+	}
+
+	/**
+	 * Change the existing value of an attribute or add a new one. <BR>
+	 * Different from addData which handles dupes by appending an underscore to
+	 * the key
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	public void setDataValue(final String key, final String value) {
+		if (value == null) {
+			logger.error("Null value being set for key " + key);
+		}
+
+		// V_GraphObjectData d = new V_GraphObjectData(key, value);
+		for (final V_GraphObjectData o : dataSet) {
+			if (o.key.equals(key)) {
+				dataSet.remove(o);
+				break;
+			}
+		}
+
+		addData(key, value);
+	}
+
+	public void setDegree(final int degree) {
+		this.degree = degree;
+	}
+
+	public void setEdited(final boolean isEdited) {
+		edited = isEdited;
+	}
+
+	public void setId(final String id) {
+		this.id = id;
+	}
+
+	public void setIdType(final String idType) {
+		this.idType = idType;
+	}
+
+	public void setIdVal(final String idVal) {
+		this.idVal = idVal;
+	}
+
+	public void setLabel(final String label) {
+		this.label = label;
+	}
+
+	public void setLeaf(final boolean isLeaf) {
+		this.isLeaf = isLeaf;
+	}
+
+	/* * * * * * * * * * * * * * * * * */
+	/* METHODS */
+	/* * * * * * * * * * * * * * * * * */
+
+	public void setMinScore(final double minScore) {
+		this.minScore = minScore;
+	}
+
+	public void setNbrLinks(final int nbrLinks) {
+		this.nbrLinks = nbrLinks;
+	}
+
+	public void setNodeType(final String family) {
+		nodeType = family;
+	}
+
+	public void setOrigin(final boolean isOrigin) {
+		this.isOrigin = isOrigin;
+	}
+
+	public void setPriority(final double priority) {
+		this.priority = priority;
+	}
+
+	public void setScanned(final boolean scanned) {
+		this.scanned = scanned;
+	}
+
+	public void setSize(final int size) {
+		this.size = size;
+	}
+
+	public void setTraversed(final boolean traversed) {
+		this.traversed = traversed;
+	}
+
+	public void setUsed(final boolean isUsed) {
+		this.isUsed = isUsed;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -465,13 +465,10 @@ public class V_GenericNode {
 	 */
 	@Override
 	public String toString() {
-		return "V_GenericNode ["
-				+ (id != null ? "id=" + id + ", " : "")
-				+ (idType != null ? "idType=" + idType + ", " : "")
-				+ (idVal != null ? "idVal=" + idVal + ", " : "")
+		return "V_GenericNode [" + (id != null ? "id=" + id + ", " : "")
+				+ (idType != null ? "idType=" + idType + ", " : "") + (idVal != null ? "idVal=" + idVal + ", " : "")
 				+ (label != null ? "label=" + label + ", " : "")
-				+ (nodeType != null ? "nodeType=" + nodeType + ", ": "")
-				+ (dataSet != null ? "dataSet=" + dataSet : "")
-				+ "]";
+				+ (nodeType != null ? "nodeType=" + nodeType + ", " : "")
+				+ (dataSet != null ? "dataSet=" + dataSet : "") + "]";
 	}
 }

@@ -29,11 +29,11 @@ public class GraphmlGraph {
 	 *            true=use the colors from Graphics Query Tool
 	 */
 	public GraphmlGraph(final V_GenericGraph g, final boolean GQT_Style) {
-		for (V_GenericEdge e : g.getEdges()) {
+		for (final V_GenericEdge e : g.getEdges().values()) {
 			edges.add(new GraphmlEdge(e));
 		}
-		for (V_GenericNode n : g.getNodes()) {
-			GraphmlNode node = new GraphmlNode(n);
+		for (final V_GenericNode n : g.getNodes().values()) {
+			final GraphmlNode node = new GraphmlNode(n);
 			node.setColors(GQT_Style);
 			nodes.add(new GraphmlNode(n));
 		}
@@ -103,8 +103,8 @@ public class GraphmlGraph {
 
 	public String validate() {
 		String err = "";
-		Set<String> idList = new HashSet<String>();
-		for (GraphmlNode g : nodes) {
+		final Set<String> idList = new HashSet<String>();
+		for (final GraphmlNode g : nodes) {
 			if (idList.contains(g.getId())) {
 				err = " Duplicate node number " + g.getId();
 				return err;

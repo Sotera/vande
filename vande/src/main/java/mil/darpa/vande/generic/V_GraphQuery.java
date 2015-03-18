@@ -1,8 +1,10 @@
 package mil.darpa.vande.generic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -27,8 +29,12 @@ public class V_GraphQuery {
 	private int minLinks = 1;
 	private int minTransValue = 0;
 	private Set<String> searchIds = new HashSet<String>();
+	private List<String> errors = new ArrayList<String>();
+
 	private Long startTime = null;
+
 	private final long timeInitiated = new Date().getTime();
+
 	/*
 	 * This was added to because legacy graph builders used it as a separate
 	 * query parameter. --djue. It is usually something like customer or account
@@ -102,10 +108,6 @@ public class V_GraphQuery {
 
 	}
 
-	/* * * * * * * * * * * * * * * * * */
-	/* GETTERS */
-	/* * * * * * * * * * * * * * * * * */
-
 	public void addSearchIds(final String... id) {
 		if ((id == null) || (id.length == 0)) {
 			logger.warn("null or empty id provided: " + Arrays.toString(id));
@@ -119,6 +121,17 @@ public class V_GraphQuery {
 
 	public Long getEndTime() {
 		return endTime;
+	}
+
+	/* * * * * * * * * * * * * * * * * */
+	/* GETTERS */
+	/* * * * * * * * * * * * * * * * * */
+
+	/**
+	 * @return the errors
+	 */
+	public List<String> getErrors() {
+		return errors;
 	}
 
 	public String getId() {
@@ -169,13 +182,13 @@ public class V_GraphQuery {
 		return username;
 	}
 
-	/* * * * * * * * * * * * * * * * * */
-	/* SETTERS */
-	/* * * * * * * * * * * * * * * * * */
-
 	public boolean isDirected() {
 		return directed;
 	}
+
+	/* * * * * * * * * * * * * * * * * */
+	/* SETTERS */
+	/* * * * * * * * * * * * * * * * * */
 
 	public void setDirected(final boolean directed) {
 		this.directed = directed;
@@ -183,6 +196,14 @@ public class V_GraphQuery {
 
 	public void setEndTime(final Long endTime) {
 		this.endTime = endTime;
+	}
+
+	/**
+	 * @param errors
+	 *            the errors to set
+	 */
+	public void setErrors(final List<String> errors) {
+		this.errors = errors;
 	}
 
 	public void setId(final String id) {
