@@ -18,6 +18,7 @@ public class CSNodeData {
 	private String id;
 	private String idType;
 	private String idVal;
+	private String imgUrl = null;
 	private String label;
 	private String name;
 	private int nbrLinks = 0;
@@ -40,6 +41,7 @@ public class CSNodeData {
 			name = node.getLabel();
 			idVal = node.getIdVal();
 			idType = node.getIdType();
+			imgUrl = node.getImgUrl();
 			origin = node.isOrigin();
 			cluster = node.isCluster();
 			nbrLinks = node.getNbrLinks();
@@ -100,6 +102,10 @@ public class CSNodeData {
 
 	public final String getIdVal() {
 		return idVal;
+	}
+	
+	public final String getImgUrl() {
+		return imgUrl;
 	}
 
 	public final String getLabel() {
@@ -181,6 +187,10 @@ public class CSNodeData {
 	public void setIdVal(final String idVal) {
 		this.idVal = idVal;
 	}
+	
+	public void setImgUrl(final String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
 
 	public void setLabel(final String label) {
 		this.label = label;
@@ -236,6 +246,7 @@ public class CSNodeData {
 		result = (prime * result) + ((id == null) ? 0 : id.hashCode());
 		result = (prime * result) + ((idType == null) ? 0 : idType.hashCode());
 		result = (prime * result) + ((idVal == null) ? 0 : idVal.hashCode());
+		result = (prime * result) + ((imgUrl == null) ? 0 : imgUrl.hashCode());
 		result = (prime * result) + ((label == null) ? 0 : label.hashCode());
 		result = (prime * result) + ((name == null) ? 0 : name.hashCode());
 		result = (prime * result) + nbrLinks;
@@ -295,6 +306,13 @@ public class CSNodeData {
 				return false;
 			}
 		} else if (!idVal.equals(other.idVal)) {
+			return false;
+		}
+		if (imgUrl == null) {
+			if (other.imgUrl != null) {
+				return false;
+			}
+		} else if (!imgUrl.equals(other.imgUrl)) {
 			return false;
 		}
 		if (label == null) {
