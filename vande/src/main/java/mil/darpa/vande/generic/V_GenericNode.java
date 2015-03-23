@@ -41,6 +41,7 @@ public class V_GenericNode {
 	private boolean scanned = false; // true when we have searched on this value
 	private int size = 16;
 	private boolean traversed = false;
+	private String imgUrl;
 
 	/** default, until children added */
 	private boolean isLeaf = true;
@@ -259,6 +260,10 @@ public class V_GenericNode {
 	public int getSize() {
 		return size;
 	}
+	
+	public String getImgUrl() {
+		return imgUrl;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -456,6 +461,10 @@ public class V_GenericNode {
 
 	public void setUsed(final boolean isUsed) {
 		this.isUsed = isUsed;
+	}
+	
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	/*
