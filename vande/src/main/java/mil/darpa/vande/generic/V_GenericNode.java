@@ -1,6 +1,7 @@
 package mil.darpa.vande.generic;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -23,7 +24,8 @@ public class V_GenericNode {
 	 * from and to nodes
 	 */
 	private SortedSet<V_GraphObjectData> dataSet = new TreeSet<V_GraphObjectData>();
-
+	private SortedSet<V_GraphObjectData> mediaSet = new TreeSet<V_GraphObjectData>();
+	
 	/* fields from deprecated V_Actor */
 	private boolean edited = false;
 	private String id;
@@ -111,6 +113,23 @@ public class V_GenericNode {
 
 		dataSet.add(new V_GraphObjectData(attribute, value));
 	}
+	
+	/**
+	 * 
+	 * @param type
+	 * @param sourceURL
+	 */
+	public void addMedia(final String type, final String sourceURL) {
+		if ((type == null) || (type.length() == 0)) {
+			return;
+		}
+
+		if ((sourceURL == null) || (sourceURL.length() == 0)) {
+			return;
+		}
+		
+		mediaSet.add(new V_GraphObjectData(type, sourceURL));
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -167,6 +186,13 @@ public class V_GenericNode {
 		} else if (!dataSet.equals(other.dataSet)) {
 			return false;
 		}
+		if (mediaSet == null) {
+			if (other.mediaSet != null) {
+				return false;
+			}
+		} else if (!mediaSet.equals(other.mediaSet)) {
+			return false;
+		}
 		if (nodeType == null) {
 			if (other.nodeType != null) {
 				return false;
@@ -206,6 +232,10 @@ public class V_GenericNode {
 		return dataSet;
 	}
 
+	public SortedSet<V_GraphObjectData> getMediaSet() {
+		return mediaSet;
+	}
+	
 	public String getDataValue(final String key) {
 		for (final V_GraphObjectData o : dataSet) {
 			if (o.key.equals(key)) {
@@ -215,6 +245,16 @@ public class V_GenericNode {
 		return null;
 	}
 
+	public List<V_GraphObjectData> getAllMediaForType(final String type) {
+		List<V_GraphObjectData> retList = new ArrayList<V_GraphObjectData>();
+		for (final V_GraphObjectData o : mediaSet) {
+			if (o.key.equals(type)) {
+				retList.add(o);
+			}
+		}
+		return retList;
+	}
+	
 	public int getDegree() {
 		return degree;
 	}
@@ -298,12 +338,20 @@ public class V_GenericNode {
 
 	public void inheritPropertiesOf(final V_GenericNode a) {
 		dataSet.addAll(a.getDataSet());
+		mediaSet.addAll(a.getMediaSet());
 	}
 
 	public void inheritPropertiesOfExcept(final V_GenericNode a, final ArrayList<String> skipTypes) {
 		for (final V_GraphObjectData x : a.getDataSet()) {
 			if (!skipTypes.contains(x.getKey())) {
 				dataSet.addAll(a.getDataSet());
+				break;
+			}
+		}
+		for (final V_GraphObjectData y : a.getMediaSet()) {
+			if (!skipTypes.contains(y.getKey())) {
+				mediaSet.addAll(a.getMediaSet());
+				break;
 			}
 		}
 	}
@@ -358,6 +406,8 @@ public class V_GenericNode {
 			dataSet.remove(l);
 		}
 	}
+	
+	// TODO removeMedia for mediaSet
 
 	public void setCluster(final boolean isCluster) {
 		this.isCluster = isCluster;
@@ -369,6 +419,10 @@ public class V_GenericNode {
 
 	public final void setDataSet(final SortedSet<V_GraphObjectData> dataSet) {
 		this.dataSet = dataSet;
+	}
+	
+	public final void setMediaSet(final SortedSet<V_GraphObjectData> mediaSet) {
+		this.mediaSet = mediaSet;
 	}
 
 	/**

@@ -10,6 +10,8 @@ import mil.darpa.vande.generic.V_GraphObjectData;
 public class CSNodeData {
 	
 	private List<CSAttr> attrs = new ArrayList<CSAttr>();
+	private List<CSAttr> media = new ArrayList<CSAttr>();
+	
 	private boolean cluster = false;
 	private String color = "bababa";
 	private boolean edited = false;
@@ -48,6 +50,7 @@ public class CSNodeData {
 			color = node.getColor();
 			size = node.getSize();
 			edited = node.isEdited();
+			
 			final Set<V_GraphObjectData> s = node.getDataSet();
 			for (final V_GraphObjectData d : s) {
 				if (d.getKey().equalsIgnoreCase("parent")) {
@@ -56,8 +59,13 @@ public class CSNodeData {
 					attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
 				}
 			}
-
 			attrs.add(new CSAttr("Links", Integer.toString(nbrLinks)));
+
+			final Set<V_GraphObjectData> m = node.getMediaSet();
+			for (final V_GraphObjectData d : m) {
+				media.add(new CSAttr(d.getKey(), d.getKeyVal()));
+			}
+			
 			if (cluster) {
 				attrs.add(new CSAttr("Placeholder", "Too many links"));
 			}
@@ -72,6 +80,10 @@ public class CSNodeData {
 		return attrs;
 	}
 
+	public final List<CSAttr> getMedia() {
+		return media;
+	}
+	
 	public boolean isCluster() {
 		return cluster;
 	}
@@ -154,6 +166,10 @@ public class CSNodeData {
 	
 	public void setAttrs(final List<CSAttr> attrs) {
 		this.attrs = attrs;
+	}
+	
+	public void setMedia(final List<CSAttr> media) {
+		this.media = media;
 	}
 
 	public void setCluster(final boolean cluster) {
@@ -241,6 +257,7 @@ public class CSNodeData {
 		final int prime = 31;
 		int result = 1;
 		result = (prime * result) + ((attrs == null) ? 0 : attrs.hashCode());
+		result = (prime * result) + ((media ==  null) ? 0 : media.hashCode());
 		result = (prime * result) + (cluster ? 1231 : 1237);
 		result = (prime * result) + ((color == null) ? 0 : color.hashCode());
 		result = (prime * result) + ((id == null) ? 0 : id.hashCode());
@@ -275,6 +292,13 @@ public class CSNodeData {
 				return false;
 			}
 		} else if (!attrs.equals(other.attrs)) {
+			return false;
+		}
+		if (media == null) {
+			if (other.media != null) {
+				return false;
+			}
+		} else if (!media.equals(other.media)) {
 			return false;
 		}
 		if (cluster != other.cluster) {
@@ -360,7 +384,7 @@ public class CSNodeData {
 	
 	@Override
 	public String toString() {
-		return "CSNodeData [attrs=" + attrs + ", cluster=" + cluster + ", id="
+		return "CSNodeData [attrs=" + attrs + ", media=" + media + ", cluster=" + cluster + ", id="
 				+ id + ", idType=" + idType + ", idVal=" + idVal + ", label="
 				+ label + ", name=" + name + ", nbrLinks=" + nbrLinks
 				+ ", origin=" + origin + ", type=" + type + ", visible="
