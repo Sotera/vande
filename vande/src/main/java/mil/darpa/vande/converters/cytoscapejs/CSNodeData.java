@@ -25,7 +25,7 @@ public class CSNodeData {
 	private String name;
 	private int nbrLinks = 0;
 	private boolean origin = false;
-	private String parent;
+	private String parentId;
 	private String reason;
 	private int size;
 	private List<CSNode> subNodes;
@@ -54,7 +54,7 @@ public class CSNodeData {
 			final Set<V_GraphObjectData> s = node.getDataSet();
 			for (final V_GraphObjectData d : s) {
 				if (d.getKey().equalsIgnoreCase("parent")) {
-					parent = d.getKeyVal();
+				//	parent = d.getKeyVal();
 				} else {
 					attrs.add(new CSAttr(d.getKey(), d.getKeyVal()));
 				}
@@ -136,8 +136,8 @@ public class CSNodeData {
 		return origin;
 	}
 	
-	public final String getParent() {
-		return parent;
+	public final String getParentId() {
+		return parentId;
 	}
 
 	public String getReason() {
@@ -224,8 +224,8 @@ public class CSNodeData {
 		this.origin = origin;
 	}
 	
-	public final void setParent(final String parent) {
-		this.parent = parent;
+	public final void setParentId(final String parentId) {
+		this.parentId = parentId;
 	}
 
 	public void setReason(final String reason) {
@@ -268,7 +268,7 @@ public class CSNodeData {
 		result = (prime * result) + ((name == null) ? 0 : name.hashCode());
 		result = (prime * result) + nbrLinks;
 		result = (prime * result) + (origin ? 1231 : 1237);
-		result = (prime * result) + ((parent == null) ? 0 : parent.hashCode());
+		result = (prime * result) + ((parentId == null) ? 0 : parentId.hashCode());
 		result = (prime * result) + size;
 		result = (prime * result) + ((type == null) ? 0 : type.hashCode());
 		result = (prime * result) + (visible ? 1231 : 1237);
@@ -359,11 +359,11 @@ public class CSNodeData {
 		if (origin != other.origin) {
 			return false;
 		}
-		if (parent == null) {
-			if (other.parent != null) {
+		if (parentId == null) {
+			if (other.parentId != null) {
 				return false;
 			}
-		} else if (!parent.equals(other.parent)) {
+		} else if (!parentId.equals(other.parentId)) {
 			return false;
 		}
 		if (size != other.size) {
