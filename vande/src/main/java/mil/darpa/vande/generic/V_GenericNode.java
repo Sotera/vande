@@ -338,7 +338,7 @@ public class V_GenericNode {
 
 	public void inheritPropertiesOf(final V_GenericNode a) {
 		dataSet.addAll(a.getDataSet());
-		mediaSet.addAll(a.getMediaSet());
+//		mediaSet.addAll(a.getMediaSet());
 	}
 
 	public void inheritPropertiesOfExcept(final V_GenericNode a, final ArrayList<String> skipTypes) {
@@ -348,12 +348,12 @@ public class V_GenericNode {
 				break;
 			}
 		}
-		for (final V_GraphObjectData y : a.getMediaSet()) {
-			if (!skipTypes.contains(y.getKey())) {
-				mediaSet.addAll(a.getMediaSet());
-				break;
-			}
-		}
+//		for (final V_GraphObjectData y : a.getMediaSet()) {
+//			if (!skipTypes.contains(y.getKey())) {
+//				mediaSet.addAll(a.getMediaSet());
+//				break;
+//			}
+//		}
 	}
 
 	/* * * * * * * * * * * * * * * * * */
