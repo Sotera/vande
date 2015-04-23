@@ -25,7 +25,7 @@ public class V_GenericNode {
 	 */
 	private SortedSet<V_GraphObjectData> dataSet = new TreeSet<V_GraphObjectData>();
 	private SortedSet<V_GraphObjectData> mediaSet = new TreeSet<V_GraphObjectData>();
-	
+
 	/* fields from deprecated V_Actor */
 	private boolean edited = false;
 	private String id;
@@ -113,7 +113,7 @@ public class V_GenericNode {
 
 		dataSet.add(new V_GraphObjectData(attribute, value));
 	}
-	
+
 	/**
 	 * 
 	 * @param type
@@ -127,7 +127,7 @@ public class V_GenericNode {
 		if ((sourceURL == null) || (sourceURL.length() == 0)) {
 			return;
 		}
-		
+
 		mediaSet.add(new V_GraphObjectData(type, sourceURL));
 	}
 
@@ -224,6 +224,16 @@ public class V_GenericNode {
 		return true;
 	}
 
+	public List<V_GraphObjectData> getAllMediaForType(final String type) {
+		final List<V_GraphObjectData> retList = new ArrayList<V_GraphObjectData>();
+		for (final V_GraphObjectData o : mediaSet) {
+			if (o.key.equals(type)) {
+				retList.add(o);
+			}
+		}
+		return retList;
+	}
+
 	public final String getColor() {
 		return color;
 	}
@@ -232,11 +242,8 @@ public class V_GenericNode {
 		return dataSet;
 	}
 
-	public SortedSet<V_GraphObjectData> getMediaSet() {
-		return mediaSet;
-	}
-	
 	public String getDataValue(final String key) {
+
 		for (final V_GraphObjectData o : dataSet) {
 			if (o.key.equals(key)) {
 				return o.keyVal;
@@ -245,16 +252,6 @@ public class V_GenericNode {
 		return null;
 	}
 
-	public List<V_GraphObjectData> getAllMediaForType(final String type) {
-		List<V_GraphObjectData> retList = new ArrayList<V_GraphObjectData>();
-		for (final V_GraphObjectData o : mediaSet) {
-			if (o.key.equals(type)) {
-				retList.add(o);
-			}
-		}
-		return retList;
-	}
-	
 	public int getDegree() {
 		return degree;
 	}
@@ -271,8 +268,16 @@ public class V_GenericNode {
 		return idVal;
 	}
 
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
 	public final String getLabel() {
 		return label;
+	}
+
+	public SortedSet<V_GraphObjectData> getMediaSet() {
+		return mediaSet;
 	}
 
 	public double getMinScore() {
@@ -299,10 +304,6 @@ public class V_GenericNode {
 
 	public int getSize() {
 		return size;
-	}
-	
-	public String getImgUrl() {
-		return imgUrl;
 	}
 
 	/*
@@ -338,7 +339,7 @@ public class V_GenericNode {
 
 	public void inheritPropertiesOf(final V_GenericNode a) {
 		dataSet.addAll(a.getDataSet());
-//		mediaSet.addAll(a.getMediaSet());
+		// mediaSet.addAll(a.getMediaSet());
 	}
 
 	public void inheritPropertiesOfExcept(final V_GenericNode a, final ArrayList<String> skipTypes) {
@@ -348,12 +349,12 @@ public class V_GenericNode {
 				break;
 			}
 		}
-//		for (final V_GraphObjectData y : a.getMediaSet()) {
-//			if (!skipTypes.contains(y.getKey())) {
-//				mediaSet.addAll(a.getMediaSet());
-//				break;
-//			}
-//		}
+		// for (final V_GraphObjectData y : a.getMediaSet()) {
+		// if (!skipTypes.contains(y.getKey())) {
+		// mediaSet.addAll(a.getMediaSet());
+		// break;
+		// }
+		// }
 	}
 
 	/* * * * * * * * * * * * * * * * * */
@@ -406,7 +407,7 @@ public class V_GenericNode {
 			dataSet.remove(l);
 		}
 	}
-	
+
 	// TODO removeMedia for mediaSet
 
 	public void setCluster(final boolean isCluster) {
@@ -419,10 +420,6 @@ public class V_GenericNode {
 
 	public final void setDataSet(final SortedSet<V_GraphObjectData> dataSet) {
 		this.dataSet = dataSet;
-	}
-	
-	public final void setMediaSet(final SortedSet<V_GraphObjectData> mediaSet) {
-		this.mediaSet = mediaSet;
 	}
 
 	/**
@@ -469,6 +466,10 @@ public class V_GenericNode {
 		this.idVal = idVal;
 	}
 
+	public void setImgUrl(final String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
 	public void setLabel(final String label) {
 		this.label = label;
 	}
@@ -480,6 +481,10 @@ public class V_GenericNode {
 	/* * * * * * * * * * * * * * * * * */
 	/* METHODS */
 	/* * * * * * * * * * * * * * * * * */
+
+	public final void setMediaSet(final SortedSet<V_GraphObjectData> mediaSet) {
+		this.mediaSet = mediaSet;
+	}
 
 	public void setMinScore(final double minScore) {
 		this.minScore = minScore;
@@ -515,10 +520,6 @@ public class V_GenericNode {
 
 	public void setUsed(final boolean isUsed) {
 		this.isUsed = isUsed;
-	}
-	
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
 	}
 
 	/*

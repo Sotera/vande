@@ -5,13 +5,20 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlValue;
 
+/**
+ * XXX: There is no real reason for this class-- a proper JSON serialization
+ * framework can take a map of objects and make them into a list of kv pairs.
+ * 
+ * @author PWG
+ * 
+ */
 /*
- * Each Node or Attribute in graphml can contain zero to many Data
- * elements of form <data key=foo>value</data>
+ * Each Node or Attribute in graphml can contain zero to many Data elements of
+ * form <data key=foo>value</data>
  */
 @XmlAccessorType(XmlAccessType.NONE)
 public class V_GraphObjectData implements Comparable<V_GraphObjectData> {
-	
+
 	@XmlAttribute
 	String key;
 	@XmlValue
@@ -26,22 +33,6 @@ public class V_GraphObjectData implements Comparable<V_GraphObjectData> {
 		this.keyVal = keyVal;
 	}
 
-	public final String getKey() {
-		return key;
-	}
-
-	public final String getKeyVal() {
-		return keyVal;
-	}
-	
-	public void setKey(final String key) {
-		this.key = key;
-	}
-
-	public void setKeyVal(final String keyVal) {
-		this.keyVal = keyVal;
-	}
-	
 	@Override
 	public final int compareTo(final V_GraphObjectData o) {
 		final int keyCompare = key.compareTo(o.key);
@@ -86,6 +77,14 @@ public class V_GraphObjectData implements Comparable<V_GraphObjectData> {
 		return true;
 	}
 
+	public final String getKey() {
+		return key;
+	}
+
+	public final String getKeyVal() {
+		return keyVal;
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -98,6 +97,14 @@ public class V_GraphObjectData implements Comparable<V_GraphObjectData> {
 		result = (prime * result) + ((key == null) ? 0 : key.hashCode());
 		result = (prime * result) + ((keyVal == null) ? 0 : keyVal.hashCode());
 		return result;
+	}
+
+	public void setKey(final String key) {
+		this.key = key;
+	}
+
+	public void setKeyVal(final String keyVal) {
+		this.keyVal = keyVal;
 	}
 
 	@Override
