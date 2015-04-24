@@ -44,6 +44,12 @@ public class V_GenericNode {
 	private int size = 16;
 	private boolean traversed = false;
 	private String imgUrl;
+	private String pie = null;
+	private Double p1 = 0.0d;
+	private Double p2 = 0.0d;
+	private Double p3 = 0.0d;
+
+	private Double p4 = 0.0d;
 
 	/** default, until children added */
 	private boolean isLeaf = true;
@@ -61,10 +67,6 @@ public class V_GenericNode {
 	public V_GenericNode(final String id) {
 		this.id = id;
 	}
-
-	/* * * * * * * * * * * * * * * * * */
-	/* GETTERS */
-	/* * * * * * * * * * * * * * * * * */
 
 	/**
 	 * Adds a key value pair to the dataSet list that appears in the keys
@@ -264,6 +266,10 @@ public class V_GenericNode {
 		return idType;
 	}
 
+	/* * * * * * * * * * * * * * * * * */
+	/* GETTERS */
+	/* * * * * * * * * * * * * * * * * */
+
 	public final String getIdVal() {
 		return idVal;
 	}
@@ -296,6 +302,41 @@ public class V_GenericNode {
 	 */
 	public String getNodeType() {
 		return nodeType;
+	}
+
+	/**
+	 * @return the p1
+	 */
+	public Double getP1() {
+		return p1;
+	}
+
+	/**
+	 * @return the p2
+	 */
+	public Double getP2() {
+		return p2;
+	}
+
+	/**
+	 * @return the p3
+	 */
+	public Double getP3() {
+		return p3;
+	}
+
+	/**
+	 * @return the p4
+	 */
+	public Double getP4() {
+		return p4;
+	}
+
+	/**
+	 * @return the pie
+	 */
+	public String getPie() {
+		return pie;
 	}
 
 	public double getPriority() {
@@ -357,10 +398,6 @@ public class V_GenericNode {
 		// }
 	}
 
-	/* * * * * * * * * * * * * * * * * */
-	/* SETTERS */
-	/* * * * * * * * * * * * * * * * * */
-
 	public boolean isCluster() {
 		return isCluster;
 	}
@@ -380,6 +417,10 @@ public class V_GenericNode {
 	public boolean isScanned() {
 		return scanned;
 	}
+
+	/* * * * * * * * * * * * * * * * * */
+	/* SETTERS */
+	/* * * * * * * * * * * * * * * * * */
 
 	public boolean isTraversed() {
 		return traversed;
@@ -407,8 +448,6 @@ public class V_GenericNode {
 			dataSet.remove(l);
 		}
 	}
-
-	// TODO removeMedia for mediaSet
 
 	public void setCluster(final boolean isCluster) {
 		this.isCluster = isCluster;
@@ -450,6 +489,8 @@ public class V_GenericNode {
 		this.degree = degree;
 	}
 
+	// TODO removeMedia for mediaSet
+
 	public void setEdited(final boolean isEdited) {
 		edited = isEdited;
 	}
@@ -478,10 +519,6 @@ public class V_GenericNode {
 		this.isLeaf = isLeaf;
 	}
 
-	/* * * * * * * * * * * * * * * * * */
-	/* METHODS */
-	/* * * * * * * * * * * * * * * * * */
-
 	public final void setMediaSet(final SortedSet<V_GraphObjectData> mediaSet) {
 		this.mediaSet = mediaSet;
 	}
@@ -500,6 +537,50 @@ public class V_GenericNode {
 
 	public void setOrigin(final boolean isOrigin) {
 		this.isOrigin = isOrigin;
+	}
+
+	/* * * * * * * * * * * * * * * * * */
+	/* METHODS */
+	/* * * * * * * * * * * * * * * * * */
+
+	/**
+	 * @param p1
+	 *            the p1 to set
+	 */
+	public void setP1(final Double p1) {
+		this.p1 = p1;
+	}
+
+	/**
+	 * @param p2
+	 *            the p2 to set
+	 */
+	public void setP2(final Double p2) {
+		this.p2 = p2;
+	}
+
+	/**
+	 * @param p3
+	 *            the p3 to set
+	 */
+	public void setP3(final Double p3) {
+		this.p3 = p3;
+	}
+
+	/**
+	 * @param p4
+	 *            the p4 to set
+	 */
+	public void setP4(final Double p4) {
+		this.p4 = p4;
+	}
+
+	/**
+	 * @param pie
+	 *            the pie to set
+	 */
+	public void setPie(final String pie) {
+		this.pie = pie;
 	}
 
 	public void setPriority(final double priority) {
