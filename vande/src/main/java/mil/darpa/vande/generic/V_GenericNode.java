@@ -384,18 +384,13 @@ public class V_GenericNode {
 	}
 
 	public void inheritPropertiesOfExcept(final V_GenericNode a, final ArrayList<String> skipTypes) {
-		for (final V_GraphObjectData x : a.getDataSet()) {
-			if (!skipTypes.contains(x.getKey())) {
-				dataSet.addAll(a.getDataSet());
-				break;
+		for (final V_GraphObjectData kva : a.getDataSet()) {
+			if (!skipTypes.contains(kva.getKey())) {
+				// dataSet.addAll(a.getDataSet());
+				dataSet.add(kva);
+				// break;
 			}
 		}
-		// for (final V_GraphObjectData y : a.getMediaSet()) {
-		// if (!skipTypes.contains(y.getKey())) {
-		// mediaSet.addAll(a.getMediaSet());
-		// break;
-		// }
-		// }
 	}
 
 	public boolean isCluster() {
