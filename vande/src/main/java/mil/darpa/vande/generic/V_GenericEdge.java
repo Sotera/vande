@@ -40,6 +40,20 @@ public class V_GenericEdge {
 		edges = new ArrayList<V_GenericEdge>();
 	}
 
+	/**
+	 * Constructor for when you don't have the actual nodes, just their ids.
+	 * 
+	 * @param edgeId
+	 * @param sourceId
+	 * @param targetId
+	 */
+	public V_GenericEdge(final String edgeId, final String sourceId, final String targetId) {
+		id = edgeId;
+		edges = new ArrayList<V_GenericEdge>();
+		this.sourceId = sourceId;
+		this.targetId = targetId;
+	}
+
 	public V_GenericEdge(final String edgeId, final V_GenericNode src_node, final V_GenericNode target_node) {
 		id = edgeId;
 		edges = new ArrayList<V_GenericEdge>();
